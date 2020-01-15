@@ -1,0 +1,26 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  /*
+    *******
+    Colours
+  */
+  --black:          #000000;
+  --lighter-black:  #555555; /* Active inputs */
+  --dark-grey:      #aeaeae; /* Placeholders */
+  --grey:           #cccccc;
+  --light-grey:     #dfdfdf;
+  --dark-purple:    #42305a; /* Hovered purple buttons */
+  --purple:         #8771a5;
+  --lightcoral:     #FF7e7e; /* Dangerous actions */
+
+  /*
+    ***********
+    Box shadows
+  */
+  --shadow-card-normal:     0 4px 8px 0 rgba(0, 0, 0, 0.1);
+  --shadow-card-hovered:    0 8px 22px 0 rgba(0, 0, 0, 0.1);
+  --shadow-input-dropdown:  0 4px 25px 0 rgba(85, 85, 85 0.25);
+}
