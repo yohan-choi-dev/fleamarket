@@ -22,5 +22,5 @@
   */
   --shadow-card-normal:     0 4px 8px 0 rgba(0, 0, 0, 0.1);
   --shadow-card-hovered:    0 8px 22px 0 rgba(0, 0, 0, 0.1);
-  --shadow-input-dropdown:  0 4px 25px 0 rgba(85, 85, 85 0.25);
+  --shadow-input-dropdown:  0 4px 25px 0 rgba(85, 85, 85, 0.25);
 }
