@@ -1,8 +1,12 @@
+:root {
+  font-size: 18px;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-
+  
   /*
     *******
     Colours
@@ -23,4 +27,16 @@
   --shadow-card-normal:     0 4px 8px 0 rgba(0, 0, 0, 0.1);
   --shadow-card-hovered:    0 8px 22px 0 rgba(0, 0, 0, 0.1);
   --shadow-input-dropdown:  0 4px 25px 0 rgba(85, 85, 85, 0.25);
+
+  /*
+    *****
+    Fonts
+  */
+  --font-family-global: 'Roboto', Helvetica, Arial, sans-serif;
+  --font-size-h1:       2.67rem;  /* 48px */
+  --font-size-h2:       2rem;     /* 36px */
+  --font-size-h3:       1.33rem;  /* 24px */
+  --font-size-body:     1rem;     /* 18px */
+  --font-line-height:   1.44rem;  /* 26px */
+
 }
