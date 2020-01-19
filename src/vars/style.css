@@ -1,12 +1,6 @@
 :root {
   font-size: 18px;
-}
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  
   /*
     *******
     Colours
@@ -38,5 +32,26 @@
   --font-size-h3:       1.33rem;  /* 24px */
   --font-size-body:     1rem;     /* 18px */
   --font-line-height:   1.44rem;  /* 26px */
+}
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/*
+  *****
+  Fonts
+*/
+@media (max-width: 1240px) {
+  :root {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 960px) {
+  :root {
+    font-size: 14px;
+  }
 }
