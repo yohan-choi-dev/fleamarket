@@ -1,0 +1,17 @@
+.Logo {
+  display: inline-block;
+  padding: 0.67rem 2rem;
+  border-radius: 0.5rem;
+  font-family: var(--font-family-global);
+  font-size: 1.33rem;
+  font-weight: 300;
+}
+
+.Logo span {
+  font-weight: 500;
+}
+
+.Logo-with-background {
+  color: #ffffff;
+  background-color: var(--black);
+}
