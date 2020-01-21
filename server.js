@@ -4,7 +4,7 @@ const session = require('express-session');
 const app = express();
 
 const http = require('http').Server(app);
-const io = require('socket-io')(http);
+const io = require('socket.io')(http);
 
 const path = require('path');
 const fs = require('fs');
@@ -16,7 +16,11 @@ const GoogleStrategy = require('passport-google-oauth').OAuthStrategy;
 const mysql = require('mysql');
 
 const hostname = '10.102.112.129';
-const port = 10034;
+const port = process.env.PORT | 10034;
+
+
+const authRoutes = require('./routes/auth.js');
+
 
 const connection = mysql.createConnection({
 	host: "mymysql.senecacollege.ca",
@@ -24,9 +28,14 @@ const connection = mysql.createConnection({
 	password: "hgAZ@4435"
 });
 
+connection.connect(err => {
+	if (err) throw err;
+	console.log('Server is connected to MySQL successfully!');
+});
+
 app.set('trust proxy', 1);
 app.use(session({
-	secret: 'keyboard cat',
+	secret: 'secret', 
 	resave: false,
 	saveUninitialized: true,
 	cookie: { secure: true }
@@ -34,23 +43,29 @@ app.use(session({
 
 
 
+// body-parser extract the entire body portion of an incoming request stream
+// and exposes it on req.body
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
-app.use('/', express.static('public'));
+// Add routes
+app.use(authRoutes);
 
-app.use((req,res) => {
+app.use('/static', express.static(path.join(__dirname, 'public')));
+
+app.use((req, res) => {
 	res.status(404).send("Page Not Found");
-}
+});
 
 app.get('/', (req,res) => {
 	res.render();
 });
 
-
-connection.connect(err => {
-	if (err) throw err;
-	console.log('Server is connected to MySQL successfully!');
-
+app.post('/auth', (req, res) => {
+    let username = request.body.username;
+    let password = request.body.password;
 });
+
 
 app.get('/', (req,res) => res.send('Group05- FleaMarket'));
 
