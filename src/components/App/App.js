@@ -3,12 +3,16 @@ import './App.css';
 
 // Components
 import SampleComponent from '../SampleComponent/SampleComponent';
+import Card from '../Card/Card';
+import SearchBox from '../SearchBox/SearchBox';
 
 function App() {
   return (
     <div className="App">
       <h1>FleaMarket</h1>
-      <SampleComponent />
+      <SearchBox />
+      <Card />
+     
     </div>
   );
 }
