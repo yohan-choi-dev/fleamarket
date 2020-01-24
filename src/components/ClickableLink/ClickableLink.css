@@ -1,0 +1,4 @@
+.ClickableLink {
+  color: var(--black);
+  text-decoration: underline;
+}
