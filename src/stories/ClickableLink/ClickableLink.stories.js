@@ -1,5 +1,5 @@
 import React from 'react';
-import ClickableLink from '../components/ClickableLink/ClickableLink';
+import ClickableLink from '../../components/ClickableLink/ClickableLink';
 
 export default {
   title: 'ClickableLink',
