@@ -1,0 +1,47 @@
+.ItemCard {
+  width: 395px;
+  border-radius: 15px;
+  background-color: #ffffff;
+  box-shadow: var(--shadow-card-normal);
+  font-family: var(--font-family-global);
+}
+
+.ItemCard-item-image {
+  border-radius: 15px 15px 0 0;
+  width: 100%;
+  height: 316px;
+  background-size: cover;
+}
+
+.ItemCard-item-info {
+  padding: 12px 20px 15px 20px;
+}
+
+.ItemCard-item-name {
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 21px;
+  color: var(--black);
+}
+
+.ItemCard-item-owner {
+  padding-top: 8px;
+  font-size: 16px;
+  color: var(--grey);
+}
+
+.ItemCard-item-owner span {
+  text-decoration: underline;
+}
+
+.ItemCard-item-description {
+  padding-top: 20px;
+  padding-bottom: 38px;
+  font-size: 17px;
+  line-height: 26px;
+  color: var(--lighter-black);
+}
+
+.ItemCard-LikeButton-container .LikeButton {
+  display: block;
+}
