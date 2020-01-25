@@ -3,7 +3,7 @@ const express = require('express');
 const session = require('express-session');
 const app = express();
 
-const favicon = require('express-favicon');
+const bcrypt = require('bcryptjs');
 
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
@@ -12,10 +12,8 @@ const path = require('path');
 const fs = require('fs');
 const bodyParser = require('body-parser');
 
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth').OAuthStrategy;
-
-const mysql = require('mysql');
+const sequelize = require('./utils/database');
+const mysql = require('mysql2');
 
 const hostname = '10.102.112.129';
 const port = process.env.PORT | 10034;
@@ -24,19 +22,23 @@ const cors = require('cors');
 
 const authRoutes = require('./routes/auth.js');
 
+/*
+  These model will be used in the future
 
-const connection = mysql.createConnection({
-    host: "mymysql.senecacollege.ca",
-    user: "prj666_201a05",
-    password: "hgAZ@4435"
-});
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth').OAuthStrategy;
+//
+// if we wanna add favicon for the fleamartket, we can use this module
+const favicon = require('express-favicon');
 
-connection.connect(err => {
-    if (err) throw err;
-    console.log('Server is connected to MySQL successfully!');
-});
+// worker_threads enable node to use multi-thread
+// it will be a good solution  to solve cpu intensive task
+// but according to nodejs.org, built-in asynchronous I/O operations are more efficient than Workers.
+// Therefore, worker_threads will be used to format uploaded image.
+// In the future, worker object will be move to the other module.
+const worker = require('worker_threads');
+*/
 
-//app.set('trust proxy', 1);
 
 app.use(session({
     secret: 'secret',
@@ -57,22 +59,23 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'build')));
 
-
 // Add routes
-//app.use(require('./routes/auth.js'));
-//app.use(require('./routes/chat.js'))
+// app.use(require('./routes/auth.js'));
+// app.use(require('./routes/chat.js'))
 
 
 app.use((req, res) => {
     res.status(404).send("Page Not Found");
 });
 
-io.on('connection', (socket) => {
-    console.log('A user is connected');
-});
 
+// Every page request goes into react application
 app.get('/*', (req,res) =>  {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
+sequelize.sync().then(result => {
+    console.log(result);
 });
 
 http.listen(port, hostname, () => console.log('server is running'));
