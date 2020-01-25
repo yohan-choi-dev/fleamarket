@@ -1,7 +1,33 @@
-
-#ReactSearchBox{
-    width: 700px;
-    align-content: center;
-    border-color: tomato;
+.SearchBox {
+  display: inline-block;
+  padding: 16px 22px;
+  background: #ffffff;
+  box-shadow: var(--shadow-input-dropdown);
+  border-radius: 3px;
 }
 
+.SearchBox .SearchBox-input {
+  background: none;
+  border: none;
+  color: var(--black);
+  outline: none;
+  font-family: var(--font-family-global);
+  font-size: 1rem;
+  font-weight: 500;
+  float: left;
+  width: 20rem;
+  padding-right: 16px;
+}
+
+.SearchBox .SearchBox-input::placeholder {
+  color: var(--dark-grey);
+}
+
+.SearchBox .SearchBox-search-button {
+  float: left;
+}
+
+.SearchBox .SearchBox-search-icon {
+  height: 1rem;
+  fill: var(--dark-grey);
+}

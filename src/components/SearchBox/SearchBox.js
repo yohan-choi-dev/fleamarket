@@ -1,47 +1,24 @@
+import React from 'react';
+import { ReactComponent as SearchIcon } from '@fortawesome/fontawesome-free/svgs/solid/search.svg';
+import SearchButton from '../SearchButton/SearchButton.js';
 
-import React from 'react'
-import ReactSearchBox from 'react-search-box'
-import './SearchBox.css'
-import SearchButton from "../SearchButton/SearchButton.js"
-
+import '../../vars/style.css';
+import './SearchBox.css';
 
 class SearchBox extends React.Component {
-  
-  data = [
-    {
-      key: 'john',
-      value: 'John Doe',
-    },
-    {
-      key: 'jane',
-      value: 'Jane Doe',
-    },
-    {
-      key: 'mary',
-      value: 'Mary Phillips',
-    },
-    {
-      key: 'robert',
-      value: 'Robert',
-    },
-    {
-      key: 'karius',
-      value: 'Karius',
-    },
-  ]
-
   render() {
     return (
-        <div id='ReactSearchBox'>
-            <ReactSearchBox
-                placeholder="What are you looking for today"
-                data={this.data}
-                inputBoxFontSize="15px"
-                inputBoxBorderColor = "white" // when we have backgroud pic change to white
-            />
-            <SearchButton />
+      <div className="SearchBox">
+        <input
+          className="SearchBox-input"
+          type="text"
+          placeholder="What are you looking for today?"
+        />
+        <div className="SearchBox-search-button">
+          <SearchIcon className="SearchBox-search-icon" />
         </div>
-    )
+      </div>
+    );
   }
 }
 
