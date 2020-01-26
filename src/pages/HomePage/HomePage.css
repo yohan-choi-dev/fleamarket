@@ -2,38 +2,6 @@
   padding-top: 2.2rem;
 }
 
-.HomePage-top-bar {
-  width: 100%;
-  display: flex;
-  padding-bottom: 2.2rem;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.HomePage-top-bar .Logo {
-  color: var(--black);
-}
-
-.HomePage-navigation ul {
-  list-style-type: none;
-}
-
-.HomePage-navigation ul li {
-  display: inline-block;
-  margin-left: 1.6rem;
-  font-family: var(--font-family-global);
-}
-
-.HomePage-navigation ul li a {
-  color: var(--black);
-  text-decoration: underline;
-  transition: color 200ms ease-in-out;
-}
-
-.HomePage-navigation ul li:hover a {
-  color: var(--purple);
-}
-
 .HomePage-header {
   display: flex;
   justify-content: center;

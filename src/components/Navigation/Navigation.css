@@ -1,0 +1,31 @@
+.Navigation {
+  width: 100%;
+  display: flex;
+  padding-bottom: 2.2rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Navigation .Logo {
+  color: var(--black);
+}
+
+.Navigation-links ul {
+  list-style-type: none;
+}
+
+.Navigation-links ul li {
+  display: inline-block;
+  margin-left: 1.6rem;
+  font-family: var(--font-family-global);
+}
+
+.Navigation-links ul li a {
+  color: var(--black);
+  text-decoration: underline;
+  transition: color 200ms ease-in-out;
+}
+
+.Navigation-links ul li:hover a {
+  color: var(--purple);
+}

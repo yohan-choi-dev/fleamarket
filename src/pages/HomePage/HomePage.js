@@ -1,10 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import '../../vars/style.css';
 import './HomePage.css';
 
 // Components
-import Logo from '../../components/Logo/Logo';
+import Navigation from '../../components/Navigation/Navigation';
 import SearchBox from '../../components/SearchBox/SearchBox';
 import ItemCard from '../../components/ItemCard/ItemCard';
 
@@ -20,21 +19,7 @@ const item = {
 function HomePage() {
   return (
     <div className="HomePage">
-      <div className="HomePage-top-bar container">
-        <Link to="/">
-          <Logo />
-        </Link>
-        <nav className="HomePage-navigation">
-          <ul>
-            <li>
-              <Link to="/login">Log In</Link>
-            </li>
-            <li>
-              <Link to="/signup">Sign Up</Link>
-            </li>
-          </ul>
-        </nav>
-      </div>
+      <Navigation />
       <header className="HomePage-header container">
         <SearchBox />
       </header>
