@@ -1,7 +1,7 @@
-const Sequelize = require('sequelize');
 const sequelize = require('../utils/database');
+const { resolver } = require('graphql-sequelize');
 
-const Users = sequelize.define('users', {
+const Users = sequelize.define('Users', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -22,7 +22,6 @@ const Users = sequelize.define('users', {
     },
     address: {
         type: Sequelize.STRING,
-        allowNull: false
     },
     description: Sequelize.STRING,
     image: Sequelize.STRING,

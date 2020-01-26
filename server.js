@@ -1,9 +1,5 @@
 // This code will be organized into dedicated js files
 const express = require('express');
-const session = require('express-session');
-const app = express();
-
-const bcrypt = require('bcryptjs');
 
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
@@ -11,9 +7,19 @@ const io = require('socket.io')(http);
 const path = require('path');
 const fs = require('fs');
 const bodyParser = require('body-parser');
+const multer = require('multer');
+const graphqlHttp = require('express-graphql');
 
+const graphqlSchema = require('./graphql/schema');
+const graphqlResolver = require('./graphql/resolvers');
+
+// import a database and models
 const sequelize = require('./utils/database');
-const mysql = require('mysql2');
+const Users = require('./models/users');
+const Items = require('./models/items');
+//const mysql = require('mysql2');
+
+
 
 const hostname = '10.102.112.129';
 const port = process.env.PORT | 10034;
@@ -39,13 +45,9 @@ const favicon = require('express-favicon');
 const worker = require('worker_threads');
 */
 
+const app = express();
 
-app.use(session({
-    secret: 'secret',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true }
-}));
+
 
 
 // CORS ( Cross-Origin Resource Sharing) allows to connect nodejs server to react application
@@ -59,13 +61,16 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'build')));
 
-// Add routes
-// app.use(require('./routes/auth.js'));
-// app.use(require('./routes/chat.js'))
 
+app.use('/auth', authRoutes);
 
-app.use((req, res) => {
-    res.status(404).send("Page Not Found");
+app.use((error, req, res, next) => {
+    console.log(error);
+    // status 500 code: internal server error
+    const status = error.statusCode || 500;
+    const message = error.message;
+    const data = error.data;
+    res.status(status).json({ message: message, data: data });
 });
 
 
@@ -74,9 +79,14 @@ app.get('/*', (req,res) =>  {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-sequelize.sync().then(result => {
-    console.log(result);
-});
+sequelize.sync()
+    .then(result => {
+        // console.log(result);
+        // http.listen(port, hostname, () => console.log('server is running'));
+        http.listen(port, () => console.log ('Server is running'));
 
-http.listen(port, hostname, () => console.log('server is running'));
+    })
+    .catch(err => {
+        console.log(err);
+    })
 
