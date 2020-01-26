@@ -11,8 +11,8 @@ router.put('/signup', [
     .isEmail()
     .withMessage('Please enter valid email address. Your email format is invalid')
     .custom((value, { req }) => {
-        return User.findOne({
-            where: {email: value},
+        return Users.findOne({
+            where: { email: value }
         }).then(result => {
             if (result !== null) {
                 return Promise.reject('This email address already exist!');
@@ -26,13 +26,9 @@ router.put('/signup', [
     body('name')
     .trim()
     .notEmpty()
-], authController.singup
+], authController.signup
 );
 
-router.get('/login', authController.getLogin);
-
-router.post('/login', authController.postLogin);
-router.post('/logout', authController.postLogin);
-
+router.post('/login', authController.login);
 
 module.exports = router;

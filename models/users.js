@@ -1,5 +1,5 @@
+const Sequelize = require('sequelize');
 const sequelize = require('../utils/database');
-const { resolver } = require('graphql-sequelize');
 
 const Users = sequelize.define('Users', {
     id: {

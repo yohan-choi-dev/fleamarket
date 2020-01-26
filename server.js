@@ -1,17 +1,10 @@
 // This code will be organized into dedicated js files
 const express = require('express');
 
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
-
 const path = require('path');
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const multer = require('multer');
-const graphqlHttp = require('express-graphql');
-
-const graphqlSchema = require('./graphql/schema');
-const graphqlResolver = require('./graphql/resolvers');
 
 // import a database and models
 const sequelize = require('./utils/database');
@@ -27,6 +20,12 @@ const port = process.env.PORT | 10034;
 const cors = require('cors');
 
 const authRoutes = require('./routes/auth.js');
+const itemRoutes = require('./routes/item.js');
+
+
+const app = express();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 
 /*
   These model will be used in the future
@@ -45,7 +44,6 @@ const favicon = require('express-favicon');
 const worker = require('worker_threads');
 */
 
-const app = express();
 
 
 
@@ -63,6 +61,7 @@ app.use(express.static(path.join(__dirname, 'build')));
 
 
 app.use('/auth', authRoutes);
+app.use('/item', itemRoutes);
 
 app.use((error, req, res, next) => {
     console.log(error);
@@ -71,12 +70,6 @@ app.use((error, req, res, next) => {
     const message = error.message;
     const data = error.data;
     res.status(status).json({ message: message, data: data });
-});
-
-
-// Every page request goes into react application
-app.get('/*', (req,res) =>  {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 sequelize.sync()

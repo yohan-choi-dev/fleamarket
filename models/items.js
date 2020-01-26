@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize');
+const Model = Sequelize.Model;
 const sequelize = require('../utils/database');
+
 
 const Items = sequelize.define('Items', {
     id: {
@@ -23,7 +25,7 @@ const Items = sequelize.define('Items', {
     price: {
         type: Sequelize.INTEGER
     },
-    exchnageFor: {
+    exchangeFor: {
         type: Sequelize.STRING
     },
     isOnSearch: {
@@ -38,6 +40,10 @@ const Items = sequelize.define('Items', {
         type: Sequelize.STRING,
         allowNull: false
     }
+}, {
+    timestamps: false,
+    updatedAt: false,
+    createAt: false
 });
 
 module.exports = Items;

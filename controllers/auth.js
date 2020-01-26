@@ -1,8 +1,8 @@
-const { validationResult } = require('express=validator/check');
+const { validationResult } = require('express-validator/check');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
-const Users = require('../model/users');
-
+const Users = require('../models/users');
 
 exports.signup = (req, res, next) => {
     const errors = validationResult(req);
@@ -40,25 +40,42 @@ exports.signup = (req, res, next) => {
         })
 }
 
-exports.getLogin = (req, res, next) => {
-    let message = req.flash('error');
-    if (message.length > 0) {
-        message = message[0]
-    }
-};
+exports.login = (req, res, next) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    let loadedUser;
 
-
-
-exports.postLogin = (req, res, next) => {
-    let username = req.body.username;
-    let password = req.body.password;
-    if (username && password) {
-        // this part will be filled later
-        connection.query('');
-
-    } else {
-        res.send('Please enter Username and Password!');
-        res.end();
-    }
-    res.redirect('/');
+    Users.findOne({
+        where: { email: value }
+    })
+        .then(user => {
+            if (user === null) {
+                const error = new Error(email + ' does not exist!');
+                error.statusCode = 401;
+                throw error;
+            }
+            loadedUser = user.get({plane: true});
+            return bcrypt.compare(password, user.password);
+        })
+        .then(isEqual => {
+            if (!isEqual) {
+                const error = new Error('Invalid password!');
+                error.statusCode = 401;
+                throw error;
+            }
+            const token = jwt.sign({
+                email: loadedUser.email,
+                id: loadedUser.id.toString()
+            }, 'jsonscrettokenforfleamarket', 
+                { expiresIn: '1h'}
+            );
+            res.status(200).json({token: token, id: loadedUser.id.toString()});
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
+        })
 }
+
