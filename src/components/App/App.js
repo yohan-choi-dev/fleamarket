@@ -1,13 +1,27 @@
 import React from 'react';
-import './App.css';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-// Components
-// import SampleComponent from '../SampleComponent/SampleComponent';
+// Pages
+import HomePage from '../../pages/HomePage/HomePage';
+import ProfilePage from '../../pages/ProfilePage/ProfilePage';
+import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 
 function App() {
   return (
     <div className="App">
-      <h1>FleaMarket</h1>
+      <Router>
+        <Switch>
+          <Route path="/profile">
+            <ProfilePage />
+          </Route>
+          <Route path="/" exact={true}>
+            <HomePage />
+          </Route>
+          <Route path="*">
+            <NotFoundPage />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
