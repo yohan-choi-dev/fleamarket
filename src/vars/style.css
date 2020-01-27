@@ -48,12 +48,53 @@
 }
 
 /*
-  *****
-  Fonts
+  *****************
+  Mobile Responsive
 */
-@media (max-width: 1240px) {
+@media (max-width: 1366px) {
   :root {
     font-size: 16px;
+  }
+
+  .container {
+    padding-left: 7.2rem;
+    padding-right: 7.2rem;
+  }
+}
+
+@media (max-width: 960px) {
+  :root {
+    font-size: 15px;
+  }
+
+  .container {
+    padding-left: 6.5rem;
+    padding-right: 6.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    font-size: 14px;
+  }
+
+  .container {
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
+}
+
+@media (max-width: 360px) {
+}
+
+/* @media (max-width: 1240px) {
+  :root {
+    font-size: 16px;
+  }
+
+  .container {
+    padding-left: 7rem;
+    padding-right: 7rem;
   }
 }
 
@@ -61,4 +102,20 @@
   :root {
     font-size: 14px;
   }
+
+  .container {
+    padding-left: 5.5rem;
+    padding-right: 5.5rem;
+  }
 }
+
+@media (max-width: 640px) {
+  :root {
+    font-size: 12px;
+  }
+
+  .container {
+    padding-left: 3.5rem;
+    padding-right: 3.5rem;
+  }
+} */

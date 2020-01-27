@@ -43,7 +43,7 @@
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr auto;
   grid-column-gap: 3%;
-  grid-row-gap: 3%;
+  grid-row-gap: 3rem;
 }
 
 .HomePage-main-section-items .ItemCard {
@@ -55,3 +55,44 @@
   height: 300px;
   background-color: var(--purple);
 }
+
+@media (max-width: 1240px) {
+  .HomePage-main-section-items {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1.5fr auto;
+    grid-column-gap: 5%;
+    grid-row-gap: 3rem;
+  }
+}
+
+@media (max-width: 960px) {
+  .HomePage-header .SearchBox .SearchBox-input {
+    width: 26rem;
+  }
+
+  .HomePage-main-section-items {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .HomePage-header .SearchBox .SearchBox-input {
+    width: 20rem;
+  }
+}
+
+/*
+@media (max-width: 640px) {
+  .HomePage-header .SearchBox .SearchBox-input {
+    width: 18rem;
+    font-size: 1rem;
+  }
+
+  .HomePage-header .SearchBox .SearchBox-search-icon {
+    height: 1rem;
+  }
+
+  .HomePage-main-section-items {
+    grid-template-columns: 1fr;
+  }
+} */
