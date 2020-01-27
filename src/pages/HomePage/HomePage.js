@@ -6,6 +6,7 @@ import './HomePage.css';
 import Navigation from '../../components/Navigation/Navigation';
 import SearchBox from '../../components/SearchBox/SearchBox';
 import ItemCard from '../../components/ItemCard/ItemCard';
+import Button from '../../components/Button/Button';
 
 const item = {
   name: 'NIKE PEACEMINUSONE - Para Noise sneaker',
@@ -32,6 +33,9 @@ function HomePage() {
           <ItemCard item={item} />
           <ItemCard item={item} />
           <ItemCard item={item} />
+        </div>
+        <div className="HomePage-main-section-show-more">
+          <Button text="Show More" />
         </div>
       </main>
       <div className="HomePage-footer"></div>

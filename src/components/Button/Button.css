@@ -1,0 +1,21 @@
+.Button {
+  background: var(--light-grey);
+  border-radius: 3px;
+  border: none;
+  color: var(--black);
+  padding: 0.67rem 1rem;
+  text-align: center;
+  font-family: var(--font-family-global);
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 100ms ease-in-out;
+  display: inline-block;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+}
+
+.Button:hover {
+  background-color: var(--black);
+  color: var(--light-grey);
+}
