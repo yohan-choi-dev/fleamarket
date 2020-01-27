@@ -17,7 +17,6 @@
 }
 
 .HomePage-header .SearchBox .SearchBox-input {
-  width: 30rem;
   font-size: 1.2rem;
 }
 
@@ -69,13 +68,13 @@
     grid-column-gap: 5%;
     grid-row-gap: 3rem;
   }
+
+  .HomePage-main-section-show-more {
+    padding-top: 4rem;
+  }
 }
 
 @media (max-width: 960px) {
-  .HomePage-header .SearchBox .SearchBox-input {
-    width: 26rem;
-  }
-
   .HomePage-main-section-items {
     grid-template-columns: 1fr;
   }
@@ -83,7 +82,11 @@
 
 @media (max-width: 640px) {
   .HomePage-header .SearchBox .SearchBox-input {
-    width: 20rem;
+    font-size: 1rem;
+  }
+
+  .HomePage-header .SearchBox .SearchBox-search-icon {
+    height: 1rem;
   }
 }
 

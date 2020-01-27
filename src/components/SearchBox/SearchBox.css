@@ -1,12 +1,15 @@
 .SearchBox {
-  display: inline-block;
-  padding: 16px 22px;
+  display: flex;
+  width: 30rem;
+  justify-content: space-between;
+  padding: 0.8rem 1.2rem;
   background: #ffffff;
   box-shadow: var(--shadow-input-dropdown);
   border-radius: 3px;
 }
 
 .SearchBox .SearchBox-input {
+  flex-grow: 1;
   background: none;
   border: none;
   color: var(--black);
