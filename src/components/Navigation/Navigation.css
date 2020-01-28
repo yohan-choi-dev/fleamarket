@@ -1,6 +1,7 @@
 .Navigation {
   width: 100%;
   display: flex;
+  padding-top: 2.2rem;
   padding-bottom: 2.2rem;
   justify-content: space-between;
   align-items: center;
