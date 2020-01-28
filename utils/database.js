@@ -1,6 +1,5 @@
 const { Sequelize, Model, DataTypes } = require('sequelize');
 
-
 const database = "prj666_201a05"; 
 const username = "prj666_201a05";
 const password = "hgAZ@4435";

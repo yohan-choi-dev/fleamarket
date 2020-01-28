@@ -10,46 +10,48 @@ const multer = require('multer');
 const sequelize = require('./utils/database');
 const Users = require('./models/users');
 const Items = require('./models/items');
-//const mysql = require('mysql2');
-
-
 
 const hostname = '10.102.112.129';
 const port = process.env.PORT | 10034;
 
-const cors = require('cors');
-
 const authRoutes = require('./routes/auth.js');
 const itemRoutes = require('./routes/item.js');
-
 
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
+
+const fileStorage = multer.diskStorage({
+    destination: (req, res, cb) => {
+        cb(null, 'images');
+    },
+    filename: (req, file, cb) => {
+        cb(null, new Date().toISOString() + '-' + file.originalname);
+    }
+});
+
+const fileFilter = (req, file, cb) => {
+    if (
+        file.mimetype == 'image/png' ||
+        file.mimetype == 'image/jpg' ||
+        file.mimetype == 'image/jpeg'
+    ) {
+        cb(null, true);
+    } {
+        cb(null, false);
+    }
+}
+
 
 /*
   These model will be used in the future
 
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuthStrategy;
-//
-// if we wanna add favicon for the fleamartket, we can use this module
-const favicon = require('express-favicon');
 
-// worker_threads enable node to use multi-thread
-// it will be a good solution  to solve cpu intensive task
-// but according to nodejs.org, built-in asynchronous I/O operations are more efficient than Workers.
-// Therefore, worker_threads will be used to format uploaded image.
-// In the future, worker object will be move to the other module.
 const worker = require('worker_threads');
 */
 
-
-
-
-
-// CORS ( Cross-Origin Resource Sharing) allows to connect nodejs server to react application
-//app.use(cors);
 
 // body-parser extract the entire body portion of an incoming request stream
 // and exposes it on req.body
@@ -57,8 +59,25 @@ const worker = require('worker_threads');
 // express.json() or express.urlencoded can be not included in express depends on the version of express
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'build')));
 
+// This middleware allows CORS
+app.use((req, res, next) => {
+    // This header allows the specific origin to access to the api
+    // res.setHeader('Access-Control-Allow-Origin', 'myvmlab.senecacollege.ca');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
+    // This header aloows the spcific method to be used
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+})
+
+
+/*
+app.use({
+    multer({ storage: fileStorage, fileFilter: fileFilter }).single('image');
+});
+*/
 
 app.use('/auth', authRoutes);
 app.use('/item', itemRoutes);
@@ -76,8 +95,7 @@ sequelize.sync()
     .then(result => {
         // console.log(result);
         // http.listen(port, hostname, () => console.log('server is running'));
-        http.listen(port, () => console.log ('Server is running'));
-
+       http.listen(port, () => console.log ('Server is running'));
     })
     .catch(err => {
         console.log(err);
