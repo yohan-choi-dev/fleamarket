@@ -1,6 +1,7 @@
 .NotFoundPage-main-section {
   width: 100%;
   height: 34rem;
+  text-align: center;
 }
 
 .bb8 {
@@ -578,41 +579,11 @@
 .credit {
   text-align: center;
   color: #999;
-  font-family: 'Roboto Mono';
-}
-
-a {
-  color: #333;
-}
-
-h1,
-h2 {
-  font-family: 'Roboto Mono';
-  text-align: center;
-  margin: 50px;
-}
-
-h2 {
-  color: #666;
-}
-
-iframe {
-  margin: 50px auto;
-  display: block;
-}
-
-hr {
-  height: 0px;
-  border: none;
-  border-top: 2px solid #ccc;
-  margin: 100px auto 50px;
-  width: 80px;
 }
 
 .NotFoundPage-animation-credit {
   padding-bottom: 5rem;
   text-align: center;
-  font-family: 'Roboto Mono', monospace;
   color: var(--grey);
 }
 
