@@ -18,8 +18,6 @@ const authRoutes = require('./routes/auth.js');
 const itemRoutes = require('./routes/item.js');
 
 const app = express();
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
 
 const fileStorage = multer.diskStorage({
     destination: (req, res, cb) => {
@@ -72,7 +70,6 @@ app.use((req, res, next) => {
     next();
 })
 
-
 /*
 app.use({
     multer({ storage: fileStorage, fileFilter: fileFilter }).single('image');
@@ -91,11 +88,19 @@ app.use((error, req, res, next) => {
     res.status(status).json({ message: message, data: data });
 });
 
+// redirect to the main page
+app.get('/', (req, res) => {
+    res.redirect('http://myvmlab.senecacollege.ca:6761');
+});
+
 sequelize.sync()
     .then(result => {
         // console.log(result);
-        // http.listen(port, hostname, () => console.log('server is running'));
-       http.listen(port, () => console.log ('Server is running'));
+        //        http.listen(port, hostname, () => console.log('server is running'));
+
+        const server = app.listen(port, hostname () => console.log(`server is listening on ${port}`));
+        const chat-service = requrie('./service/chat-service.js');
+        //http.listen(port, () => console.log ('Server is running'));
     })
     .catch(err => {
         console.log(err);
