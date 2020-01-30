@@ -1,8 +1,7 @@
-const { Sequelize, Model, DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/database');
 
-class Feedbacks extends Model {}
-Feedbacks.init({
+const Feedback = sequelize.define('Feedback', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -25,7 +24,11 @@ Feedbacks.init({
         type: DataTypes.INTEGER,
         allowNull: false
     }
-});
+}, {
+    timestamps: false,
+    updatedAt: false,
+    createAt: false
+})
 
-module.exports = Feedbacks;
+module.exports = Feedback;
 

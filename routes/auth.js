@@ -1,7 +1,7 @@
 const express = require('express');
 const { body } = require('express-validator/check');
 
-const Users = require('../models/users');
+const User = require('../models/user');
 const authController = require('../controllers/auth');
 
 const router = express.Router();
@@ -11,7 +11,7 @@ router.put('/signup', [
     .isEmail()
     .withMessage('Please enter valid email address. Your email format is invalid')
     .custom((value, { req }) => {
-        return Users.findOne({
+        return User.findOne({
             where: { email: value }
         }).then(result => {
             if (result !== null) {

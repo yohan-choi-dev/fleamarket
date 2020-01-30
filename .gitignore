@@ -3,3 +3,4 @@ package-lock.json
 view
 .env
 build/
+*.swp

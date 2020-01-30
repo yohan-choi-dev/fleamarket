@@ -1,4 +1,3 @@
-// This code will be organized into dedicated js files
 const express = require('express');
 
 const path = require('path');
@@ -8,14 +7,20 @@ const multer = require('multer');
 
 // import a database and models
 const sequelize = require('./utils/database');
-const Users = require('./models/users');
-const Items = require('./models/items');
+const User = require('./models/user');
+const Item = require('./models/item');
+const Comment = require('./models/comment');
+const Category = require('./models/category');
+const Feedback = require('./models/feedback');
+const Message = require('./models/message');
+const Notification = require('./models/notification');
+const UserItemBridge = require('./models/user-item-bridge');
 
 const hostname = '10.102.112.129';
 const port = process.env.PORT | 10034;
 
-const authRoutes = require('./routes/auth.js');
-const itemRoutes = require('./routes/item.js');
+const authRoutes = require('./routes/auth');
+const itemRoutes = require('./routes/items');
 
 const app = express();
 
@@ -40,22 +45,6 @@ const fileFilter = (req, file, cb) => {
     }
 }
 
-
-/*
-  These model will be used in the future
-
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth').OAuthStrategy;
-
-const worker = require('worker_threads');
-*/
-
-
-// body-parser extract the entire body portion of an incoming request stream
-// and exposes it on req.body
-// For the future maintainance, body-parser from 3rd party will be used.
-// express.json() or express.urlencoded can be not included in express depends on the version of express
-app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 // This middleware allows CORS
@@ -77,7 +66,7 @@ app.use({
 */
 
 app.use('/auth', authRoutes);
-app.use('/item', itemRoutes);
+app.use('/items', itemRoutes);
 
 app.use((error, req, res, next) => {
     console.log(error);
@@ -95,14 +84,10 @@ app.get('/', (req, res) => {
 
 sequelize.sync()
     .then(result => {
-        // console.log(result);
-        //        http.listen(port, hostname, () => console.log('server is running'));
-
-        const server = app.listen(port, hostname () => console.log(`server is listening on ${port}`));
-        const chat-service = requrie('./service/chat-service.js');
-        //http.listen(port, () => console.log ('Server is running'));
+        //  const server = app.listen(port, hostname, () => console.log(`server is listening on '${port}'`));
+        const server = app.listen(port, () => console.log ('Server is running'));
+        const io = require('socket.io')(server);
     })
     .catch(err => {
         console.log(err);
     })
-

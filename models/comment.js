@@ -1,31 +1,35 @@
-const { Sequelize, Model, DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/database');
 
-class Feedbacks extends Model {}
-Feedbacks.init({
+const Comment = sequelize.define('Comment', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true
     },
-    message: {
+    content: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    feedbackDate: {
+    conmmentDate: {
         type: DataTypes.DATE,
         allowNull: false
     },
-    writerId: {
+    postId: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    transactionId: {
+    userId: {
         type: DataTypes.INTEGER,
         allowNull: false
     }
+}, {
+    timestamps: false,
+    updatedAt: false,
+    createAt: false
 });
 
-module.exports = Feedbacks;
+module.exports = Comment;
+
 

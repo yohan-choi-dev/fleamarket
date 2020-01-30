@@ -3,14 +3,14 @@ const path = require('path');
 
 const { validationResult } = require('express-validator/check');
 
-const Items = require('../models/items');
-const Users = require('../models/users');
 const sequelize = require('../utils/database');
+const Item = require('../models/item');
+const User = require('../models/user');
 
 exports.getItems = async (req, res, next) => {
     let items = [];
     try  {
-        items = await Items.findAll();
+        items = await Item.findAll();
         if (items.length === 0) {
             const error = new Error('No available item');
             error.statusCode = 401;
@@ -27,11 +27,13 @@ exports.getItems = async (req, res, next) => {
 };
 
 exports.getItemsByName = async (req, res, next) => {
-    let name = req.params.name;
+    let name = req.query.name; 
     let search_query = `SELECT DISTINCT * FROM Items
-                        WHERE name LIKE '%${name}%'`
+                        WHERE (name LIKE '%${name}%'
+                        OR description LIKE '%${name}%')
+                        AND isOnSearch = true`
     try {
-        let results = await sequelize.query(search_query);
+        let results = await sequelize.query(search_query, {type: sequelize.QueryTypes.SELECT});
         if (results.length === 0) {
             const error = new Error ('No Search Result');
             error.statusCode = 401;

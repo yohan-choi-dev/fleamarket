@@ -1,8 +1,7 @@
-const { Sequelize, Model, DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/database');
 
-class ImageLink extends Model {}
-ImageLink.init({
+const ImageLink = sequelize.define('ImageLink',{
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -12,9 +11,11 @@ ImageLink.init({
     url: {
         type: DataTypes.STRING,
         allowNull: false
-    },
-    postId: {
     }
-})
+},{
+    timestamps: false,
+    updatedAt: false,
+    createAt: false
+});
 
 module.exports = ImageLink;
