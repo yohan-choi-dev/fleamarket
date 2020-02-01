@@ -29,6 +29,10 @@ const User = sequelize.define('User', {
     disliked: DataTypes.INTEGER,
     isActivated: DataTypes.BOOLEAN,
     paymentId: DataTypes.INTEGER
+},{
+    timestamp: false,
+    updateAt: false,
+    createAt: false
 });
 
 module.exports = User;
