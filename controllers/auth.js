@@ -6,12 +6,13 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 exports.signup = async (req, res, next) => {
-    const isValid = validationResult(req).isEmpty();
+    const errors = validationResult(req)
 
     try {
-        if (!isValid) {
+        if (!errors.isEmpty()) {
             const error = new Error('Validation failed!');
             error.statusCode = 422;
+            error.data = errors.array();
             throw error;
         }
 
@@ -36,7 +37,7 @@ exports.signup = async (req, res, next) => {
         if (!error.statusCode) {
             error.statusCode = 500;
         }
-        next();
+        next(error);
     }
 }
 

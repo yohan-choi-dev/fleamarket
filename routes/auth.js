@@ -1,42 +1,37 @@
 const express = require('express');
-const { body, check } = require('express-validator/check');
+const { body, check } = require('express-validator');
 
 const User = require('../models/user');
 const authController = require('../controllers/auth');
 
 const router = express.Router();
 
-router.post('/signup',(req,res,next) => {
-    console.log(req.body);
+router.post('/signup', (req,res,next) => {
     next();
 }, [
-    check('email').isEmail(),
-    check('password').isLength({min: 5})
-    /*
-    body('email')
+    check('email')
+    .normalizeEmail()
     .isEmail()
-    .withMessage('Please enter valid email address. Your email format is invalid')
-    .custom((value, { req }) => {
-        return User.findOne({
-            attributes: email, 
+    .bail()
+    .custom(value => {
+        return User.findAll({
+            attributes: ['email'],
             where: { email: value }
-        }).then(result => {
-            if (result !== null) {
-                return Promise.reject('This email address already exist!');
-            }
-        });
+        })
+            .then(user => {
+                let lenth = user.length;
+                if (lenth !== 0) {
+                    let error = new Error('Email is is use already')
+                    error.statusCode = 401;
+                    return Promise.reject(error);
+                }
+            })
     })
-    .normalizeEmail(),
-    body('password')
-    .trim()
-    .isLength({min: 8, max: 24}),
-    body('name')
-    .trim()
-    .notEmpty()
-    */
-]
-, authController.signup
-);
+    .bail(),
+    check('password')
+    .isLength({min: 8, max: 25})
+    .withMessage('must be at least 8 chars long and at most 25 chars long')
+], authController.signup);
 
 router.post('/login', authController.login);
 
