@@ -8,6 +8,7 @@ import SearchBox from '../../components/SearchBox/SearchBox';
 import ItemCard from '../../components/ItemCard/ItemCard';
 import Button from '../../components/Button/Button';
 import Footer from '../../components/Footer/Footer';
+import CreateAccountModal from '../../components/CreateAccountModal/CreateAccountModal';
 
 const item = {
   name: 'NIKE PEACEMINUSONE - Para Noise sneaker',
@@ -18,7 +19,7 @@ const item = {
     'https://www.kicksonfire.com/wp-content/uploads/2019/11/PEACEMINUSONE-X-Nike-Air-Force-1-Low-Para-Noise.jpg'
 };
 
-function HomePage() {
+function HomePage(props) {
   return (
     <div className="HomePage">
       <Navigation />
@@ -43,7 +44,7 @@ function HomePage() {
           <ItemCard item={item} />
         </div>
         <div className="HomePage-main-section-show-more">
-          <Button text="Show More" />
+          <Button>Show more</Button>
         </div>
       </main>
       <Footer />
