@@ -23,6 +23,13 @@ function HomePage() {
     <div className="HomePage">
       <Navigation />
       <header className="HomePage-header container">
+        <h1 className="HomePage-header-title">
+          Trade in your
+          <br />
+          secondhands for
+          <br />
+          something useful.
+        </h1>
         <SearchBox />
       </header>
       <main className="HomePage-main-section container">
