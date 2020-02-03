@@ -1,0 +1,23 @@
+.Modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.Modal-title {
+  padding-bottom: 1.2rem;
+  font-size: var(--font-size-h3);
+}
+
+.Modal-content {
+  max-width: 550px;
+  padding: 1.2rem 1.4rem;
+  background-color: #ffffff;
+  border-radius: 15px;
+}
