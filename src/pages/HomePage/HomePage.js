@@ -8,7 +8,6 @@ import SearchBox from '../../components/SearchBox/SearchBox';
 import ItemCard from '../../components/ItemCard/ItemCard';
 import Button from '../../components/Button/Button';
 import Footer from '../../components/Footer/Footer';
-import CreateAccountModal from '../../components/CreateAccountModal/CreateAccountModal';
 
 const item = {
   name: 'NIKE PEACEMINUSONE - Para Noise sneaker',
