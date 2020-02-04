@@ -21,7 +21,7 @@ router.post('/signup', (req,res,next) => {
             .then(user => {
                 let lenth = user.length;
                 if (lenth !== 0) {
-                    let error = new Error('Email is is use already')
+                    let error = new Error('Email is in use already')
                     error.statusCode = 401;
                     return Promise.reject(error);
                 }

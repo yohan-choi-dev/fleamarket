@@ -22,6 +22,8 @@ const port = process.env.PORT | 10034;
 const authRoutes = require('./routes/auth');
 const itemRoutes = require('./routes/items');
 
+const ChatService = require('./service/chat-service');
+
 const app = express();
 
 const fileStorage = multer.diskStorage({
@@ -84,9 +86,12 @@ app.get('/', (req, res) => {
 
 sequelize.sync()
     .then(result => {
-        //  const server = app.listen(port, hostname, () => console.log(`server is listening on '${port}'`));
         const server = app.listen(port, () => console.log ('Server is running'));
-        const io = require('socket.io')(server);
+        const io = require('./socket').init(server);
+        io.on('connection', socket => {
+
+        })
+        const chatService = new ChatService(io);
     })
     .catch(err => {
         console.log(err);
