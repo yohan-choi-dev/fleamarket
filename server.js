@@ -1,78 +1,88 @@
-// This code will be organized into dedicated js files
 const express = require('express');
-const session = require('express-session');
-const app = express();
-
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
 
 const path = require('path');
 const fs = require('fs');
 const bodyParser = require('body-parser');
+const multer = require('multer');
 
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth').OAuthStrategy;
-
-const mysql = require('mysql');
+// import a database and models
+const sequelize = require('./utils/database');
+const User = require('./models/user');
+const Item = require('./models/item');
+const Comment = require('./models/comment');
+const Category = require('./models/category');
+const Feedback = require('./models/feedback');
+const Message = require('./models/message');
+const Notification = require('./models/notification');
+const UserItemBridge = require('./models/user-item-bridge');
 
 const hostname = '10.102.112.129';
 const port = process.env.PORT | 10034;
 
+const authRoutes = require('./routes/auth');
+const itemRoutes = require('./routes/items');
 
-const authRoutes = require('./routes/auth.js');
+const ChatService = require('./service/chat-service');
 
+const app = express();
 
-const connection = mysql.createConnection({
-	host: "mymysql.senecacollege.ca",
-	user: "prj666_201a05",
-	password: "hgAZ@4435"
+const fileStorage = multer.diskStorage({
+    destination: (req, res, cb) => {
+        cb(null, 'images');
+    },
+    filename: (req, file, cb) => {
+        cb(null, new Date().toISOString() + '-' + file.originalname);
+    }
 });
 
-connection.connect(err => {
-	if (err) throw err;
-	console.log('Server is connected to MySQL successfully!');
-});
+const fileFilter = (req, file, cb) => {
+    if (
+        file.mimetype == 'image/png' ||
+        file.mimetype == 'image/jpg' ||
+        file.mimetype == 'image/jpeg'
+    ) {
+        cb(null, true);
+    } {
+        cb(null, false);
+    }
+}
 
-app.set('trust proxy', 1);
-app.use(session({
-	secret: 'secret', 
-	resave: false,
-	saveUninitialized: true,
-	cookie: { secure: true }
-}));
-
-
-
-// body-parser extract the entire body portion of an incoming request stream
-// and exposes it on req.body
-app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-// Add routes
-app.use(authRoutes);
+// This middleware allows CORS
+app.use((req, res, next) => {
+    // This header allows the specific origin to access to the api
+    // res.setHeader('Access-Control-Allow-Origin', 'myvmlab.senecacollege.ca');
+    res.setHeader('Access-Control-Allow-Origin', '*');
 
-app.use('/static', express.static(path.join(__dirname, 'public')));
+    // This header aloows the spcific method to be used
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+})
 
-app.use((req, res) => {
-	res.status(404).send("Page Not Found");
+
+app.use('/auth', authRoutes);
+app.use('/items', itemRoutes);
+
+app.use((error, req, res, next) => {
+    console.log(error);
+    // status 500 code: internal server error
+    const status = error.statusCode || 500;
+    const message = error.message;
+    const data = error.data;
+    res.status(status).json({ message: message, data: data });
 });
 
-app.get('/', (req,res) => {
-	res.render();
+// redirect to the main page
+app.get('/', (req, res) => {
+    res.redirect('http://myvmlab.senecacollege.ca:6761');
 });
 
-app.post('/auth', (req, res) => {
-    let username = request.body.username;
-    let password = request.body.password;
-});
-
-
-app.get('/', (req,res) => res.send('Group05- FleaMarket'));
-
-io.on('connection', (socket) => {
-	console.log('A user is connected');
-});
-
-
-http.listen(port, hostname, () => console.log('server is running'));
-
+sequelize.sync()
+    .then(result => {
+        const server = app.listen(port, () => console.log ('Server is running'));
+    })
+    .catch(err => {
+        console.log(err);
+    })
