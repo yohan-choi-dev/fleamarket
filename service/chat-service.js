@@ -1,4 +1,4 @@
-
+/*
 
 class ChatService {
     constructor(httpServer){
@@ -14,3 +14,5 @@ class ChatService {
 module.exports = {
 
 }
+
+*/

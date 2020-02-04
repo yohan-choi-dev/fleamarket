@@ -61,11 +61,6 @@ app.use((req, res, next) => {
     next();
 })
 
-/*
-app.use({
-    multer({ storage: fileStorage, fileFilter: fileFilter }).single('image');
-});
-*/
 
 app.use('/auth', authRoutes);
 app.use('/items', itemRoutes);
@@ -87,11 +82,6 @@ app.get('/', (req, res) => {
 sequelize.sync()
     .then(result => {
         const server = app.listen(port, () => console.log ('Server is running'));
-        const io = require('./socket').init(server);
-        io.on('connection', socket => {
-
-        })
-        const chatService = new ChatService(io);
     })
     .catch(err => {
         console.log(err);
