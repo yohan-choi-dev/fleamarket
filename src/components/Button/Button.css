@@ -19,3 +19,8 @@
   background-color: var(--black);
   color: var(--light-grey);
 }
+
+.Button:disabled {
+  opacity: 0.3;
+  cursor: initial;
+}
