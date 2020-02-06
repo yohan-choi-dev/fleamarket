@@ -40,19 +40,24 @@ function CreateAccountModal(props) {
   }, [userPassword.content, userPasswordConfirm.content]);
 
   const handleOnClick = event => {
-    // 1. Validation
-
-    // setValid(emailRegex.test(email));
-
-    // 2. Send POST request
-    // fetch({
-    //   url: 'http://myvmlab.senecacollege.ca:6761/auth/signup',
-    //   body: JSON.stringify({
-    //     email: email,
-    //     name: 'Test',
-    //     password: password
-    //   })
-    // });
+    event.preventDefault();
+    const response = fetch('http://localhost:10034/auth/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': true
+      },
+      body: JSON.stringify({
+        email: userEmail.content,
+        name: 'Test',
+        password: userPassword.content
+      })
+    });
+    response.then(data => {
+      console.log(data);
+    }).catch(err => {
+      console.error(err);
+    });
   };
 
   return (
