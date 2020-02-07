@@ -13,15 +13,11 @@ const transporter = nodemailer.createTransport({
     tls: {ciphers: 'SSLv3'}
 });
 
-
-let info = await transporter.sendMail(message);
-console.log(info.messageId);
-
 module.exports = {
     init: async () => {
         transporter.verify((err, suc) => {
             if (err) {
-                throw new Error('Failed to connected to the mail server');
+                throw new Error(`failed to connect the mail server ${err}`);
             }
             console.log('Success to connnecting the mail server!');
         })
@@ -34,7 +30,7 @@ module.exports = {
             text: msg.text, // this is only for clients with plain text support only
             html: msg.html
         }
-        transporter.sendMail(message);
+        return await transporter.sendMail(message).messageId;
     }
 }
 
