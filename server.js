@@ -79,9 +79,11 @@ app.get('/', (req, res) => {
     res.redirect('http://myvmlab.senecacollege.ca:6761');
 });
 
+
 sequelize.sync()
-    .then(result => {
+    .then(res => {
         const server = app.listen(port, () => console.log ('Server is running'));
+        const mailService = require('./service/mail-service').init();        
     })
     .catch(err => {
         console.log(err);
