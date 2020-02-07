@@ -1,36 +1,40 @@
 const nodemailer = require('nodemailer');
 
+const user = "prj666_201a05@myseneca.ca";
 
-module.exports = async () => {
-    const transporter = nodemailer.createTransport({
-        host: "smtp.office365.com",
-        port: 587,
-        auth: {
-            user: "prj666_201a05@myseneca.ca",
-            pass: "BNjj6#4$pk2v"
-        },
-        secureConnection: false,
-        tls: {ciphers: 'SSLv3'}
-    });
+const transporter = nodemailer.createTransport({
+    host: "smtp.office365.com",
+    port: 587,
+    auth: {
+        user: user,
+        pass: "BNjj6#4$pk2v"
+    },
+    secureConnection: false,
+    tls: {ciphers: 'SSLv3'}
+});
 
-    transporter.verify((err, suc) => {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log('Success to connect to the mail server');
+
+let info = await transporter.sendMail(message);
+console.log(info.messageId);
+
+module.exports = {
+    init: async () => {
+        transporter.verify((err, suc) => {
+            if (err) {
+                throw new Error('Failed to connected to the mail server');
+            }
+            console.log('Success to connnecting the mail server!');
+        })
+    },
+    sendMail: async (to, msg) => {
+        let message = {
+            from: user,
+            to: to,
+            subject: msg.subject,
+            text: msg.text, // this is only for clients with plain text support only
+            html: msg.html
         }
-    })
-
-    const message = {
-        from: "prj666_201a05@myseneca.ca",
-        to: "ychoi63@myseneca.ca",
-        subject: "Test Email",
-        text: "Plain text",
-        html: "<p>Hello </p>"
+        transporter.sendMail(message);
     }
-
-    let info = await transporter.sendMail(message);
-    console.log(info.messageId);
-
 }
 
