@@ -23,8 +23,15 @@ const authRoutes = require('./routes/auth');
 const itemRoutes = require('./routes/items');
 
 const ChatService = require('./service/chat-service');
-
 const app = express();
+
+const corsOptions = {
+    origin: 'http://myvmlab.senecacollege.ca:6764',
+    optionsSuccessStatus: 200
+}
+
+
+
 
 const fileStorage = multer.diskStorage({
     destination: (req, res, cb) => {
@@ -48,20 +55,19 @@ const fileFilter = (req, file, cb) => {
 }
 
 app.use(bodyParser.json());
-
+/*
 // This middleware allows CORS
 app.use((req, res, next) => {
     // This header allows the specific origin to access to the api
     // res.setHeader('Access-Control-Allow-Origin', 'myvmlab.senecacollege.ca');
-    res.setHeader('Access-Control-Allow-Origin', 'http://myvmalab.senecacollege.ca:6764444');
+    res.setHeader('Access-Control-Allow-Origin', 'http://myvmalab.senecacollege.ca:6764');
 
     // This header aloows the spcific method to be used
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
 })
-
-
+*/
 app.use('/auth', authRoutes);
 app.use('/items', itemRoutes);
 
@@ -74,14 +80,22 @@ app.use((error, req, res, next) => {
     res.status(status).json({ message: message, data: data });
 });
 
+app.use(express.static(path.join(__dirname, '../frontend/build')))
+
+app.get('/', (req,res,next) => {
+    res.sendFile(__dirname, '../frontend/build', 'index.html');
+})
+
+
+/*
 // redirect to the main page
 app.get('/', (req, res) => {
     res.redirect('http://myvmlab.senecacollege.ca:6761');
 });
-
+*/
 sequelize.sync()
     .then(result => {
-        const server = app.listen(port, () => console.log ('Server is running'));
+        const server = app.listen(port, hostname, () => console.log ('Server is running'));
     })
     .catch(err => {
         console.log(err);
