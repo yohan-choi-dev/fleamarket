@@ -53,7 +53,7 @@ app.use(bodyParser.json());
 app.use((req, res, next) => {
     // This header allows the specific origin to access to the api
     // res.setHeader('Access-Control-Allow-Origin', 'myvmlab.senecacollege.ca');
-    res.setHeader('Access-Control-Allow-Origin', 'http:myvmlab.senecacollge.ca:6761');
+    res.setHeader('Access-Control-Allow-Origin', 'http://myvmalab.senecacollege.ca:6761');
 
     // This header aloows the spcific method to be used
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
