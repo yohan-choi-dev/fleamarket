@@ -6,9 +6,8 @@ const authController = require('../controllers/auth');
 
 const router = express.Router();
 
-router.post('/signup', (req,res,next) => {
-    next();
-}, [
+router.post('/signup',
+[
     check('email')
     .normalizeEmail()
     .isEmail()
@@ -21,15 +20,16 @@ router.post('/signup', (req,res,next) => {
             .then(user => {
                 let lenth = user.length;
                 if (lenth !== 0) {
-                    let error = new Error('Email is in use already')
+                   let error = new Error('Email is in use already')
                     error.statusCode = 401;
                     return Promise.reject(error);
                 }
             })
     })
-    .bail(),
-    check('password')
-    .isLength({min: 8, max: 25})
+    .bail()
+    ,
+        check('password')
+    .isLength({min: 8})
     .withMessage('must be at least 8 chars long and at most 25 chars long')
 ], authController.signup);
 
