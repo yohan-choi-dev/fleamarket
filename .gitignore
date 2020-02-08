@@ -4,3 +4,4 @@ view
 .env
 build/
 *.swp
+test/
