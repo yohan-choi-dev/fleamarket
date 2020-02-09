@@ -1,0 +1,12 @@
+.BottonPurple .Button {
+  margin-top: 2rem;
+  background-color: var(--purple);
+  color: #ffffff;
+  font: 0.9rem;
+  font-family: var(--font-family-global);
+  transition: background 150ms ease-in-out;
+}
+
+.BottonPurple .Button:hover {
+  background-color: var(--dark-purple);
+}
