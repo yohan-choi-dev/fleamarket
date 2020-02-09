@@ -1,0 +1,67 @@
+.ProfileCard {
+    position: absolute;
+    width: 1360px;
+    height: 450px;
+    left: 120px;
+    top: 153px;
+    background: #FFFFFF;
+    /* Shadow - Normal Card */
+
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    /* border-radius: 15px; */
+}
+
+.ProfileCard-user-image {
+    position: absolute;
+    width: 324px;
+    height: 324px;
+    left: 298px;
+    top: 216px;
+}
+
+.ProfileCard-user-name {
+    position: absolute;
+    width: 168px;
+    height: 42px;
+    left: 850px;
+    top: 216px;
+
+    /* Heading 2 */
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 42px;
+    color: var(--black);
+}
+
+.ProfileCard-user-rate {
+    position: absolute;
+    width: 104px;
+    height: 21px;
+    left: 850px;
+    top: 278px;
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 21px;
+    color: var(--black);
+}
+
+.ProfileCard-user-description {
+    position: absolute;
+    width: 393px;
+    height: 52px;
+    left: 850px;
+    top: 313px;
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 26px;
+    color: var(--black);
+}

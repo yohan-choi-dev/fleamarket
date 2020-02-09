@@ -1,0 +1,254 @@
+.ItemComments-background {
+    position: absolute;
+    width: 1360px;
+    height: 746px;
+    left: 120px;
+    top: 933px;
+
+    background: #FFFFFF;
+    /* Shadow - Normal Card */
+
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+}
+
+.ItemComments-title-comment {
+    position: absolute;
+    width: 177px;
+    height: 42px;
+    left: 120px;
+    top: 859px;
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 42px;
+
+    color: var(--black);
+}
+
+.ItemComments-profile-picture {
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    left: 175px;
+    top: 985px;
+
+    background: #C4C4C4;
+}
+
+.ItemComments-profile-picture1 {
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    left: 175px;
+    top: 1191px;
+
+    background: #C4C4C4;
+}
+
+.ItemComments-profile-picture2 {
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    left: 175px;
+    top: 1371px;
+
+    background: #C4C4C4;
+}
+
+.ItemComments-star {
+    position: absolute;
+    width: 13px;
+    height: 12.4px;
+    left: 247px;
+    top: 1021px;
+    
+    /* Lightcoral */
+    
+    background: var(--lightcoral);
+}
+
+.ItemComments-star1 {
+    position: absolute;
+    width: 13px;
+    height: 12.4px;
+    left: 247px;
+    top: 1227px;
+    
+    /* Lightcoral */
+    
+    background: var(--lightcoral);
+}
+
+.ItemComments-star2 {
+    position: absolute;
+    width: 13px;
+    height: 12.4px;
+    left: 247px;
+    top: 1407px;
+    
+    /* Lightcoral */
+    
+    background: var(--lightcoral);
+}
+
+.ItemComments-rate {
+    position: absolute;
+    width: 19px;
+    height: 16px;
+    left: 264px;
+    top: 1020px;
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 16px;
+
+    color: var(--black);
+}
+
+.ItemComments-rate1 {
+    position: absolute;
+    width: 19px;
+    height: 16px;
+    left: 264px;
+    top: 1226px;
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 16px;
+
+    color: var(--black);
+}
+
+.ItemComments-rate2 {
+    position: absolute;
+    width: 19px;
+    height: 16px;
+    left: 264px;
+    top: 1406px;
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 16px;
+
+    color: var(--black);
+}
+
+.ItemComments-user {
+    position: absolute;
+    width: 92px;
+    height: 21px;
+    left: 247px;
+    top: 997px;
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 21px;
+
+    color: var(--black);
+}
+
+
+.ItemComments-user1 {
+    position: absolute;
+    width: 131px;
+    height: 21px;
+    left: 247px;
+    top: 1203px;
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 21px;
+
+    color: var(--black);
+}
+
+.ItemComments-user2 {
+    position: absolute;
+    width: 56px;
+    height: 21px;
+    left: 247px;
+    top: 1383px;
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 21px;
+
+    color: var(--black);
+}
+
+
+.ItemComments-comments {
+    position: absolute;
+    width: 812px;
+    height: 78px;
+    left: 175px;
+    top: 1061px;
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 26px;
+
+    color: var(--black);
+}
+
+.ItemComments-comments1 {
+    position: absolute;
+    width: 812px;
+    height: 52px;
+    left: 175px;
+    top: 1267px;
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 26px;
+
+    color: var(--black);
+}
+
+.ItemComments-comments2 {
+    position: absolute;
+    width: 812px;
+    height: 78px;
+    left: 175px;
+    top: 1447px;
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 26px;
+
+    color: var(--black);
+}
+
+.ItemComments-write-comments {
+    position: absolute;
+    width: 1114px;
+    height: 47px;
+    left: 175px;
+    top: 1580px;
+
+    /* Light Grey */
+
+    background: var(--light-grey);
+    border-radius: 3px;
+}
