@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import DOMPurify from 'dompurify';
+
 import './CreateAccountModal.css';
 
 import Modal from '../Modal/Modal';
@@ -81,10 +83,10 @@ function CreateAccountModal(props) {
                 required: true,
                 autoFocus: true,
                 onChangeHandler: (event) => {
-                  const userInput = event.target.value;
+                  const userInput = DOMPurify.sanitize(event.target.value.trim());
                   setUserName({
                     ...userName,
-                    first: userInput.trim()
+                    first: userInput
                   });
                 }
               }}
@@ -97,10 +99,10 @@ function CreateAccountModal(props) {
                 type: "text",
                 required: true,
                 onChangeHandler: (event) => {
-                  const userInput = event.target.value;
+                  const userInput = DOMPurify.sanitize(event.target.value.trim());
                   setUserName({
                     ...userName,
-                    last: userInput.trim()
+                    last: userInput
                   });
                 }
               }}
