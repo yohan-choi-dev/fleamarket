@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 
 import './CreateAccountModal.css';
@@ -28,6 +29,8 @@ function CreateAccountModal(props) {
   });
   const [passwordIsSame, setPasswordIsSame] = useState(false);
   const [valid, setValid] = useState(false);
+
+  const history = useHistory();
 
   var emailRegex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   const invalidBorderStyle = '2px solid #ff7e7e';
@@ -61,13 +64,11 @@ function CreateAccountModal(props) {
       })
     });
     response.then(data => {
-      console.log(data);
+      history.push('/verify-your-email');
     }).catch(err => {
-      console.error(err);
+      history.push('/sign-up-error');
     });
   };
-
-  console.log(APIRoute);
 
   return (
     <div className="CreateAccountModal">
