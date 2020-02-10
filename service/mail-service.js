@@ -1,6 +1,11 @@
 const nodemailer = require('nodemailer');
 
+const { Mail } = require('../resource/email-template/mail');
+const { MailResource } = require('../resource/email-template/mail-resource');
+const { MailInfo } = require('../resource/email-template/mail-info');
+
 const user = "prj666_201a05@myseneca.ca";
+
 
 const transporter = nodemailer.createTransport({
     host: "smtp.office365.com",
@@ -13,7 +18,23 @@ const transporter = nodemailer.createTransport({
     tls: {ciphers: 'SSLv3'}
 });
 
-module.exports = {
+class MailService {
+    static async init() {
+        transporter.verify((err, suc) => {
+            if (err) {
+                throw new Error(`failed to connect the mail server ${err}`);
+            }
+            console.log('Success to connnecting the mail server!');
+        })
+    }
+    async sendMail(to) => {
+        
+    }
+}
+
+
+
+const mailService = {
     init: async () => {
         transporter.verify((err, suc) => {
             if (err) {
@@ -33,4 +54,4 @@ module.exports = {
         return await transporter.sendMail(message).messageId;
     }
 }
-
+module.exports.mailService = maillService; 

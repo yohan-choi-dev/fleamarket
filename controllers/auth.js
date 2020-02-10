@@ -1,9 +1,12 @@
-const { validationResult } = require('express-validator/check');
+const { validationResult } = require('express-validator');
 
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto-js');
 const jwt = require('jsonwebtoken');
 
-const User = require('../models/user');
+const MailService = require('../service/mail-service');
+
+const { User, Token } = require('../models/user');
 
 exports.signup = async (req, res, next) => {
     const errors = validationResult(req)
@@ -24,6 +27,13 @@ exports.signup = async (req, res, next) => {
         const hashedPw = await bcrypt.hash(password, 12);
         const result = await User.create({ email: email, name: name, password: hashedPw });
         const user = result.get();
+
+        const token = await Token.create({
+            token: crypto.randomBytes(16).toSting('hex')},
+            UserId: user.id;
+        );
+
+        MailService.sendMail(user.email, 'verification');
 
         res.status(201).json({
             message: "Success!",
@@ -57,17 +67,21 @@ exports.login = async (req, res, next) => {
             throw error;
         }
         const isMatch = await bcrypt.compare(password, loadedUser.password);
+
         if (!isMatch){
             const error = new Error('Invalid password!');
             error.statusCode = 401;
             throw error;
         }
+
         const token = jwt.sign({
             email: loadedUser.email,
             id: loadedUser.id.toString()
         }, 'jsonscretoeknforfleamarket',
             { expiresIn: '1h' });
+
         res.status(200).json({token: token, id: loadedUser.id.toString()});
+
     } catch (error) {
         if (!error.statusCode) {
             error.statusCode = 500;
@@ -76,3 +90,11 @@ exports.login = async (req, res, next) => {
     }
 }
 
+exports.confirmEmail = async (req, res, next) => {
+    const url = req.query.url;
+    const user = await Token.findOne({
+        where: {
+            token: url; 
+        }
+    })
+}

@@ -27,7 +27,11 @@ const User = sequelize.define('User', {
     image: DataTypes.STRING,
     liked: DataTypes.INTEGER,
     disliked: DataTypes.INTEGER,
-    isActivated: DataTypes.BOOLEAN,
+    isActivated:{
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+    }
     paymentId: DataTypes.INTEGER
 },{
     timestamp: false,
@@ -35,4 +39,21 @@ const User = sequelize.define('User', {
     createAt: false
 });
 
-module.exports = User;
+const Token = sequelize.define('Token', {
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        allowNull: false,
+        primaryKey: true
+    },
+    token: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    }
+});
+
+User.hasMany(Token);
+Token.belongsTo(User);
+
+module.exports.User = User;
+module.exports.Token = Token;

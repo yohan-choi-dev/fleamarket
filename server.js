@@ -7,7 +7,7 @@ const multer = require('multer');
 
 // import a database and models
 const sequelize = require('./utils/database');
-const User = require('./models/user');
+const { User, Token } = require('./models/user');
 const Item = require('./models/item');
 const Comment = require('./models/comment');
 const Category = require('./models/category');
@@ -56,8 +56,11 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
 
     // This header aloows the spcific method to be used
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    if (req.method == 'OPTIONS') {
+        res.status(200).send();
+    }
     next();
 })
 
