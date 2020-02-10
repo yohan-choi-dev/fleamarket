@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, useLocation } from 'react-router-dom';
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Pages
 import HomePage from '../../pages/HomePage/HomePage';
