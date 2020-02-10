@@ -4,8 +4,13 @@ import './CreateAccountModal.css';
 import Modal from '../Modal/Modal';
 import Button from '../Button/Button';
 import LabeledInputField from '../LabeledInputField/LabeledInputField';
+import APIRoute from '../../vars/api-route';
 
 function CreateAccountModal(props) {
+  const [userName, setUserName] = useState({
+    first: '',
+    last: ''
+  });
   const [userEmail, setUserEmail] = useState({
     content: '',
     isValid: false,
@@ -41,7 +46,7 @@ function CreateAccountModal(props) {
 
   const handleOnClick = event => {
     event.preventDefault();
-    const response = fetch('http://localhost:10034/auth/signup', {
+    const response = fetch(`${APIRoute}/auth/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -49,7 +54,7 @@ function CreateAccountModal(props) {
       },
       body: JSON.stringify({
         email: userEmail.content,
-        name: 'Test',
+        name: `${userName.first} ${userName.last}`,
         password: userPassword.content
       })
     });
@@ -64,6 +69,42 @@ function CreateAccountModal(props) {
     <div className="CreateAccountModal">
       <Modal className="CreateAccountModal-modal" title="Create an account">
         <form className="CreateAccountModal-form">
+          <div className="CreateAccount-name-input">
+            <LabeledInputField
+              label="First Name"
+              inputField={{
+                id: "CreateAccount-fn-input",
+                name: "CreateAccount-fn-input",
+                type: "text",
+                required: true,
+                autoFocus: true,
+                onChangeHandler: (event) => {
+                  const userInput = event.target.value;
+                  setUserName({
+                    ...userName,
+                    first: userInput.trim()
+                  });
+                }
+              }}
+            />
+            <LabeledInputField
+              label="Last Name"
+              inputField={{
+                id: "CreateAccount-ln-input",
+                name: "CreateAccount-ln-input",
+                type: "text",
+                required: true,
+                autoFocus: true,
+                onChangeHandler: (event) => {
+                  const userInput = event.target.value;
+                  setUserName({
+                    ...userName,
+                    last: userInput.trim()
+                  });
+                }
+              }}
+            />
+          </div>
           <LabeledInputField
             label="Email"
             inputField={{
@@ -72,7 +113,6 @@ function CreateAccountModal(props) {
               type: "email",
               placeholder: "example@email.com",
               required: true,
-              autoFocus: true,
               style: {
                 border: userEmail.borderStyle
               },
