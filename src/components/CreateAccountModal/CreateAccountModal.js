@@ -65,6 +65,8 @@ function CreateAccountModal(props) {
     });
   };
 
+  console.log(APIRoute);
+
   return (
     <div className="CreateAccountModal">
       <Modal className="CreateAccountModal-modal" title="Create an account">
@@ -94,7 +96,6 @@ function CreateAccountModal(props) {
                 name: "CreateAccount-ln-input",
                 type: "text",
                 required: true,
-                autoFocus: true,
                 onChangeHandler: (event) => {
                   const userInput = event.target.value;
                   setUserName({

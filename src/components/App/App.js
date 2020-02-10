@@ -1,4 +1,3 @@
-import dotenv from 'dotenv';
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, useLocation } from 'react-router-dom';
 
@@ -7,8 +6,6 @@ import HomePage from '../../pages/HomePage/HomePage';
 import ProfilePage from '../../pages/ProfilePage/ProfilePage';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 import CreateAccountModal from '../../components/CreateAccountModal/CreateAccountModal';
-
-dotenv.config();
 
 function ModalSwitch() {
   let location = useLocation();
