@@ -1,38 +1,17 @@
-.CreateAccountModal-modal-form .Button {
+.CreateAccountModal-form .Button {
   background-color: var(--purple);
   color: #ffffff;
   transition: background 150ms ease-in-out;
 }
 
-.CreateAccountModal-modal-form .Button:hover {
+.CreateAccountModal-form .Button:hover:enabled {
   background-color: var(--dark-purple);
 }
 
-.CreateAccountModal-modal-form-group {
-  padding-bottom: 1.2rem;
+.CreateAccountModal-form .LabeledInputField {
+  padding-bottom: 1.4rem;
 }
 
-.CreateAccountModal-form-label {
-  display: block;
-  padding-bottom: 6px;
-  font-family: var(--font-family-global);
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--lighter-black);
-}
-
-.CreateAccountModal-form-input {
-  width: 420px;
-  padding: 13px 10px;
-  background-color: var(--light-grey);
-  border-radius: 3px;
-  border: none;
-  outline: none;
-  font-family: var(--font-family-global);
-  font-weight: 500;
-  font-size: 1rem;
-}
-
-.CreateAccountModal-form-input::placeholder {
-  color: var(--dark-grey);
+.CreateAccountModal-form .LabeledInputField-input {
+  min-width: 420px;
 }

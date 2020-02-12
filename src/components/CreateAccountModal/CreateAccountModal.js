@@ -1,64 +1,184 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import DOMPurify from 'dompurify';
+
 import './CreateAccountModal.css';
 
 import Modal from '../Modal/Modal';
 import Button from '../Button/Button';
+import LabeledInputField from '../LabeledInputField/LabeledInputField';
+import APIRoute from '../../vars/api-route';
 
 function CreateAccountModal(props) {
+  const [userName, setUserName] = useState({
+    first: '',
+    last: ''
+  });
+  const [userEmail, setUserEmail] = useState({
+    content: '',
+    isValid: false,
+    borderStyle: 'none'
+  });
+  const [userPassword, setUserPassword] = useState({
+    content: '',
+    isValid: false,
+    borderStyle: 'none'
+  });
+  const [userPasswordConfirm, setUserPasswordConfirm] = useState({
+    content: ''
+  });
+  const [passwordIsSame, setPasswordIsSame] = useState(false);
+  const [valid, setValid] = useState(false);
+
+  const history = useHistory();
+
+  var emailRegex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  const invalidBorderStyle = '2px solid #ff7e7e';
+
+  // Effects
+  useEffect(() => {
+    setValid(userEmail.isValid && userPassword.isValid && passwordIsSame);
+  }, [userEmail.content, passwordIsSame]);
+
+  useEffect(() => {
+    const isSame = userPassword.content === userPasswordConfirm.content;
+    setUserPassword({
+      ...userPassword,
+      borderStyle: isSame ? 'none' : invalidBorderStyle
+    });
+    setPasswordIsSame(isSame)
+  }, [userPassword.content, userPasswordConfirm.content]);
+
   const handleOnClick = event => {
-    // 1. Validation
-    // 2.
+    event.preventDefault();
+    const response = fetch(`${APIRoute}/auth/signup`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': true
+      },
+      body: JSON.stringify({
+        email: userEmail.content,
+        name: `${userName.first} ${userName.last}`,
+        password: userPassword.content
+      })
+    });
+    response.then(data => {
+      history.push('/verify-your-email');
+    }).catch(err => {
+      history.push('/sign-up-error');
+    });
   };
 
   return (
     <div className="CreateAccountModal">
       <Modal className="CreateAccountModal-modal" title="Create an account">
-        <form className="CreateAccountModal-modal-form">
-          <div className="CreateAccountModal-modal-form-group CreateAccountModal-modal-form-email">
-            <label className="CreateAccountModal-form-label" htmlFor="create-account-email">
-              Email
-            </label>
-            <input
-              className="CreateAccountModal-form-input"
-              type="email"
-              name="email"
-              id="create-account-email"
-              placeholder="funnyguy@email.com"
-              required
-              autoFocus
+        <form className="CreateAccountModal-form">
+          <div className="CreateAccount-name-input">
+            <LabeledInputField
+              label="First Name"
+              inputField={{
+                id: "CreateAccount-fn-input",
+                name: "CreateAccount-fn-input",
+                type: "text",
+                required: true,
+                autoFocus: true,
+                onChangeHandler: (event) => {
+                  const userInput = DOMPurify.sanitize(event.target.value.trim());
+                  setUserName({
+                    ...userName,
+                    first: userInput
+                  });
+                }
+              }}
+            />
+            <LabeledInputField
+              label="Last Name"
+              inputField={{
+                id: "CreateAccount-ln-input",
+                name: "CreateAccount-ln-input",
+                type: "text",
+                required: true,
+                onChangeHandler: (event) => {
+                  const userInput = DOMPurify.sanitize(event.target.value.trim());
+                  setUserName({
+                    ...userName,
+                    last: userInput
+                  });
+                }
+              }}
             />
           </div>
-          <div className="CreateAccountModal-modal-form-group CreateAccountModal-modal-form-password">
-            <label className="CreateAccountModal-form-label" htmlFor="create-account-password">
-              Password
-            </label>
-            <input
-              className="CreateAccountModal-form-input"
-              type="password"
-              name="password"
-              id="create-account-password"
-              placeholder="••••••••••"
-              required
-            />
-          </div>
-          <div className="CreateAccountModal-modal-form-group CreateAccountModal-modal-form-confirm-password">
-            <label
-              className="CreateAccountModal-form-label"
-              htmlFor="create-account-confirm-password"
-            >
-              Confirm Password
-            </label>
-            <input
-              className="CreateAccountModal-form-input"
-              type="password"
-              name="confirm-password"
-              id="create-account-confirm-password"
-              placeholder="••••••••••"
-              required
-            />
-          </div>
-          {/* TODO: Change the below to "input" instead of button */}
-          <Button handleOnClick={handleOnClick}>Sign Up</Button>
+          <LabeledInputField
+            label="Email"
+            inputField={{
+              id: "CreateAccount-email-input",
+              name: "CreateAccount-email-input",
+              type: "email",
+              placeholder: "example@email.com",
+              required: true,
+              style: {
+                border: userEmail.borderStyle
+              },
+              onChangeHandler: (event) => {
+                const userInput = event.target.value;
+                const emailIsValid = emailRegex.test(userInput);
+                setUserEmail({
+                  content: userInput,
+                  isValid: emailIsValid,
+                  borderStyle: emailIsValid ? 'none' : invalidBorderStyle
+                });
+              },
+              value: userEmail.content
+            }}
+          />
+          <LabeledInputField
+            label="Password"
+            inputField={{
+              id: "CreateAccount-password-input",
+              name: "CreateAccount-password-input",
+              type: "password",
+              placeholder: "••••••••••",
+              required: true,
+              autoFocus: false,
+              style: {
+                border: userPassword.borderStyle
+              },
+              onChangeHandler: (event) => {
+                const userInput = event.target.value;
+                const passwordIsValid = userInput.length >= 8;
+                setUserPassword({
+                  content: userInput,
+                  isValid: passwordIsValid
+                });
+              },
+              value: userPassword.content
+            }}
+          />
+          <LabeledInputField
+            label="Confirm Password"
+            inputField={{
+              id: "CreateAccount-password-confirm-input",
+              name: "CreateAccount-password-confirm-input",
+              type: "password",
+              placeholder: "••••••••••",
+              required: true,
+              autoFocus: false,
+              style: {
+                border: userPassword.borderStyle
+              },
+              onChangeHandler: (event) => {
+                const userInput = event.target.value;
+                setUserPasswordConfirm({
+                  content: userInput
+                });
+              },
+              value: userPasswordConfirm.content
+            }}
+          />
+          <Button handleOnClick={handleOnClick} disabled={!valid}>
+            Sign Up
+          </Button>
         </form>
       </Modal>
     </div>

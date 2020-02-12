@@ -4,9 +4,9 @@ import './Button.css';
 
 class Button extends React.Component {
   render() {
-    const { handleOnClick, type, children } = this.props;
+    const { handleOnClick, children, ...otherProps } = this.props;
     return (
-      <button className="Button" onClick={handleOnClick} type={type}>
+      <button className="Button" onClick={handleOnClick} {...otherProps}>
         {children}
       </button>
     );

@@ -1,12 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, useLocation } from 'react-router-dom';
-import dotenv from 'dotenv';
-dotenv.config();
 
 // Pages
 import HomePage from '../../pages/HomePage/HomePage';
 import ProfilePage from '../../pages/ProfilePage/ProfilePage';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
+import VerifyYourEmailPage from '../../pages/VerifyYourEmailPage/VerifyYourEmailPage';
 import CreateAccountModal from '../../components/CreateAccountModal/CreateAccountModal';
 
 function ModalSwitch() {
@@ -18,6 +17,9 @@ function ModalSwitch() {
   return (
     <div>
       <Switch location={background || location}>
+        <Route path="/verify-your-email">
+          <VerifyYourEmailPage />
+        </Route>
         <Route path="/profile">
           <ProfilePage />
         </Route>
