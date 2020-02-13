@@ -17,7 +17,7 @@ const User = sequelize.define('User', {
         allowNull: false,
     },
     password: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING,
         allowNull: false
     },
     address: {
@@ -31,7 +31,7 @@ const User = sequelize.define('User', {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false
-    }
+    },
     paymentId: DataTypes.INTEGER
 },{
     timestamp: false,

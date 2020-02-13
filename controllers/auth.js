@@ -1,8 +1,9 @@
 const { validationResult } = require('express-validator');
 
 const bcrypt = require('bcryptjs');
-const crypto = require('crypto-js');
+const cryptoRandomString = require('crypto-random-string');
 const jwt = require('jsonwebtoken');
+const moment = require('moment');
 
 const MailService = require('../service/mail-service');
 
@@ -28,12 +29,6 @@ exports.signup = async (req, res, next) => {
         const result = await User.create({ email: email, name: name, password: hashedPw });
         const user = result.get();
 
-        const token = await Token.create({
-            token: crypto.randomBytes(16).toSting('hex')},
-            UserId: user.id;
-        );
-
-        MailService.sendMail(user.email, 'verification');
 
         res.status(201).json({
             message: "Success!",
@@ -42,6 +37,19 @@ exports.signup = async (req, res, next) => {
             updateAt: user.updateAt,
             createAt: user.createAt
         })
+
+        const cryptoURL = cryptoRandomString({length: 48, type: 'url-safe'});
+
+        const token = await Token.create({
+            token: cryptoURL,
+            UserId: user.id
+        });
+
+        MailService.sendMail(user.email, {
+            subject: "Verfication Email",
+            text: cryptoURL,
+            html: `<a href='http://localhost:10017/confirmEmail?url=${cryptoURL}'>${cryptoURL}</a>`
+        });
 
     } catch (error) {
         if (!error.statusCode) {
@@ -92,9 +100,50 @@ exports.login = async (req, res, next) => {
 
 exports.confirmEmail = async (req, res, next) => {
     const url = req.query.url;
-    const user = await Token.findOne({
-        where: {
-            token: url; 
+
+    try {
+        const tokenUser= await Token.findOne({
+            where: {
+                token: url
+            }
+        });
+
+        if(!tokenUser) {
+            const error = new Error('No matching link found!');
+            error.statusCode = 404;
+            throw error;
         }
-    })
+
+        const tokenDate = tokenUser.get().createAt;
+
+        const expiredDate = moment(tokenDate).add(24, 'h');
+        const currentDate = moment();
+
+        if (currentDate > expiredDate) {
+            await Token.destroy({
+                where: {
+                    id: token.id
+                }
+            });
+            const error = new Error("Your token expired already!");
+            error.statusCode = 404;
+            throw error;
+        }
+
+        userId = token.get().UserId;
+
+        const user = await User.update({isActivated: true}, {
+            where: {
+                id: userId
+            }
+        });
+
+        res.status(200).json(user);
+
+    } catch (error) {
+        if (!error.statusCode) {
+            error.statusCode = 500;
+        }
+        next(error);
+    }
 }

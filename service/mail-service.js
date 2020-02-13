@@ -17,7 +17,7 @@ const transporter = nodemailer.createTransport({
     secureConnection: false,
     tls: {ciphers: 'SSLv3'}
 });
-
+/*
 class MailService {
     static async init() {
         transporter.verify((err, suc) => {
@@ -28,13 +28,12 @@ class MailService {
         })
     }
     async sendMail(to) => {
-        
+
     }
 }
+*/
 
-
-
-const mailService = {
+module.exports = {
     init: async () => {
         transporter.verify((err, suc) => {
             if (err) {
@@ -51,7 +50,19 @@ const mailService = {
             text: msg.text, // this is only for clients with plain text support only
             html: msg.html
         }
-        return await transporter.sendMail(message).messageId;
+
+        try {
+            let result = await transporter.sendMail(message);
+            if(result) {
+                console.log(result);
+            }
+        } catch (err) {
+            console.log(err);
+        }
     }
 }
-module.exports.mailService = maillService; 
+
+
+
+
+//module.exports.mailService = mailService;
