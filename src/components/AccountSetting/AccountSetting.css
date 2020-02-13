@@ -1,0 +1,66 @@
+.NavgationBar {
+  background-color: #ececec;
+  padding-top: 5rem;
+  padding-left: 3rem;
+  line-height: 3.8rem;
+  font-size: 0.9rem;
+  font-family: var(--font-family-global);
+  color: var(--dark-grey);
+  width: 25%;
+  height: 58rem;
+  border-top-left-radius: 1.5rem;
+  border-bottom-left-radius: 1.5rem;
+}
+
+.AccountSetting {
+  margin: 3rem 3rem 5rem 5rem;
+  width: 80rem;
+  border-radius: 1.5rem;
+  box-shadow: var(--shadow-card-normal);
+}
+
+.AccountSetting::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.NavgationBar,
+.DisplaySection {
+  float: left;
+}
+
+.DisplaySection {
+  padding-top: 5rem;
+  padding-left: 5rem;
+  line-height: 3rem;
+  font-size: 0.9rem;
+  border-top-right-radius: 1.5rem;
+  border-bottom-right-radius: 1.5rem;
+  width: 75%;
+  height: 58rem;
+}
+
+button {
+  border: none;
+  background-color: #ececec;
+  color: var(--dark-grey);
+  font-size: 0.9rem;
+}
+button:hover {
+  cursor: pointer;
+}
+
+button:focus,
+button:active {
+  outline: 0em;
+}
+
+.selected {
+  background-color: teal;
+  color: white;
+}

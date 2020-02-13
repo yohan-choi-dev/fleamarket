@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 
 import './CreateAccountModal.css';
-
 import Modal from '../Modal/Modal';
 import Button from '../Button/Button';
 import LabeledInputField from '../LabeledInputField/LabeledInputField';
