@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { BrowserRouter as Router, Switch, Route, useLocation } from 'react-router-dom';
+
+import AppContext from '../../contexts/AppContext';
 
 // Pages
 import HomePage from '../../pages/HomePage/HomePage';
@@ -37,6 +39,9 @@ function ModalSwitch() {
 }
 
 function App() {
+  const value = useContext(AppContext); // Equivalent to <AppContext.Consumer>
+  console.log(value);
+
   return (
     <div className="App">
       <Router>
