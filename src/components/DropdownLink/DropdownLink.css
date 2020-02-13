@@ -1,0 +1,45 @@
+.dropbtn {
+  padding-left: 15px;
+  padding-bottom: 15px;
+  font-size: 1.2rem;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  width: 190px;
+}
+.dropbtn button {
+  text-align: right;
+}
+
+.Icon {
+  position: relative;
+  left: 10px;
+  top: 7px;
+  width: 1.1rem;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  padding-top: 15px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  font-size: 1.2rem;
+  text-align: right;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown{
+  font-family: var(--font-family-global);
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
