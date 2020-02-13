@@ -45,10 +45,12 @@ exports.signup = async (req, res, next) => {
             UserId: user.id
         });
 
+        // const domain = 'http://localhost:10034/auth/confirmEmail?url=';
+        const domain = 'http://myvmlab.senecacollege.ca:6765/auth/confirmEmail?url='
         MailService.sendMail(user.email, {
             subject: "Verfication Email",
             text: cryptoURL,
-            html: `<a href='http://localhost:10017/confirmEmail?url=${cryptoURL}'>${cryptoURL}</a>`
+            html: `<a href='${domain}${cryptoURL}'>${domain}${cryptoURL}</a>`
         });
 
     } catch (error) {
@@ -64,16 +66,23 @@ exports.login = async (req, res, next) => {
     const password = req.body.password;
 
     try {
+
         let loadedUser = await User.findOne({
             where: {
                 email: email
             }
         });
+
         if (loadedUser === null) {
             const error = new Error(`${email} does not exist!`);
             error.statusCode = 401;
             throw error;
+        } else if (!loadedUser.get.isActivated){
+            const error = new Error(`User account ${email} is not activated!`);
+            error.statusCode = 403;
+            throw error;
         }
+
         const isMatch = await bcrypt.compare(password, loadedUser.password);
 
         if (!isMatch){
@@ -102,6 +111,7 @@ exports.confirmEmail = async (req, res, next) => {
     const url = req.query.url;
 
     try {
+
         const tokenUser= await Token.findOne({
             where: {
                 token: url
@@ -113,11 +123,10 @@ exports.confirmEmail = async (req, res, next) => {
             error.statusCode = 404;
             throw error;
         }
-
-        const tokenDate = tokenUser.get().createAt;
-
-        const expiredDate = moment(tokenDate).add(24, 'h');
-        const currentDate = moment();
+    
+        const tokenDate = tokenUser.get().createdAt;
+        const expiredDate = moment(tokenDate).add(24, 'h').toDate();
+        const currentDate = moment().toDate();
 
         if (currentDate > expiredDate) {
             await Token.destroy({
@@ -130,7 +139,7 @@ exports.confirmEmail = async (req, res, next) => {
             throw error;
         }
 
-        userId = token.get().UserId;
+        userId = tokenUser.get().UserId;
 
         const user = await User.update({isActivated: true}, {
             where: {

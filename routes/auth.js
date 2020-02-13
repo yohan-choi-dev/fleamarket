@@ -35,4 +35,6 @@ router.post('/signup', (req,res,next) => {
 
 router.post('/login', authController.login);
 
+router.get('/confirmEmail', authController.confirmEmail);
+
 module.exports = router;

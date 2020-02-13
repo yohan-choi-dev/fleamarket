@@ -51,6 +51,7 @@ app.use(bodyParser.json());
 
 // This middleware allows CORS
 app.use((req, res, next) => {
+
     // This header allows the specific origin to access to the api
     // res.setHeader('Access-Control-Allow-Origin', 'myvmlab.senecacollege.ca');
     res.setHeader('Access-Control-Allow-Origin', '*');
