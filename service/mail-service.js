@@ -1,36 +1,68 @@
 const nodemailer = require('nodemailer');
 
+const { Mail } = require('../resource/email-template/mail');
+const { MailResource } = require('../resource/email-template/mail-resource');
+const { MailInfo } = require('../resource/email-template/mail-info');
 
-module.exports = async () => {
-    const transporter = nodemailer.createTransport({
-        host: "smtp.office365.com",
-        port: 587,
-        auth: {
-            user: "prj666_201a05@myseneca.ca",
-            pass: "BNjj6#4$pk2v"
-        },
-        secureConnection: false,
-        tls: {ciphers: 'SSLv3'}
-    });
+const user = "prj666_201a05@myseneca.ca";
 
-    transporter.verify((err, suc) => {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log('Success to connect to the mail server');
-        }
-    })
 
-    const message = {
-        from: "prj666_201a05@myseneca.ca",
-        to: "ychoi63@myseneca.ca",
-        subject: "Test Email",
-        text: "Plain text",
-        html: "<p>Hello </p>"
+const transporter = nodemailer.createTransport({
+    host: "smtp.office365.com",
+    port: 587,
+    auth: {
+        user: user,
+        pass: "BNjj6#4$pk2v"
+    },
+    secureConnection: false,
+    tls: {ciphers: 'SSLv3'}
+});
+/*
+class MailService {
+    static async init() {
+        transporter.verify((err, suc) => {
+            if (err) {
+                throw new Error(`failed to connect the mail server ${err}`);
+            }
+            console.log('Success to connnecting the mail server!');
+        })
     }
+    async sendMail(to) => {
 
-    let info = await transporter.sendMail(message);
-    console.log(info.messageId);
+    }
+}
+*/
 
+module.exports = {
+    init: async () => {
+        transporter.verify((err, suc) => {
+            if (err) {
+                throw new Error(`failed to connect the mail server ${err}`);
+            }
+            console.log('Success to connnecting the mail server!');
+        })
+    },
+    sendMail: async (to, msg) => {
+        let message = {
+            from: user,
+            to: to,
+            subject: msg.subject,
+            text: msg.text, // this is only for clients with plain text support only
+            html: msg.html
+        }
+
+        try {
+            let result = await transporter.sendMail(message);
+            if(result) {
+                console.log(result);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
 }
 
+
+
+
+//module.exports.mailService = mailService;
