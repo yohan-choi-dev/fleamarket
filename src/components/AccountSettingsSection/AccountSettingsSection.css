@@ -1,0 +1,25 @@
+.AccountSettingsSection-view {
+  float: left;
+  padding-top: 5.5rem;
+  padding-left: 2.5rem;
+}
+
+.AccountSettingsSection-view ul {
+  list-style-type: none;
+}
+
+.AccountSettingsSection-view ul li {
+  line-height: 2.5rem;
+}
+
+.AccountSettingsSection-view .Button {
+  margin-top: 1.3rem;
+  background-color: var(--purple);
+  color: #fff;
+  transition: all 200ms ease-in-out;
+}
+
+.AccountSettingsSection-view .Button:hover {
+  background-color: var(--dark-purple);
+  color: #fff;
+}

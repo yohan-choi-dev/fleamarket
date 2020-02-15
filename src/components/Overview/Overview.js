@@ -1,24 +1,27 @@
 import React from 'react';
-import ClickableLink from '../ClickableLink/ClickableLink';
+import { Link } from 'react-router-dom';
+import './Overview.css';
 
 function Overview() {
   return (
     <div className="Overview">
-      <ul>
+      <ul className="Overview-list">
         <li>
-          <b>Email: </b>user.email
+          <strong>Email: </strong>user.email
         </li>
         <li>
-          <b>Name: </b>user.name
+          <strong>Name: </strong>user.name
         </li>
         <li>
-          <b>Payment Information: </b>user.paymentInformation
+          <strong>Payment Information: </strong>user.paymentInformation
         </li>
         <li>
-          <b>Address: </b>user.address
+          <strong>Address: </strong>user.address
         </li>
+        <Link className="Overview-transaction-history" to="/transaction-history">
+          Transaction History
+        </Link>
       </ul>
-      <ClickableLink>Transaction History</ClickableLink>
     </div>
   );
 }

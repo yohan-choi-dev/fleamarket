@@ -1,9 +1,9 @@
 import React from 'react';
 import '../../vars/style.css';
-import './AccountSetting.css';
-import AccountSettingSection from '../AccountSettingSection/AccountSettingSection';
+import './AccountSettings.css';
+import AccountSettingsSection from '../AccountSettingsSection/AccountSettingsSection';
 
-class AccountSetting extends React.Component {
+class AccountSettings extends React.Component {
   constructor(props) {
     super(props);
     this.state = { content: 'Overview' };
@@ -16,7 +16,7 @@ class AccountSetting extends React.Component {
   }
   render() {
     return (
-      <div className="AccountSetting">
+      <div className="AccountSettings">
         <div className="NavgationBar" id="NavgationBar">
           <ul>
             <li>
@@ -52,11 +52,11 @@ class AccountSetting extends React.Component {
           </ul>
         </div>
         <div className="DisplaySection">
-          <AccountSettingSection content={this.state.content} />
+          <AccountSettingsSection content={this.state.content} />
         </div>
       </div>
     );
   }
 }
 
-export default AccountSetting;
+export default AccountSettings;
