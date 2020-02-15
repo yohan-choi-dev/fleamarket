@@ -1,5 +1,9 @@
+.AccountSettingsSection {
+  display: grid;
+  grid-auto-flow: column;
+}
+
 .AccountSettingsSection-view {
-  float: left;
   padding-top: 5.5rem;
   padding-left: 2.5rem;
 }

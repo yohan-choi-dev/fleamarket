@@ -24,7 +24,7 @@ import LabeledInputField from '../LabeledInputField/LabeledInputField';
 function UpdateContact(props) {
   return (
     <div className="UpdateContact">
-      <div className="UpdateContact-apartment">
+      <div className="UpdateContact-section UpdateContact-apartment">
         <LabeledInputField
           className="UpdateContact-apartment-number"
           label="Apartment Number"
@@ -34,7 +34,10 @@ function UpdateContact(props) {
             type: 'number',
             autoFocus: true,
             onChangeHandler: () => {},
-            value: ''
+            value: '',
+            style: {
+              width: '85%'
+            }
           }}
         />
         <LabeledInputField
@@ -49,7 +52,7 @@ function UpdateContact(props) {
           }}
         />
       </div>
-      <div className="UpdateContact-street">
+      <div className="UpdateContact-section UpdateContact-street">
         <LabeledInputField
           className="UpdateContact-street-number"
           label="Street Number"
@@ -58,7 +61,10 @@ function UpdateContact(props) {
             name: 'UpdateContact-street-number',
             type: 'number',
             onChangeHandler: () => {},
-            value: ''
+            value: '',
+            style: {
+              width: '70%'
+            }
           }}
         />
         <LabeledInputField
@@ -73,7 +79,7 @@ function UpdateContact(props) {
           }}
         />
       </div>
-      <div className="UpdateContact-town">
+      <div className="UpdateContact-section UpdateContact-town">
         <LabeledInputField
           className="UpdateContact-city-town"
           label="City/Town"
@@ -82,7 +88,10 @@ function UpdateContact(props) {
             name: 'UpdateContact-city-town',
             type: 'text',
             onChangeHandler: () => {},
-            value: ''
+            value: '',
+            style: {
+              width: '70%'
+            }
           }}
         />
         <LabeledInputField
@@ -93,7 +102,10 @@ function UpdateContact(props) {
             name: 'UpdateContact-province',
             type: 'text',
             onChangeHandler: () => {},
-            value: ''
+            value: '',
+            style: {
+              width: '50%'
+            }
           }}
         />
         <LabeledInputField
@@ -119,7 +131,9 @@ function UpdateContact(props) {
           }}
         />
       </div>
-      <div className="UpdateContact-phone-number">{/* OOUUUUIIIIIAAAASSSSSSS */}</div>
+      <div className="UpdateContact-section UpdateContact-phone-number">
+        {/* OOUUUUIIIIIAAAASSSSSSS */}
+      </div>
     </div>
   );
 }

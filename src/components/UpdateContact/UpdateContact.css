@@ -1,0 +1,15 @@
+.UpdateContact-section {
+  padding-bottom: 2rem;
+}
+
+.UpdateContact-apartment {
+  display: flex;
+}
+
+.UpdateContact-street {
+  display: flex;
+}
+
+.UpdateContact-town {
+  display: flex;
+}
