@@ -47,12 +47,12 @@ function CreateAccountModal(props) {
       ...userPassword,
       borderStyle: isSame ? 'none' : invalidBorderStyle
     });
-    setPasswordIsSame(isSame)
+    setPasswordIsSame(isSame);
   }, [userPassword.content, userPasswordConfirm.content]);
 
   const handleOnClick = event => {
     event.preventDefault();
-    const response = fetch(`${APIRoute}/auth/signup`, {
+    const response = fetch(`/api/auth/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -64,11 +64,13 @@ function CreateAccountModal(props) {
         password: userPassword.content
       })
     });
-    response.then(data => {
-      history.push('/verify-your-email');
-    }).catch(err => {
-      history.push('/sign-up-error');
-    });
+    response
+      .then(data => {
+        history.push('/verify-your-email');
+      })
+      .catch(err => {
+        history.push('/sign-up-error');
+      });
   };
 
   return (
@@ -79,12 +81,12 @@ function CreateAccountModal(props) {
             <LabeledInputField
               label="First Name"
               inputField={{
-                id: "CreateAccount-fn-input",
-                name: "CreateAccount-fn-input",
-                type: "text",
+                id: 'CreateAccount-fn-input',
+                name: 'CreateAccount-fn-input',
+                type: 'text',
                 required: true,
                 autoFocus: true,
-                onChangeHandler: (event) => {
+                onChangeHandler: event => {
                   const userInput = DOMPurify.sanitize(event.target.value.trim());
                   setUserName({
                     ...userName,
@@ -96,11 +98,11 @@ function CreateAccountModal(props) {
             <LabeledInputField
               label="Last Name"
               inputField={{
-                id: "CreateAccount-ln-input",
-                name: "CreateAccount-ln-input",
-                type: "text",
+                id: 'CreateAccount-ln-input',
+                name: 'CreateAccount-ln-input',
+                type: 'text',
                 required: true,
-                onChangeHandler: (event) => {
+                onChangeHandler: event => {
                   const userInput = DOMPurify.sanitize(event.target.value.trim());
                   setUserName({
                     ...userName,
@@ -113,15 +115,15 @@ function CreateAccountModal(props) {
           <LabeledInputField
             label="Email"
             inputField={{
-              id: "CreateAccount-email-input",
-              name: "CreateAccount-email-input",
-              type: "email",
-              placeholder: "example@email.com",
+              id: 'CreateAccount-email-input',
+              name: 'CreateAccount-email-input',
+              type: 'email',
+              placeholder: 'example@email.com',
               required: true,
               style: {
                 border: userEmail.borderStyle
               },
-              onChangeHandler: (event) => {
+              onChangeHandler: event => {
                 const userInput = event.target.value;
                 const emailIsValid = emailRegex.test(userInput);
                 setUserEmail({
@@ -136,16 +138,16 @@ function CreateAccountModal(props) {
           <LabeledInputField
             label="Password"
             inputField={{
-              id: "CreateAccount-password-input",
-              name: "CreateAccount-password-input",
-              type: "password",
-              placeholder: "••••••••••",
+              id: 'CreateAccount-password-input',
+              name: 'CreateAccount-password-input',
+              type: 'password',
+              placeholder: '••••••••••',
               required: true,
               autoFocus: false,
               style: {
                 border: userPassword.borderStyle
               },
-              onChangeHandler: (event) => {
+              onChangeHandler: event => {
                 const userInput = event.target.value;
                 const passwordIsValid = userInput.length >= 8;
                 setUserPassword({
@@ -159,16 +161,16 @@ function CreateAccountModal(props) {
           <LabeledInputField
             label="Confirm Password"
             inputField={{
-              id: "CreateAccount-password-confirm-input",
-              name: "CreateAccount-password-confirm-input",
-              type: "password",
-              placeholder: "••••••••••",
+              id: 'CreateAccount-password-confirm-input',
+              name: 'CreateAccount-password-confirm-input',
+              type: 'password',
+              placeholder: '••••••••••',
               required: true,
               autoFocus: false,
               style: {
                 border: userPassword.borderStyle
               },
-              onChangeHandler: (event) => {
+              onChangeHandler: event => {
                 const userInput = event.target.value;
                 setUserPasswordConfirm({
                   content: userInput
