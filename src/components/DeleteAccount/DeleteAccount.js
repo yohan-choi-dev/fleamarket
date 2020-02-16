@@ -1,10 +1,10 @@
 import React from 'react';
-import ButtonRed from '../ButtonRed/ButtonRed';
+import Button from '../Button/Button';
 
 function DeleteAccount() {
   return (
     <div className="DeleteAccountBuut">
-      <ButtonRed text="Delete Account" />
+      <Button>Delete Account</Button>
     </div>
   );
 }

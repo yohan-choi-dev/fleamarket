@@ -1,6 +1,6 @@
 import React from 'react';
 import TextField from '../TextField/TextField';
-import ButtonPurple from '../ButtonPurple/ButtonPurple';
+import Button from '../Button/Button';
 
 function ChangeEmail() {
   return (
@@ -15,7 +15,7 @@ function ChangeEmail() {
         <TextField text="example@gmail.com" size="25" />
       </li>
       <li>
-        <ButtonPurple text="Update Email" />
+        <Button>Update Email</Button>
       </li>
     </ul>
   );
