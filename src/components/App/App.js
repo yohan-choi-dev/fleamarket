@@ -9,6 +9,7 @@ import ProfilePage from '../../pages/ProfilePage/ProfilePage';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 import VerifyYourEmailPage from '../../pages/VerifyYourEmailPage/VerifyYourEmailPage';
 import CreateAccountModal from '../../components/CreateAccountModal/CreateAccountModal';
+import LoginModal from '../../components/LoginModal/LoginModal';
 
 function ModalSwitch() {
   let location = useLocation();
@@ -34,14 +35,12 @@ function ModalSwitch() {
       </Switch>
 
       {background && <Route path="/signup" children={<CreateAccountModal />} />}
+      {background && <Route path="/login" children={<LoginModal />} />}
     </div>
   );
 }
 
 function App() {
-  const value = useContext(AppContext); // Equivalent to <AppContext.Consumer>
-  console.log(value);
-
   return (
     <div className="App">
       <Router>

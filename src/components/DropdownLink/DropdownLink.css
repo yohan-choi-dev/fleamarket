@@ -1,4 +1,4 @@
-.dropbtn {
+.DropdownLink-button {
   padding-left: 15px;
   padding-bottom: 15px;
   font-size: 1.2rem;
@@ -8,18 +8,19 @@
   user-select: none;
   width: 190px;
 }
-.dropbtn button {
+
+.DropdownLink-button {
   text-align: right;
 }
 
-.Icon {
+.DropdownLink-chevron {
   position: relative;
   left: 10px;
   top: 7px;
   width: 1.1rem;
 }
 
-.dropdown-content {
+.DropdownLink-content {
   display: none;
   position: absolute;
   padding-top: 15px;
@@ -29,17 +30,17 @@
   text-align: right;
 }
 
-.dropdown-content a {
+.DropdownLink-content a {
   color: black;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
 }
 
-.dropdown{
+.DropdownLink {
   font-family: var(--font-family-global);
 }
 
-.dropdown:hover .dropdown-content {
+.DropdownLink:hover .dropdown-content {
   display: block;
 }
