@@ -38,10 +38,13 @@ const Item = sequelize.define('Item', {
         type: DataTypes.STRING,
         allowNull: false
     }
-}, {
-    timestamps: false,
-    updatedAt: false,
-    createAt: false
 });
 
 module.exports = Item;
+
+
+module.exports = (sequelize, DataTypes) => {
+
+
+
+}

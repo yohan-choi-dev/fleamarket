@@ -5,3 +5,4 @@ view
 build/
 *.swp
 test/
+branches/

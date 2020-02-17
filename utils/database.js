@@ -10,8 +10,8 @@ const sequelize = new Sequelize(database, username, password, {
     pool: {
         max: 30,
         min: 0,
-        acquire: 40000,
-        evict: 20000
+        acquire: 400000,
+        evict: 200000
 
     }
 });

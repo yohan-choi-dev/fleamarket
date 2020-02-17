@@ -10,7 +10,7 @@ const User = require('../models/user');
 exports.getItems = async (req, res, next) => {
     let items = [];
     try  {
-        items = await Item.findAll({where: {isOnSearch: true}});
+        items = await Items.findAll({where: {isOnSearch: true}});
         if (items.length === 0) {
             const error = new Error('No available item');
             error.statusCode = 401;
@@ -45,7 +45,7 @@ exports.getItemsByName = async (req, res, next) => {
             err.statusCode = 500;
         }
         console.log(err);
-        next();
+        next(err);
     }
 }
 
