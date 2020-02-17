@@ -25,7 +25,7 @@ exports.signup = async (req, res, next) => {
         const password = req.body.password;
 
         const hashedPw = await bcrypt.hash(password, 12);
-        const result = await User.create({ email: email, name: name, password: hashedPw });
+        const result = await User.create({ email: email, name: name, password: hashedPw, isActivated: false });
         const user = result.get();
 
 
@@ -45,7 +45,7 @@ exports.signup = async (req, res, next) => {
         });
 
         // const domain = 'http://localhost:10034/auth/confirmEmail?url=';
-        const domain = 'http://myvmlab.senecacollege.ca:6765/auth/confirmEmail?url='
+        const domain = 'http://myvmlab.senecacollege.ca:6761/api/auth/confirmEmail?url='
         MailService.sendMail(user.email, {
             subject: "Verfication Email",
             text: cryptoURL,
@@ -76,7 +76,7 @@ exports.login = async (req, res, next) => {
             const error = new Error(`${email} does not exist!`);
             error.statusCode = 401;
             throw error;
-        } else if (!loadedUser.get.isActivated){
+        } else if (!loadedUser.isActivated){
             const error = new Error(`User account ${email} is not activated!`);
             error.statusCode = 403;
             throw error;
@@ -107,6 +107,7 @@ exports.login = async (req, res, next) => {
 }
 
 exports.confirmEmail = async (req, res, next) => {
+    console.log("confirmEmail is executed!");
     const url = req.query.url;
 
     try {
@@ -146,7 +147,7 @@ exports.confirmEmail = async (req, res, next) => {
             }
         });
 
-        res.status(200).json(user);
+        res.status(200).redirect('http://myvmlab.senecacollege.ca:6761');
 
     } catch (error) {
         if (!error.statusCode) {

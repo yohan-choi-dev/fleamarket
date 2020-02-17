@@ -24,12 +24,7 @@ const itemRoutes = require("./routes/items");
 
 const ChatService = require("./service/chat-service");
 const app = express();
-/*
-const corsOptions = {
-    origin: "http://myvmlab.senecacollege.ca:6764",
-    optionsSuccessStatus: 200
-};
-*/
+
 const fileStorage = multer.diskStorage({
     destination: (req, res, cb) => {
         cb(null, "images");
@@ -59,7 +54,7 @@ app.use((req, res, next) => {
 
     // This header allows the specific origin to access to the api
     // res.setHeader('Access-Control-Allow-Origin', 'myvmlab.senecacollege.ca');
-    res.setHeader('Access-Control-Allow-Origin', 'http://myvmalab.senecacollege.ca:6764');
+    res.setHeader('Access-Control-Allow-Origin', '*');
 
     // This header aloows the spcific method to be used
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
@@ -68,9 +63,10 @@ app.use((req, res, next) => {
         res.status(200).send();
     }
     next();
-})
-app.use("/auth", authRoutes);
-app.use("/items", itemRoutes);
+});
+
+app.use("/api/auth", authRoutes);
+app.use("/api/items", itemRoutes);
 
 app.use((error, req, res, next) => {
     console.log(error);
@@ -81,11 +77,7 @@ app.use((error, req, res, next) => {
     res.status(status).json({ message: message, data: data });
 });
 
-app.use(express.static(path.join(__dirname, "../frontend/build")));
 
-app.get("/", (req, res, next) => {
-    res.sendFile(__dirname, "../frontend/build", "index.html");
-});
 
 sequelize
     .sync()
