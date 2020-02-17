@@ -1,0 +1,13 @@
+.LoginModal-form .Button {
+  background-color: var(--purple);
+  color: #ffffff;
+  transition: background 150ms ease-in-out;
+}
+
+.LoginModal-form .Button:hover:enabled {
+  background-color: var(--dark-purple);
+}
+
+.LoginModal-form .LabeledInputField {
+  padding-bottom: 1.4rem;
+}

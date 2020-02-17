@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AppContext from '../contexts/AppContext';
 
 function AppContextProvider(props) {
-  const state = {
+  const [appState, setAppState] = useState({
     user: {
-      isLoggedIn: false
+      isLoggedIn: false,
+      name: ''
     }
-  };
+  });
 
-  return <AppContext.Provider value={state}>{props.children}</AppContext.Provider>;
+  return (
+    <AppContext.Provider value={{ appState, setAppState }}>{props.children}</AppContext.Provider>
+  );
 }
 
 export default AppContextProvider;
