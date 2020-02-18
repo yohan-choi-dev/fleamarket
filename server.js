@@ -12,7 +12,9 @@ if (cluster.isMaster) {
     cluster.on("exit", (worker, code, signal) => {
         console.log(`worker ${worker.process.pid} died`);
     });
+
 } else {
+
     const express = require("express");
 
     const path = require("path");
@@ -88,8 +90,6 @@ if (cluster.isMaster) {
     app.use("/api/items", itemRoutes);
 
     app.use((error, req, res, next) => {
-        console.log(error);
-        // status 500 code: internal server error
         const status = error.statusCode || 500;
         const message = error.message;
         const data = error.data;
