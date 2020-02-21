@@ -45,7 +45,7 @@ exports.signup = async (req, res, next) => {
         });
 
         // const domain = 'http://localhost:10034/auth/confirmEmail?url=';
-        const domain = 'http://myvmlab.senecacollege.ca:6761/api/auth/confirmEmail?url='
+        const domain = 'http://myvmlab.senecacollege.ca:6765/api/auth/confirmEmail?url='
         MailService.sendMail(user.email, {
             subject: "Verfication Email",
             text: cryptoURL,
@@ -131,7 +131,7 @@ exports.confirmEmail = async (req, res, next) => {
         if (currentDate > expiredDate) {
             await Token.destroy({
                 where: {
-                    id: token.id
+                    token: url
                 }
             });
             const error = new Error("Your token expired already!");
