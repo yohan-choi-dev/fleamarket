@@ -18,31 +18,31 @@ function Navigation(props) {
       <DropdownLink>{appState.user.name}</DropdownLink>
     </li>
   ) : (
-    <React.Fragment>
-      <li>
-        <Link
-          to={{
-            pathname: `/login`,
-            state: { background: location }
-          }}
-        >
-          Login
+      <React.Fragment>
+        <li className="Navigation-links-list-item">
+          <Link
+            to={{
+              pathname: `/login`,
+              state: { background: location }
+            }}
+          >
+            Login
         </Link>
-      </li>
-      <li>
-        <Link
-          to={{
-            pathname: `/signup`,
-            // This is the trick! This link sets
-            // the `background` in location state.
-            state: { background: location }
-          }}
-        >
-          Sign Up
+        </li>
+        <li className="Navigation-links-list-item">
+          <Link
+            to={{
+              pathname: `/signup`,
+              // This is the trick! This link sets
+              // the `background` in location state.
+              state: { background: location }
+            }}
+          >
+            Sign Up
         </Link>
-      </li>
-    </React.Fragment>
-  );
+        </li>
+      </React.Fragment>
+    );
 
   return (
     <div className="Navigation container">
@@ -50,7 +50,7 @@ function Navigation(props) {
         <Logo />
       </Link>
       <nav className="Navigation-links">
-        <ul>{rightNavigations}</ul>
+        <ul className="Navigation-links-list">{rightNavigations}</ul>
       </nav>
     </div>
   );

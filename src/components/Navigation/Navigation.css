@@ -15,7 +15,7 @@
   list-style-type: none;
 }
 
-.Navigation-links ul li {
+.Navigation-links .Navigation-links-list-item {
   display: inline-block;
   margin-left: 1.6rem;
   font-family: var(--font-family-global);
@@ -27,6 +27,6 @@
   transition: color 200ms ease-in-out;
 }
 
-.Navigation-links ul li:hover a {
+.Navigation-links ul li a:hover {
   color: var(--purple);
 }

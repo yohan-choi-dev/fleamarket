@@ -6,9 +6,6 @@ import './CreateAccountModal.css';
 import Modal from '../Modal/Modal';
 import Button from '../Button/Button';
 import LabeledInputField from '../LabeledInputField/LabeledInputField';
-// import APIRoute from '../../vars/api-route';
-
-const APIRoute = 'http://myvmlab.senecacollege.ca:6765';
 
 function CreateAccountModal(props) {
   const [userName, setUserName] = useState({
