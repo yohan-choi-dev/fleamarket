@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import Cookies from 'universal-cookie';
 import { useHistory } from 'react-router-dom';
 import './LoginModal.css';
 
@@ -9,6 +10,7 @@ import Button from '../Button/Button';
 import LabeledInputField from '../LabeledInputField/LabeledInputField';
 
 function LoginModal(props) {
+  const cookies = new Cookies();
   // Constants
   const emailRegex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   const invalidBorderStyle = '2px solid #ff7e7e';
@@ -53,6 +55,14 @@ function LoginModal(props) {
     } else {
       const body = await response.json();
       history.push('/');
+
+      // set login cookie
+      cookies.set('fleamarket-authentication', {
+        username: body.name,
+        token: body.token,
+        isLoggedIn: true
+      });
+
       setAppState({
         ...appState,
         user: {

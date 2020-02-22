@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../vars/style.css';
 import './HomePage.css';
 
@@ -9,16 +9,31 @@ import ItemCard from '../../components/ItemCard/ItemCard';
 import Button from '../../components/Button/Button';
 import Footer from '../../components/Footer/Footer';
 
-const item = {
-  name: 'NIKE PEACEMINUSONE - Para Noise sneaker',
-  owner: 'William To',
-  description:
-    'Kombucha woke forage tacos disrupt tumblr tousled, try-hard pork belly ennui tote bag knausgaard. Man bun lo-fi helvetica, pop-up chia venmo church-key.',
-  imageUrl:
-    'https://www.kicksonfire.com/wp-content/uploads/2019/11/PEACEMINUSONE-X-Nike-Air-Force-1-Low-Para-Noise.jpg'
-};
-
 function HomePage(props) {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      const response = await fetch(`/api/items`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': true
+        }
+      });
+
+      const body = await response.json();
+
+      setItems(body);
+    }
+
+    fetchItems();
+  }, []);
+
+  useEffect(() => {
+    console.log(items);
+  }, [items]);
+
   return (
     <div className="HomePage">
       <Navigation />
@@ -35,16 +50,17 @@ function HomePage(props) {
       <main className="HomePage-main-section container">
         <h2 className="HomePage-main-section-heading">Items close to you</h2>
         <div className="HomePage-main-section-items">
-          <ItemCard item={item} />
-          <ItemCard item={item} />
-          <ItemCard item={item} />
-          <ItemCard item={item} />
-          <ItemCard item={item} />
-          <ItemCard item={item} />
+          {
+            items.map((item, index) => (
+              <ItemCard item={item} key={`ItemCard-${index}`} />
+            ))
+          }
         </div>
-        <div className="HomePage-main-section-show-more">
-          <Button>Show more</Button>
-        </div>
+        {
+          items.length > 6 ? <div className="HomePage-main-section-show-more">
+            <Button>Show more</Button>
+          </div> : ''
+        }
       </main>
       <Footer />
     </div>
