@@ -47,9 +47,9 @@ function CreateAccountModal(props) {
     setPasswordIsSame(isSame);
   }, [userPassword.content, userPasswordConfirm.content]);
 
-  const handleOnClick = event => {
+  const handleOnClick = async event => {
     event.preventDefault();
-    const response = fetch(`/api/auth/signup`, {
+    const response = await fetch(`/api/auth/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -61,13 +61,14 @@ function CreateAccountModal(props) {
         password: userPassword.content
       })
     });
-    response
-      .then(data => {
-        history.push('/verify-your-email');
-      })
-      .catch(err => {
-        history.push('/sign-up-error');
-      });
+
+    if (response.status != 201) {
+      const body = await response.json();
+
+      window.alert(`Failed to sign up. ${body.data[0].msg}`);
+    } else {
+      history.push('/verify-your-email');
+    }
   };
 
   return (

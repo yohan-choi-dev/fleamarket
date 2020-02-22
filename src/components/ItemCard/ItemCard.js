@@ -10,13 +10,13 @@ function ItemCard(props) {
       <div
         className="ItemCard-item-image"
         style={{
-          backgroundImage: `url(${item.imageUrl})`
+          backgroundImage: `url(${item.image})`
         }}
       ></div>
       <div className="ItemCard-item-info">
         <h1 className="ItemCard-item-name">{item.name}</h1>
         <p className="ItemCard-item-owner">
-          posted by <span>{item.owner}</span>
+          posted by <span>William To</span>
         </p>
         <p className="ItemCard-item-description">{item.description}</p>
         <div className="ItemCard-LikeButton-container">
