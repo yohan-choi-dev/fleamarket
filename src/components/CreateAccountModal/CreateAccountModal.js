@@ -7,6 +7,8 @@ import Modal from '../Modal/Modal';
 import Button from '../Button/Button';
 import LabeledInputField from '../LabeledInputField/LabeledInputField';
 
+import APIRoute from '../../vars/api-routes';
+
 function CreateAccountModal(props) {
   const [userName, setUserName] = useState({
     first: '',
@@ -49,7 +51,7 @@ function CreateAccountModal(props) {
 
   const handleOnClick = async event => {
     event.preventDefault();
-    const response = await fetch(`/api/auth/signup`, {
+    const response = await fetch(`${APIRoute}/api/auth/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -9,12 +9,14 @@ import ItemCard from '../../components/ItemCard/ItemCard';
 import Button from '../../components/Button/Button';
 import Footer from '../../components/Footer/Footer';
 
+import APIRoute from '../../vars/api-routes';
+
 function HomePage(props) {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
     const fetchItems = async () => {
-      const response = await fetch(`/api/items`, {
+      const response = await fetch(`${APIRoute}/api/items`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

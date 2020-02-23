@@ -9,6 +9,8 @@ import Modal from '../Modal/Modal';
 import Button from '../Button/Button';
 import LabeledInputField from '../LabeledInputField/LabeledInputField';
 
+import APIRoute from '../../vars/api-routes';
+
 function LoginModal(props) {
   const cookies = new Cookies();
   // Constants
@@ -38,7 +40,7 @@ function LoginModal(props) {
   // Event handlers
   const handleOnClick = async event => {
     event.preventDefault();
-    const response = await fetch(`/api/auth/login`, {
+    const response = await fetch(`${APIRoute}/api/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
