@@ -10,6 +10,7 @@ import LabeledInputField from '../LabeledInputField/LabeledInputField';
 import APIRoute from '../../vars/api-routes';
 
 function CreateAccountModal(props) {
+
   const [userName, setUserName] = useState({
     first: '',
     last: ''

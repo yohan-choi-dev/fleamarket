@@ -12,6 +12,7 @@ import Footer from '../../components/Footer/Footer';
 import APIRoute from '../../vars/api-routes';
 
 function HomePage(props) {
+  console.log(APIRoute);
   const [items, setItems] = useState([]);
 
   useEffect(() => {
