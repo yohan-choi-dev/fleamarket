@@ -12,7 +12,6 @@ import Footer from '../../components/Footer/Footer';
 import APIRoute from '../../vars/api-routes';
 
 function HomePage(props) {
-  console.log(APIRoute);
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -59,11 +58,11 @@ function HomePage(props) {
             ))
           }
         </div>
-        {
+        {/* {
           items.length > 6 ? <div className="HomePage-main-section-show-more">
             <Button>Show more</Button>
           </div> : ''
-        }
+        } */}
       </main>
       <Footer />
     </div>

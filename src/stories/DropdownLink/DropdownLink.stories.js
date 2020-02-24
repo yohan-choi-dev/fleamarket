@@ -1,12 +1,12 @@
 import React from 'react';
-import DropdownLink from '../../components/DropdownLink/DropdownLink';
+import ProfileDropdown from '../../components/ProfileDropdown/ProfileDropdown';
 
 export default {
-  title: 'DropdownLink',
-  component: DropdownLink
+  title: 'ProfileDropdown',
+  component: ProfileDropdown
 };
 
 
 
 
-export const Normal = () => <DropdownLink username='wing tung lau'/>;
+export const Normal = () => <ProfileDropdown username='wing tung lau' />;

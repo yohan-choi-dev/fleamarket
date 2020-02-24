@@ -15,9 +15,9 @@ function ItemCard(props) {
       ></div>
       <div className="ItemCard-item-info">
         <h1 className="ItemCard-item-name">{item.name}</h1>
-        <p className="ItemCard-item-owner">
-          posted by <span>William To</span>
-        </p>
+        {/* <p className="ItemCard-item-owner">
+          posted by <span></span>
+        </p> */}
         <p className="ItemCard-item-description">{item.description}</p>
         <div className="ItemCard-LikeButton-container">
           <LikeButton />
