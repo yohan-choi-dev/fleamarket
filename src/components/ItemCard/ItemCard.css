@@ -1,4 +1,5 @@
 .ItemCard {
+  position: relative;
   width: 395px;
   border-radius: 15px;
   background-color: #ffffff;
@@ -36,10 +37,16 @@
 
 .ItemCard-item-description {
   padding-top: 20px;
-  padding-bottom: 38px;
+  padding-bottom: 3rem;
   font-size: 0.94rem;
   line-height: 1.4rem;
   color: var(--lighter-black);
+}
+
+.ItemCard-LikeButton-container {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
 }
 
 .ItemCard-LikeButton-container .LikeButton {

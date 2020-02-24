@@ -8,8 +8,11 @@ import HomePage from '../../pages/HomePage/HomePage';
 import ProfilePage from '../../pages/ProfilePage/ProfilePage';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 import VerifyYourEmailPage from '../../pages/VerifyYourEmailPage/VerifyYourEmailPage';
+
+// Components
 import CreateAccountModal from '../../components/CreateAccountModal/CreateAccountModal';
 import LoginModal from '../../components/LoginModal/LoginModal';
+import PrivateRoute from '../../components/PrivateRoute/PrivateRoute';
 
 function ModalSwitch() {
   let location = useLocation();
@@ -23,9 +26,9 @@ function ModalSwitch() {
         <Route path="/verify-your-email">
           <VerifyYourEmailPage />
         </Route>
-        <Route path="/profile">
+        <PrivateRoute path="/profile">
           <ProfilePage />
-        </Route>
+        </PrivateRoute>
         <Route path="/" exact={true}>
           <HomePage />
         </Route>

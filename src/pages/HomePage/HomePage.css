@@ -48,6 +48,7 @@
 
 .HomePage-main-section-items .ItemCard {
   width: auto;
+  position: relative;
 }
 
 .HomePage-main-section-show-more {

@@ -7,7 +7,7 @@ import AppContext from '../../contexts/AppContext';
 
 // Components
 import Logo from '../../components/Logo/Logo';
-import DropdownLink from '../../components/DropdownLink/DropdownLink';
+import ProfileDropdown from '../../components/ProfileDropdown/ProfileDropdown';
 
 function Navigation(props) {
   let location = useLocation();
@@ -15,7 +15,7 @@ function Navigation(props) {
 
   const rightNavigations = appState.user.isLoggedIn ? (
     <li>
-      <DropdownLink>{appState.user.name}</DropdownLink>
+      <ProfileDropdown>{appState.user.name}</ProfileDropdown>
     </li>
   ) : (
       <React.Fragment>

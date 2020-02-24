@@ -1,9 +1,9 @@
-.DropdownLink {
+.ProfileDropdown {
   position: relative;
   font-family: var(--font-family-global);
 }
 
-.DropdownLink-button {
+.ProfileDropdown-button {
   display: flex;
   align-items: center;
   border: none;
@@ -12,16 +12,16 @@
   user-select: none;
 }
 
-.DropdownLink-chevron {
+.ProfileDropdown-chevron {
   padding-left: 0.5rem;
   height: 1rem;
 }
 
-.DropdownLink-username {
+.ProfileDropdown-username {
   font-size: 1rem;
 }
 
-.DropdownLink-content {
+.ProfileDropdown-content {
   display: none;
   width: 10rem;
   padding-top: 0.5rem;
@@ -35,12 +35,12 @@
   text-align: right;
 }
 
-.DropdownLink-content a {
+.ProfileDropdown-content a {
   display: block;
   color: black;
   line-height: 3rem;
 }
 
-.DropdownLink:hover .DropdownLink-content {
+.ProfileDropdown:hover .ProfileDropdown-content {
   display: block;
 }
