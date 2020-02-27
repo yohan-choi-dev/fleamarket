@@ -6,7 +6,6 @@ import './HomePage.css';
 import Navigation from '../../components/Navigation/Navigation';
 import SearchBox from '../../components/SearchBox/SearchBox';
 import ItemCard from '../../components/ItemCard/ItemCard';
-import Button from '../../components/Button/Button';
 import Footer from '../../components/Footer/Footer';
 
 import APIRoute from '../../vars/api-routes';

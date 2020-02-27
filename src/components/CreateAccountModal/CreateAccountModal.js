@@ -33,12 +33,14 @@ function CreateAccountModal(props) {
 
   const history = useHistory();
 
+  //eslint-disable-next-line
   var emailRegex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   const invalidBorderStyle = '2px solid #ff7e7e';
 
   // Effects
   useEffect(() => {
     setValid(userEmail.isValid && userPassword.isValid && passwordIsSame);
+    // eslint-disable-next-line
   }, [userEmail.content, passwordIsSame]);
 
   useEffect(() => {
@@ -48,7 +50,8 @@ function CreateAccountModal(props) {
       borderStyle: isSame ? 'none' : invalidBorderStyle
     });
     setPasswordIsSame(isSame);
-  }, [userPassword.content, userPasswordConfirm.content]);
+    // eslint-disable-next-line
+  }, [userPassword.content, userPasswordConfirm]);
 
   const handleOnClick = async event => {
     event.preventDefault();
@@ -65,7 +68,7 @@ function CreateAccountModal(props) {
       })
     });
 
-    if (response.status != 201) {
+    if (response.status !== 201) {
       const body = await response.json();
 
       window.alert(`Failed to sign up. ${body.data[0].msg}`);

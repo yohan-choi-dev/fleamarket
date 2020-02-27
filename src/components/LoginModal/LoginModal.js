@@ -14,6 +14,7 @@ import APIRoute from '../../vars/api-routes';
 
 function LoginModal(props) {
   // Constants
+  //eslint-disable-next-line
   const emailRegex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   const invalidBorderStyle = '2px solid #ff7e7e';
 
@@ -34,7 +35,7 @@ function LoginModal(props) {
 
   // Effects
   useEffect(() => {
-    setFormIsValid(userEmail.isValid && userPassword != '');
+    setFormIsValid(userEmail.isValid && userPassword !== '');
   }, [userEmail, userPassword]);
 
   // Event handlers
@@ -52,7 +53,7 @@ function LoginModal(props) {
       })
     });
 
-    if (response.status != 200) {
+    if (response.status !== 200) {
       history.push('/login-error');
     } else {
       const body = await response.json();
