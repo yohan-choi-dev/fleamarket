@@ -18,3 +18,36 @@
 .ProfilePage-user-items-content .ItemCard {
   width: auto;
 }
+
+@media (max-width: 1240px) {
+  .ProfilePage-user-items-content {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1.5fr auto;
+    grid-column-gap: 5%;
+    grid-row-gap: 3rem;
+  }
+}
+
+@media (max-width: 960px) {
+  .ProfilePage .ProfileCard-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ProfilePage .ProfileCard-profile-image {
+    width: 100%;
+  }
+
+  .ProfilePage .ProfileCard-profile-info {
+    padding-top: 2rem;
+    text-align: center;
+  }
+  
+  .ProfilePage .ProfileCard-profile-description {
+    width: 100%;
+  }
+
+  .ProfilePage-user-items-content {
+    grid-template-columns: 1fr;
+  }
+}

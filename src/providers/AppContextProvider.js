@@ -43,7 +43,7 @@ function AppContextProvider(props) {
       cookies.remove(COOKIES.user);
     }
 
-  }, [appState.user]);
+  }, [appState.user, cookies]);
 
   return (
     <AppContext.Provider value={{ appState, setAppState }}>{props.children}</AppContext.Provider>

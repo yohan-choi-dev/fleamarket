@@ -1,6 +1,5 @@
 import React from 'react';
 import { ReactComponent as SearchIcon } from '@fortawesome/fontawesome-free/svgs/solid/search.svg';
-import SearchButton from '../SearchButton/SearchButton.js';
 
 import '../../vars/style.css';
 import './SearchBox.css';
