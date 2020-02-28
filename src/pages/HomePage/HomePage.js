@@ -31,9 +31,6 @@ function HomePage(props) {
     fetchItems();
   }, []);
 
-  useEffect(() => {
-    console.log(items);
-  }, [items]);
 
   return (
     <div className="HomePage">
