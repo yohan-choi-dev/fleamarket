@@ -56,5 +56,5 @@
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-react-hooks": "^1.7.0"
   },
-  "proxy": "http://myvmlab.senecacollege.ca:6765"
+  "proxy": "http://localhost:12218"
 }

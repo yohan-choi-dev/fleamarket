@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { ReactComponent as SearchIcon } from '@fortawesome/fontawesome-free/svgs/solid/search.svg';
 
 import '../../vars/style.css';
 import './SearchBox.css';
 
 const SearchBox = () => {
-  let controller;
 
   const [searchStatus, setSearchStatus] = useState({
     text: '',
     loading: false
   });
+  const [searchItems, setSearchItems] = useState([]);
 
   const handleSearchInputChange = (event) => {
     const userInput = event.target.value;
@@ -21,25 +22,6 @@ const SearchBox = () => {
     });
   }
 
-  // const fetchSearchResults = async () => {
-  //   controller.abort();
-  //   controller = new AbortController();
-  //   controller.abort.bind(controller);
-
-  //   try {
-  //     const response = await fetch(, {
-  //       method: 'GET',
-  //       signal: controller.signal
-  //     });
-
-  //     const body = await response.json();
-
-  //     console.log(body);
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // }
-
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
@@ -47,20 +29,29 @@ const SearchBox = () => {
       setSearchStatus({
         ...searchStatus,
         loading: false
-      })
+      });
+      setSearchItems([]);
     } else {
       if (searchStatus.loading) {
-        fetch(`https://api.unsplash.com/search/photos?client_id=RF4MCBnafSRDlbW3c1TBS71GCxT63ydD7aFzuyJifPA&page=1&query=${searchStatus.text}`, {
+        fetch(`/api/items?name=${searchStatus.text}`, {
           method: 'GET',
           signal: signal
         }).then((response) => {
-          console.log(response);
+          response.json().then((data) => {
+            setSearchItems(data);
+            setSearchStatus({
+              ...searchStatus,
+              loading: false
+            });
+          });
         }).catch(err => {
-
+          console.error(err);
         });
       }
     }
 
+    // This is the magic, every time the component updates, it will abort
+    // the last fetch request.
     return function cleanup() {
       controller.abort();
     }
@@ -78,6 +69,22 @@ const SearchBox = () => {
       />
       <div className="SearchBox-search-button">
         <SearchIcon className="SearchBox-search-icon" />
+      </div>
+      <div className="SearchBox-search-results">
+        <ul className="SearchBox-search-results-items">
+          {
+            searchItems.map((item, index) => {
+              return (
+                <li className="SearchBox-results-item" key={`SearchBox-results-item-${index}`}>
+                  <img className="SearchBox-results-item-image" src={item.image} alt="item" />
+                  <div className="SearchBox-results-item-info">
+                    <Link className="SearchBox-results-item-info-name" to="/">{item.name}</Link>
+                  </div>
+                </li>
+              );
+            })
+          }
+        </ul>
       </div>
     </div>
   );
