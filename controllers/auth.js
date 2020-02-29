@@ -104,7 +104,8 @@ exports.login = async (req, res, next) => {
             description: loadedUser.description,
             image: loadedUser.image,
             liked: loadedUser.liked,
-            disliked: loadedUser.disliked
+            disliked: loadedUser.disliked,
+            email: loadedUser.email
         });
 
     } catch (error) {
