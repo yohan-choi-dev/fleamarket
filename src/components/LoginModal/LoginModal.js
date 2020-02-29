@@ -70,7 +70,8 @@ function LoginModal(props) {
           description: body.description,
           image: body.image,
           liked: body.liked,
-          disliked: body.disliked
+          disliked: body.disliked,
+          email: body.email
         }
       });
     }

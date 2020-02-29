@@ -27,11 +27,8 @@ function ProfilePage(props) {
       });
 
       const body = await response.json();
-      console.log(body);
       setUserItems(body);
     }
-
-    console.log(appState.user.id);
     fetchItemsByUser(appState.user.id);
   }, [appState.user.id]);
 

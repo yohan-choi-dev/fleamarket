@@ -21,7 +21,8 @@ function AppContextProvider(props) {
       description: userCookie ? userCookie.description : '',
       image: userCookie ? userCookie.image : '',
       liked: userCookie ? userCookie.liked : 0,
-      disliked: userCookie ? userCookie.disliked : 0
+      disliked: userCookie ? userCookie.disliked : 0,
+      email: userCookie ? userCookie.email : ''
     }
   });
 
@@ -36,7 +37,8 @@ function AppContextProvider(props) {
         description: appState.user.description,
         image: appState.user.image,
         liked: appState.user.liked,
-        disliked: appState.user.disliked
+        disliked: appState.user.disliked,
+        email: appState.user.email
       });
     } else {
       // clear cookie

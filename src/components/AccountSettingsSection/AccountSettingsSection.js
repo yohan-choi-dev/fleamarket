@@ -12,15 +12,18 @@ import DeleteAccount from '../DeleteAccount/DeleteAccount';
 import ChangePassword from '../ChangePassword/ChangePassword';
 
 function AccountSettingsSection(props) {
-  const [accountSettingsView, setAccountSettingsView] = useState(<Overview />);
+  const { profile } = props;
+  const [accountSettingsView, setAccountSettingsView] = useState(
+    <Overview profile={profile} />
+  );
 
   const handleSelection = selection => {
     switch (selection) {
       case 0:
-        setAccountSettingsView(<Overview />);
+        setAccountSettingsView(<Overview profile={profile} />);
         break;
       case 1:
-        setAccountSettingsView(<ChangeEmail />);
+        setAccountSettingsView(<ChangeEmail profile={profile} />);
         break;
       case 2:
         setAccountSettingsView(<ChangePassword />);
