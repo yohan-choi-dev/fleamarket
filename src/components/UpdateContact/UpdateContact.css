@@ -10,6 +10,8 @@
   display: flex;
 }
 
-.UpdateContact-town {
-  display: flex;
+.UpdateContact-town div {
+  display: inline-block;
+  padding-bottom: 2rem;
+  margin-right: 1rem;
 }
