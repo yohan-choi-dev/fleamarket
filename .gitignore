@@ -6,3 +6,4 @@ build/
 *.swp
 test/
 branches/
+.DS_Store

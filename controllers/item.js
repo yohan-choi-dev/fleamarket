@@ -8,15 +8,10 @@ const Item = require('../models/item');
 const User = require('../models/user');
 
 exports.getItems = async (req, res, next) => {
-    let items = [];
-    try  {
-        items = await Items.findAll({where: {isOnSearch: true}});
-        if (items.length === 0) {
-            const error = new Error('No available item');
-            error.statusCode = 401;
-            throw error;
-        }
-        res.status(200).send(JSON.stringify(items));
+    let search_query = `SELECT * FROM Items;`
+    try {
+        let results = await sequelize.query(search_query, { type: sequelize.QueryTypes.SELECT });
+        res.status(200).send(JSON.stringify(results));
     } catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;
@@ -27,15 +22,14 @@ exports.getItems = async (req, res, next) => {
 };
 
 exports.getItemsByName = async (req, res, next) => {
-    let name = req.query.name; 
-    let search_query = `SELECT DISTINCT * FROM Items
+    let name = req.query.name;
+    let search_query = `SELECT * FROM Items
                         WHERE (name LIKE '%${name}%'
-                        OR description LIKE '%${name}%')
-                        AND isOnSearch = true`
+                        OR description LIKE '%${name}%');`
     try {
-        let results = await sequelize.query(search_query, {type: sequelize.QueryTypes.SELECT});
+        let results = await sequelize.query(search_query, { type: sequelize.QueryTypes.SELECT });
         if (results.length === 0) {
-            const error = new Error ('No Search Result');
+            const error = new Error('No Search Result');
             error.statusCode = 401;
             throw error;
         }
@@ -45,7 +39,23 @@ exports.getItemsByName = async (req, res, next) => {
             err.statusCode = 500;
         }
         console.log(err);
-        next(err);
+        next();
+    }
+}
+
+exports.getItemsByUser = async (req, res, next) => {
+    let user = req.query.user;
+    let search_query = `SELECT * FROM Items
+                        WHERE (userId = ${user});`
+    try {
+        let results = await sequelize.query(search_query, { type: sequelize.QueryTypes.SELECT });
+        res.status(200).send(JSON.stringify(results));
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        console.log(err);
+        next();
     }
 }
 
