@@ -26,7 +26,7 @@ const Item = sequelize.define('Item', {
     exchangeFor: {
         type: DataTypes.STRING
     },
-    isOnSearch: {
+    isHidden: {
         type: DataTypes.BOOLEAN,
         allowNull: false
     },
@@ -41,10 +41,3 @@ const Item = sequelize.define('Item', {
 });
 
 module.exports = Item;
-
-
-module.exports = (sequelize, DataTypes) => {
-
-
-
-}

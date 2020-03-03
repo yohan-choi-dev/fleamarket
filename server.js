@@ -102,7 +102,9 @@ if (cluster.isMaster) {
             const server = app.listen(port, () =>
                 console.log(`Worker ${process.pid} is running on ${port}`)
             );
-            const mailService = require("./service/mail-service").init();
+            if (process.env.NODE_ENV == 'production') {
+                const mailService = require("./service/mail-service").init();
+            }
         })
         .catch(err => {
             console.log(err);

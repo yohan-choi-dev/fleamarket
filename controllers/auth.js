@@ -8,26 +8,27 @@ const moment = require('moment');
 const MailService = require('../service/mail-service');
 
 const { User, Token } = require('../models/user');
+const ERROR_CODES = require('../utils/app-error-codes');
 
 exports.signup = async (req, res, next) => {
-       const errors = validationResult(req)
+    const errors = validationResult(req)
 
     try {
-          if (!errors.isEmpty()) {
+        if (!errors.isEmpty()) {
             const error = new Error('Validation failed!');
             error.statusCode = 422;
             error.data = errors.array();
+            error.data[0].appErrorCode = ERROR_CODES.USER.EMAIL_USED;
             throw error;
-         }
-        console.log(req.body);
+        }
+
         const email = req.body.email;
         const name = req.body.name;
         const password = req.body.password;
 
         const hashedPw = await bcrypt.hash(password, 12);
-        const result = await User.create({ email: email, name: name, password: hashedPw, isActivated: false });
+        const result = await User.create({ email: email, name: name, password: hashedPw });
         const user = result.get();
-
 
         res.status(201).json({
             message: "Success!",
@@ -37,7 +38,7 @@ exports.signup = async (req, res, next) => {
             createAt: user.createAt
         })
 
-        const cryptoURL = cryptoRandomString({length: 48, type: 'url-safe'});
+        const cryptoURL = cryptoRandomString({ length: 48, type: 'url-safe' });
 
         const token = await Token.create({
             token: cryptoURL,
@@ -76,7 +77,7 @@ exports.login = async (req, res, next) => {
             const error = new Error(`${email} does not exist!`);
             error.statusCode = 401;
             throw error;
-        } else if (!loadedUser.isActivated){
+        } else if (!loadedUser.isActivated) {
             const error = new Error(`User account ${email} is not activated!`);
             error.statusCode = 403;
             throw error;
@@ -84,7 +85,7 @@ exports.login = async (req, res, next) => {
 
         const isMatch = await bcrypt.compare(password, loadedUser.password);
 
-        if (!isMatch){
+        if (!isMatch) {
             const error = new Error('Invalid password!');
             error.statusCode = 401;
             throw error;
@@ -96,7 +97,16 @@ exports.login = async (req, res, next) => {
         }, 'jsonscretoeknforfleamarket',
             { expiresIn: '1h' });
 
-        res.status(200).json({token: token, id: loadedUser.id.toString()});
+        res.status(200).json({
+            token: token,
+            id: loadedUser.id,
+            name: loadedUser.name,
+            description: loadedUser.description,
+            image: loadedUser.image,
+            liked: loadedUser.liked,
+            disliked: loadedUser.disliked,
+            email: loadedUser.email
+        });
 
     } catch (error) {
         if (!error.statusCode) {
@@ -107,23 +117,22 @@ exports.login = async (req, res, next) => {
 }
 
 exports.confirmEmail = async (req, res, next) => {
-    console.log("confirmEmail is executed!");
     const url = req.query.url;
 
     try {
 
-        const tokenUser= await Token.findOne({
+        const tokenUser = await Token.findOne({
             where: {
                 token: url
             }
         });
 
-        if(!tokenUser) {
+        if (!tokenUser) {
             const error = new Error('No matching link found!');
             error.statusCode = 404;
             throw error;
         }
-    
+
         const tokenDate = tokenUser.get().createdAt;
         const expiredDate = moment(tokenDate).add(24, 'h').toDate();
         const currentDate = moment().toDate();
@@ -141,13 +150,13 @@ exports.confirmEmail = async (req, res, next) => {
 
         userId = tokenUser.get().UserId;
 
-        const user = await User.update({isActivated: true}, {
+        const user = await User.update({ isActivated: true }, {
             where: {
                 id: userId
             }
         });
 
-        res.status(200).redirect('http://myvmlab.senecacollege.ca:6761');
+        res.status(200).json(user);
 
     } catch (error) {
         if (!error.statusCode) {
