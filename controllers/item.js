@@ -4,8 +4,9 @@ const path = require("path");
 const { validationResult } = require("express-validator");
 
 const sequelize = require("../utils/database");
+const { Model } = require('sequelize');
 const Item = require("../models/item");
-const User = require("../models/user");
+const { User } = require("../models/user");
 const UserItemBridge = require("../models/user-item-bridge");
 
 exports.getItems = async (req, res, next) => {
@@ -17,7 +18,7 @@ exports.getItems = async (req, res, next) => {
                 {
                     model: User,
                     through: {
-                        attribute: [
+                        attributes: [
                             "id",
                             "name",
                             "email",
@@ -27,9 +28,7 @@ exports.getItems = async (req, res, next) => {
                             "liked",
                             "disliked",
                             "isActivated",
-                            "paymentId",
-                            "createAt",
-                            "updateAt"
+                            "paymentId"
                         ]
                     }
                 }
