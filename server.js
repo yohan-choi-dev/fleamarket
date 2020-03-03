@@ -33,7 +33,7 @@ if (cluster.isMaster) {
     const Notification = require("./models/notification");
     const UserItemBridge = require("./models/user-item-bridge");
 
-    const port = process.env.PORT | 10034 | 3000;
+    const port = 8008 // process.env.PORT | 10034 | 3000;
 
     const authRoutes = require("./routes/auth");
     const itemRoutes = require("./routes/items");
