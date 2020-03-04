@@ -9,8 +9,6 @@ const User = require("../models/user");
 const UserItemBridge = require("../models/user-item-bridge");
 
 exports.getItems = async (req, res, next) => {
-    let search_query = `SELECT * FROM Items;`;
-
     try {
         let results = await Item.findAll({
             include: [
@@ -35,7 +33,7 @@ exports.getItems = async (req, res, next) => {
                 }
             ]
         });
-        // let results = await sequelize.query(search_query, { type: sequelize.QueryTypes.SELECT });
+
         res.status(200).send(JSON.stringify(results));
     } catch (err) {
         if (!err.statusCode) {
