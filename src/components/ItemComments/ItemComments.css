@@ -1,3 +1,11 @@
+.ItemComments-comments-section{
+    position: absolute;
+    width: 812px;
+    height: 540px;
+    left: 175px;
+    top: 985px;
+}
+
 .ItemComments-background {
     position: absolute;
     width: 1360px;
