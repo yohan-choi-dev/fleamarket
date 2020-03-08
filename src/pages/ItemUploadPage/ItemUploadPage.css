@@ -1,0 +1,52 @@
+.ItemUploadPage-upload-form-container {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  display: flex;
+  justify-content: center;
+}
+
+.ItemUploadPage-upload-form {
+  padding: 1.39rem 1.67rem;
+  box-shadow: var(--shadow-card-normal);
+  border-radius: 15px;
+}
+
+.ItemUploadPage-upload-form-inner {
+  padding-top: 2.33rem;
+}
+
+.ItemUploadPage-upload-form-name-category {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ItemUploadPage-upload-form-name-category .LabeledInputField {
+  padding-right: 2rem;
+}
+
+.ItemUploadPage-upload-form-name-category p,
+.ItemUploadPage-upload-form-item-description p,
+.ItemUploadPage-upload-form-item-images p {
+  padding-bottom: 6px;
+  font-family: var(--font-family-global);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--lighter-black);
+}
+
+.ItemUploadPage-upload-form-item-description,
+.ItemUploadPage-upload-form-item-images {
+  padding-top: 1.33rem;
+}
+
+.ItemUploadPage-upload-form-item-description .LabeledTextField textarea {
+  width: 100%;
+  height: 20rem;
+  padding: 0.72rem 0.56rem;
+  background-color: var(--light-grey);
+  border: none;
+  border-radius: 3px;
+  resize: none;
+  outline: none;
+  font-size: 1rem;
+}

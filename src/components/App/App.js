@@ -7,6 +7,7 @@ import ProfilePage from '../../pages/ProfilePage/ProfilePage';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 import VerifyYourEmailPage from '../../pages/VerifyYourEmailPage/VerifyYourEmailPage';
 import AccountSettingsPage from '../../pages/AccountSettingsPage/AccountSettingsPage';
+import ItemUploadPage from '../../pages/ItemUploadPage/ItemUploadPage';
 
 // Components
 import CreateAccountModal from '../../components/CreateAccountModal/CreateAccountModal';
@@ -30,6 +31,9 @@ function ModalSwitch() {
         </PrivateRoute>
         <PrivateRoute path="/account-settings">
           <AccountSettingsPage />
+        </PrivateRoute>
+        <PrivateRoute path="/upload-item">
+          <ItemUploadPage />
         </PrivateRoute>
         <Route path="/" exact={true}>
           <HomePage />

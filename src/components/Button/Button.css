@@ -24,3 +24,12 @@
   opacity: 0.3;
   cursor: initial;
 }
+
+.Button.purple {
+  background-color: var(--purple);
+  color: #fff;
+}
+
+.Button.purple:hover {
+  background-color: var(--dark-purple)
+}
