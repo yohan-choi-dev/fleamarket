@@ -39,6 +39,10 @@
   padding-top: 1.33rem;
 }
 
+.ItemUploadPage-upload-form-item-images input {
+  outline: none;
+}
+
 .ItemUploadPage-upload-form-item-description .LabeledTextField textarea {
   width: 100%;
   height: 20rem;
@@ -49,4 +53,18 @@
   resize: none;
   outline: none;
   font-size: 1rem;
+}
+
+.ItemUploadPage-actions {
+  padding-top: 2.78rem;
+  display: flex;
+  justify-content: center;
+}
+
+.ItemUploadPage-actions .Button.purple {
+  margin-right: 1.2rem;
+}
+
+.ItemUploadPage-actions .Button.purple:disabled {
+  opacity: 0.6;
 }

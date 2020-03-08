@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import './ItemUploadPage.css';
 
 // Contexts
@@ -13,23 +14,48 @@ import LabeledTextField from '../../components/LabeledTextField/LabeledTextField
 import Button from '../../components/Button/Button';
 
 function ItemUploadPage(props) {
+  // States
   const [itemState, setItemState] = useState({
     itemName: '',
     itemCategory: 0,
     itemDescription: '',
     itemImages: []
   });
+  const [isValid, setIsValid] = useState(false);
+
+  // Hooks
+  const history = useHistory();
 
   useEffect(() => {
-
+    setIsValid(
+      itemState.itemName != '' &&
+      itemState.itemCategory != 0 &&
+      itemState.itemDescription != '' &&
+      itemState.itemImages.length > 0
+    );
   }, [itemState]);
 
   const uploadItem = () => {
     // 1. Verify all information is valid
+    if (isValid) {
+      // 2. Upload item to server
 
-    // 2. Upload item to server
-
-    // 3. Redirect user to the newly-created item's page
+      // 3. Redirect user to the newly-created item's page
+      // For now, let's just redirect the user to homepage
+      // until the item page is completed.
+      history.push('/');
+    } else {
+      // For now, let's just put up an alert message
+      if (itemState.itemName == '') {
+        alert('Item\'s name is missing. Please complete the form.');
+      } else if (itemState.itemCategory == 0) {
+        alert('Item\'s category is invalid. Please complete the form.');
+      } else if (itemState.itemDescription == '') {
+        alert('Item\'s description is missing. Please complete the form.');
+      } else if (itemState.itemImages.length == 0) {
+        alert('There must be at least 1 image of the item. Please try again.');
+      }
+    }
   }
 
   return (
@@ -52,7 +78,7 @@ function ItemUploadPage(props) {
                   onChangeHandler: event => {
                     setItemState({
                       ...itemState,
-                      itemName: event.target.value.trim()
+                      itemName: event.target.value
                     });
                   }
                 }}
@@ -73,18 +99,26 @@ function ItemUploadPage(props) {
               <LabeledTextField onChangeHandler={(event) => {
                 setItemState({
                   ...itemState,
-                  itemDescription: event.target.value.trim()
+                  itemDescription: event.target.value
                 });
               }} textFieldValue={itemState.itemDescription} />
             </div>
             <div className="ItemUploadPage-upload-form-item-images">
               <p>Item's Images</p>
               <input type="file" multiple={true} onChange={(event) => {
-                console.log(event.target.files);
+                setItemState({
+                  ...itemState,
+                  itemImages: event.target.files
+                })
               }} />
             </div>
-            <Button handleOnClick={uploadItem} otherClassNames="purple">Upload Item</Button>
           </form>
+          <div className="ItemUploadPage-actions">
+            <Button disabled={!isValid} handleOnClick={uploadItem} otherClassNames="purple">Upload</Button>
+            <Link to="/profile">
+              <Button handleOnClick={() => { }} otherClassNames="grey">Cancel</Button>
+            </Link>
+          </div>
         </div>
       </div>
       <Footer />
