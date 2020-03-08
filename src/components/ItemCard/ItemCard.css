@@ -7,6 +7,10 @@
   font-family: var(--font-family-global);
 }
 
+.ItemCard a {
+  text-decoration: none;
+}
+
 .ItemCard-item-image {
   border-radius: 15px 15px 0 0;
   width: 100%;
