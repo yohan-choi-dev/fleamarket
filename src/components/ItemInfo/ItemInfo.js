@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../../vars/style.css';
 import './ItemInfo.css';
+
+// Components
 import LikeButton from '../LikeButton/LikeButton';
 import Button from '../Button/Button';
 
@@ -38,13 +41,17 @@ function ItemInfo(props) {
       </div>
 
       <div className="ItemInfo-item-details">
-        <h2 className="ItemInfo-item-name">{item.name}</h2>
-        <p className="ItemInfo-item-owner-name">{item.owner.name}</p>
-        <p className="ItemInfo-item-description">{item.description}</p>
-        {/* <LikeButton className='LikeButton' /> 90
-          <div className="Item-Detail-Button">
-            <Button>Contact User</Button>
-          </div> */}
+        <div className="ItemInfo-item-details-info">
+          <h2 className="ItemInfo-item-name">{item.name}</h2>
+          <p className="ItemInfo-item-owner-name">by <Link to="/">{item.owner.name}</Link></p>
+          <p className="ItemInfo-item-description">{item.description}</p>
+          <div className="ItemInfo-ratings">
+            <LikeButton className="" /> {item.ratings}
+          </div>
+        </div>
+        <div className="ItemInfo-contact-owner">
+          <Button otherClassName="purple">Contact User</Button>
+        </div>
       </div>
     </div>
   );

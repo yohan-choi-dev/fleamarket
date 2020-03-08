@@ -51,9 +51,11 @@ function ItemPage(props) {
   }, []);
 
   return (
-    <div className="ItemPage container">
+    <div className="ItemPage">
       <Navigation />
-      <ItemInfo item={appState.currentItem} />
+      <div className="container">
+        <ItemInfo item={appState.currentItem} />
+      </div>
       <Footer />
     </div>
   );

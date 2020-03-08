@@ -42,5 +42,30 @@
 }
 
 .ItemInfo-item-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   padding-left: 3.89rem;
+}
+
+.ItemInfo-item-name {
+  padding-bottom: 0.44rem;
+}
+
+.ItemInfo-item-owner-name a {
+  color: var(--black);
+}
+
+.ItemInfo-item-description {
+  padding-top: 1.78rem;
+  line-height: var(--font-line-height);
+}
+
+.ItemInfo-ratings {
+  padding-top: 1.78rem;
+  -webkit-user-select: none;
+}
+
+.ItemInfo-ratings .LikeButton {
+  padding-right: 0.44rem;
 }

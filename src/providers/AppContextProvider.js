@@ -29,7 +29,7 @@ function AppContextProvider(props) {
       name: '',
       owner: {
         id: 0,
-        name: ''
+        name: 'William To'
       },
       imageUrls: [
         'https://static.zarahome.net/8/photos4/2020/V/4/1/p/9400/072/999/9400072999_1_1_3.jpg?t=1572015717021',
