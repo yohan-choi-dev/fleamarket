@@ -1,13 +1,14 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/database');
 
-const Chatroom = sequelize.define('Chatroom', {
+const MessageImage = sequelize.define('MessageImage', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true
-    }
+    },
+    imageUrl: DataTypes.STRING
 });
 
-module.exports = Chatroom;
+module.exports = MessageImage;

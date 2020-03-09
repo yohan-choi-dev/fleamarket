@@ -4,14 +4,13 @@ const path = require("path");
 const { validationResult } = require("express-validator");
 
 const sequelize = require("../utils/database");
-const { Model } = require('sequelize');
+
+const User = require("../models/user");
 const Item = require("../models/item");
-const { User } = require("../models/user");
 const UserItemBridge = require("../models/user-item-bridge");
+const ImageLink = require("../models/image-link");
 
 exports.getItems = async (req, res, next) => {
-    let search_query = `SELECT * FROM Items;`;
-
     try {
         let results = await Item.findAll({
             include: [
@@ -34,7 +33,7 @@ exports.getItems = async (req, res, next) => {
                 }
             ]
         });
-        // let results = await sequelize.query(search_query, { type: sequelize.QueryTypes.SELECT });
+
         res.status(200).send(JSON.stringify(results));
     } catch (err) {
         if (!err.statusCode) {
@@ -64,8 +63,7 @@ exports.getItemsByName = async (req, res, next) => {
         if (!err.statusCode) {
             err.statusCode = 500;
         }
-        console.log(err);
-        next();
+        next(err);
     }
 };
 
@@ -82,19 +80,45 @@ exports.getItemsByUser = async (req, res, next) => {
         if (!err.statusCode) {
             err.statusCode = 500;
         }
-        console.log(err);
-        next();
+        next(err);
     }
 };
 
-exports.createItem = async (req, res, next) => {
-    //    const errors
+exports.postItem = async (req, res, next) => {
     const name = req.body.name;
     const description = req.body.description;
+    const category = req.body.category;
+    const imageUrl = req.body.imageUrl;
 
-    Items.create();
+    console.log(name);
+    console.log(description);
+    console.log(category);
+    console.log(imageUrl);
+
+    try {
+        const result = await Item.create({
+            name: name,
+            description: description,
+            category: category,
+            isHidden: false
+        });
+
+        const item = result.get();
+        /*
+        await ImageLink.create({
+            imageLink: imageUrl,
+            itmeId: item.id
+        });
+        */
+        res.status(200).send(JSON.stringify(item));
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        console.log(err);
+        next(err);
+    }
 };
 
-exports.updateItem = async (req, res, next) => {};
-
+exports.patchItem = async (req, res, next) => {};
 exports.deleteItem = async (req, res, next) => {};

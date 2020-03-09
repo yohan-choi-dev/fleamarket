@@ -39,21 +39,4 @@ const User = sequelize.define('User', {
     createAt: false
 });
 
-const Token = sequelize.define('Token', {
-    id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        allowNull: false,
-        primaryKey: true
-    },
-    token: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    }
-});
-
-User.hasMany(Token);
-Token.belongsTo(User);
-
-module.exports.User = User;
-module.exports.Token = Token;
+module.exports = User;

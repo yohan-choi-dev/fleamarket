@@ -22,36 +22,38 @@ if (cluster.isMaster) {
 
         // import a database and models
         const sequelize = require("./utils/database");
-        const { User, Token } = require("./models/user");
+        const User = require("./models/user");
         const Item = require("./models/item");
-        const Comment = require("./models/comment");
+        const UserItemBridge = require("./models/user-item-bridge");
         const Category = require("./models/category");
+        const ItemCategoryBridge = require("./models/item-category-bridge");
+        const Comment = require("./models/comment");
+        const Token = require("./models/token");
         const Feedback = require("./models/feedback");
         const Message = require("./models/message");
         const Notification = require("./models/notification");
-        const UserItemBridge = require("./models/user-item-bridge");
+        const Trade = require("./models/trade");
 
-        const port = process.env.PORT | 10034 | 3000;
+        const port = 12218;
 
         const authRoutes = require("./routes/auth");
         const itemRoutes = require("./routes/items");
+        const categoryRoutes = require("./routes/category");
 
         const ChatService = require("./service/chat-service");
         const app = express();
 
         app.use(bodyParser.json());
 
-        // This middleware allows CORS
         app.use((req, res, next) => {
-            // This header allows the specific origin to access to the api
             // res.setHeader('Access-Control-Allow-Origin', 'myvmlab.senecacollege.ca');
             res.setHeader("Access-Control-Allow-Origin", "*");
 
-            // This header aloows the spcific method to be used
             res.setHeader(
                 "Access-Control-Allow-Methods",
                 "GET, POST, PUT, PATCH, DELETE, OPTIONS"
             );
+
             res.setHeader(
                 "Access-Control-Allow-Headers",
                 "Content-Type, Authorization"
@@ -64,7 +66,8 @@ if (cluster.isMaster) {
 
         app.use("/api/auth", authRoutes);
         app.use("/api/items", itemRoutes);
-        
+        app.use("/api/categories", categoryRoutes);
+
         app.use((error, req, res, next) => {
             const status = error.statusCode || 500;
             const message = error.message;
@@ -78,9 +81,7 @@ if (cluster.isMaster) {
                 const server = app.listen(port, () =>
                     console.log(`Worker ${process.pid} is running on ${port}`)
                 );
-                if (process.env.NODE_ENV == "production") {
-                    const mailService = require("./service/mail-service").init();
-                }
+                const mailService = require("./service/mail-service").init();
             })
             .catch(err => {
                 console.log(err);
@@ -99,15 +100,40 @@ if (cluster.isMaster) {
         const User = require("./models/user");
         const Item = require("./models/item");
 
-        //        const imageRoutes = require("./routes/image.js");
         const port = 5000;
+        const cors = require('cors');
+
+        const corsOptions = {
+            origin: 'http://localhost:3000',
+            optionsSuccessStatus: 200
+        }
+
+        app.use(cors(corsOptions));
+        app.use((req, res, next) => {
+            // res.setHeader('Access-Control-Allow-Origin', 'myvmlab.senecacollege.ca');
+            res.setHeader("Access-Control-Allow-Origin", "*");
+
+            res.setHeader(
+                "Access-Control-Allow-Methods",
+                "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+            );
+
+            res.setHeader(
+                "Access-Control-Allow-Headers",
+                "Content-Type, multipart/from-data"
+            );
+            if (req.method == "OPTIONS") {
+                res.status(200).send();
+            }
+            next();
+        });
 
         const fileStorage = multer.diskStorage({
             destination: (req, res, cb) => {
                 cb(null, "images");
             },
             filename: (req, file, cb) => {
-                cb(null, new Date().toISOString() + "+" + file.originalname);
+                cb(null, file.originalname);
             }
         });
 
@@ -131,8 +157,6 @@ if (cluster.isMaster) {
             )
         );
         app.use("/images", express.static(path.join(__dirname, "images")));
-
-        // app.use("/api/images", imageRoutes);
 
         app.use((err, req, res, next) => {
             const status = err.statusCode || 500;

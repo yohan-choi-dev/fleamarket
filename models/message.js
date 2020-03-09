@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/database');
+const MessageImage = require('./message-image');
 
 const Message = sequelize.define('Message', {
     id: {
@@ -9,11 +10,8 @@ const Message = sequelize.define('Message', {
         primaryKey: true
     },
     message: DataTypes.STRING,
-    image: DataTypes.STRING
-},{
-    timestamps: false,
-    updatedAt: false,
-    createAt: false
 });
+
+Message.hasOne(MessageImage);
 
 module.exports = Message;

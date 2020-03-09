@@ -12,11 +12,7 @@ const sequelize = new Sequelize(database, username, password, {
         min: 0,
         acquire: 400000,
         evict: 200000
-
     }
 });
 
 module.exports = sequelize;
-
-
-

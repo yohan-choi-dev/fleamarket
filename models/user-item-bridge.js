@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/database');
 
-const { User } = require('./user');
+const User = require('./user');
 const Item = require('./item');
 
 const UserItemBridge = sequelize.define('UserItemBridge', {
