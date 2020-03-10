@@ -1,5 +1,5 @@
 .ItemProfile-background {
-    position: absolute;
+    position: relative;
     width: 1360px;
     height: 630px;
     left: 120px;
@@ -13,7 +13,7 @@
 }
 
 .ItemProfile-pic {
-    position: absolute;
+    position: relative;
     width: 500px;
     height: 500px;
     left: 175px;
@@ -24,7 +24,7 @@
 }
 
 .ItemProfile-description {
-    position: absolute;
+    position: relative;
     width: 562px;
     height: 127px;
     left: 863px;
@@ -40,7 +40,7 @@
 }
 
 .ItemProfile-name {
-    position: absolute;
+    position: relative;
     width: 351px;
     height: 42px;
     left: 863px;
@@ -58,7 +58,7 @@
 }
 
 .ItemProfile-from {
-    position: absolute;
+    position: relative;
     width: 105px;
     height: 21px;
     left: 863px;
@@ -76,7 +76,7 @@
 }
 
 .ItemProfile-heart {
-    position: absolute;
+    position: relative;
     width: 40px;
     height: 40px;
     left: 863px;
@@ -87,7 +87,7 @@
 }
 
 .ItemProfile-rate {
-    position: absolute;
+    position: relative;
     width: 21px;
     height: 26px;
     left: 911px;
@@ -105,7 +105,7 @@
 }
 
 .ItemProfile-small-pic {
-    position: absolute;
+    position: relative;
     width: 96px;
     height: 96px;
     left: 697px;
@@ -116,7 +116,7 @@
 }
 
 .ItemProfile-small-pic1 {
-    position: absolute;
+    position: relative;
     width: 96px;
     height: 96px;
     left: 697px;
@@ -129,7 +129,7 @@
 }
 
 .ItemProfile-small-pic2 {
-    position: absolute;
+    position: relative;
     width: 96px;
     height: 96px;
     left: 697px;
@@ -142,7 +142,7 @@
 }
 
 .ItemProfile-small-pic3 {
-    position: absolute;
+    position: relative;
     width: 96px;
     height: 96px;
     left: 697px;
