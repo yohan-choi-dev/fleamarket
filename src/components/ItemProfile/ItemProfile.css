@@ -36,7 +36,7 @@
     font-size: 18px;
     line-height: 26px;
 
-    color: #000000;
+    color: var(--black);
 }
 
 .ItemProfile-name {
@@ -54,7 +54,7 @@
     font-size: 36px;
     line-height: 42px;
 
-    color: #000000;
+    color: var(--black);
 }
 
 .ItemProfile-from {
@@ -72,7 +72,7 @@
     font-size: 18px;
     line-height: 21px;
 
-    color: #000000;
+    color: var(--black);
 }
 
 .ItemProfile-heart {
@@ -82,7 +82,7 @@
     left: 863px;
     top: 476px;
 
-    border: 2px solid #8771A5;
+    border: 2px solid var(--purple);
     box-sizing: border-box;
 }
 
@@ -101,7 +101,7 @@
     font-size: 18px;
     line-height: 26px;
 
-    color: #000000;
+    color: var(--black);
 }
 
 .ItemProfile-small-pic {

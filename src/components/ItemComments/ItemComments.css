@@ -43,7 +43,7 @@
     left: 175px;
     top: 985px;
 
-    background: #C4C4C4;
+    background: var(--grey);
 }
 
 .ItemComments-profile-picture1 {
@@ -53,7 +53,7 @@
     left: 175px;
     top: 1191px;
 
-    background: #C4C4C4;
+    background: var(--grey);
 }
 
 .ItemComments-profile-picture2 {
@@ -63,7 +63,7 @@
     left: 175px;
     top: 1371px;
 
-    background: #C4C4C4;
+    background: var(--grey);
 }
 
 .ItemComments-star {
