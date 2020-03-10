@@ -13,12 +13,13 @@ if (cluster.isMaster) {
         console.log(`worker ${worker.process.pid} died`);
     });
 } else {
-    if (cluster.worker.id == 1) {
         const express = require("express");
 
         const path = require("path");
         const fs = require("fs");
         const bodyParser = require("body-parser");
+        const multer = require('multer');
+        const cors = require('cors');
 
         // import a database and models
         const sequelize = require("./utils/database");
@@ -43,10 +44,15 @@ if (cluster.isMaster) {
         const ChatService = require("./service/chat-service");
         const app = express();
 
+        const corsOptions = {
+            origin: 'http://localhost:3000',
+            optionsSuccessStatus: 200
+        }
+
+        app.use(cors(corsOptions));
         app.use(bodyParser.json());
 
         app.use((req, res, next) => {
-            // res.setHeader('Access-Control-Allow-Origin', 'myvmlab.senecacollege.ca');
             res.setHeader("Access-Control-Allow-Origin", "*");
 
             res.setHeader(
@@ -63,6 +69,37 @@ if (cluster.isMaster) {
             }
             next();
         });
+
+
+        const fileStorage = multer.diskStorage({
+            destination: (req, res, cb) => {
+                cb(null, "images");
+            },
+            filename: (req, file, cb) => {
+                cb(null, new Date().toISOString + '-' +file.originalname);
+            }
+        });
+
+        const fileFilter = (req, file, cb) => {
+            if (
+                file.mimetype == "image/png" ||
+                file.mimetype == "image/jpg" ||
+                file.mimetype == "image/jpeg"
+            ) {
+                cb(null, true);
+            }
+            {
+                cb(null, false);
+            }
+        };
+
+        app.use(
+            multer({ storage: fileStorage, fileFilter: fileFilter }).single(
+                "image"
+            )
+        );
+
+        app.use("/images", express.static(path.join(__dirname, "images")));
 
         app.use("/api/auth", authRoutes);
         app.use("/api/items", itemRoutes);
@@ -86,92 +123,4 @@ if (cluster.isMaster) {
             .catch(err => {
                 console.log(err);
             });
-    } else {
-        const express = require("express");
-
-        const fs = require("fs");
-        const path = require("path");
-        const multer = require("multer");
-        const bodyParser = require("body-parser");
-
-        const sequelize = require("./utils/database");
-        const app = express();
-
-        const User = require("./models/user");
-        const Item = require("./models/item");
-
-        const port = 5000;
-        const cors = require('cors');
-
-        const corsOptions = {
-            origin: 'http://localhost:3000',
-            optionsSuccessStatus: 200
-        }
-
-        app.use(cors(corsOptions));
-        app.use((req, res, next) => {
-            // res.setHeader('Access-Control-Allow-Origin', 'myvmlab.senecacollege.ca');
-            res.setHeader("Access-Control-Allow-Origin", "*");
-
-            res.setHeader(
-                "Access-Control-Allow-Methods",
-                "GET, POST, PUT, PATCH, DELETE, OPTIONS"
-            );
-
-            res.setHeader(
-                "Access-Control-Allow-Headers",
-                "Content-Type, multipart/from-data"
-            );
-            if (req.method == "OPTIONS") {
-                res.status(200).send();
-            }
-            next();
-        });
-
-        const fileStorage = multer.diskStorage({
-            destination: (req, res, cb) => {
-                cb(null, "images");
-            },
-            filename: (req, file, cb) => {
-                cb(null, file.originalname);
-            }
-        });
-
-        const fileFilter = (req, file, cb) => {
-            if (
-                file.mimetype == "image/png" ||
-                file.mimetype == "image/jpg" ||
-                file.mimetype == "image/jpeg"
-            ) {
-                cb(null, true);
-            }
-            {
-                cb(null, false);
-            }
-        };
-
-        app.use(bodyParser.json());
-        app.use(
-            multer({ storage: fileStorage, fileFilter: fileFilter }).single(
-                "image"
-            )
-        );
-        app.use("/images", express.static(path.join(__dirname, "images")));
-
-        app.use((err, req, res, next) => {
-            const status = err.statusCode || 500;
-            const message = err.message;
-            const data = err.data;
-
-            res.status(status).json({ message: message, data: data });
-        });
-
-        sequelize.sync().then(res => {
-            app.listen(port, () => {
-                console.log(`Image server is listening on ${port}`);
-            });
-        });
-
-        // In the end, add functionality for controlling thread based on the latency
-    }
 }
