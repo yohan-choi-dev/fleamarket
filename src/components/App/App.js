@@ -42,6 +42,9 @@ function ModalSwitch() {
         <Route path="/" exact={true}>
           <HomePage />
         </Route>
+        <Route path="/item/:itemId">
+          <ItemPage />
+        </Route>
         <Route path="*">
           <NotFoundPage />
         </Route>

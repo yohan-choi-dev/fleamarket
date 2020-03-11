@@ -49,7 +49,7 @@ function ItemPage(props) {
         console.error(err);
       });
   }, []);
-
+  
   return (
     <div className="ItemPage">
       <Navigation />
