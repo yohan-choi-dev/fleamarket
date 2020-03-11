@@ -19,12 +19,14 @@ if (cluster.isMaster) {
         const fs = require("fs");
         const bodyParser = require("body-parser");
         const multer = require('multer');
+        const cryptoRandomString = require('crypto-random-string');
         const cors = require('cors');
 
         // import a database and models
         const sequelize = require("./utils/database");
         const User = require("./models/user");
         const Item = require("./models/item");
+        const ImageLink = require('./models/image-link');
         const UserItemBridge = require("./models/user-item-bridge");
         const Category = require("./models/category");
         const ItemCategoryBridge = require("./models/item-category-bridge");
@@ -50,7 +52,6 @@ if (cluster.isMaster) {
         }
 
         app.use(cors(corsOptions));
-        app.use(bodyParser.json());
 
         app.use((req, res, next) => {
             res.setHeader("Access-Control-Allow-Origin", "*");
@@ -62,7 +63,7 @@ if (cluster.isMaster) {
 
             res.setHeader(
                 "Access-Control-Allow-Headers",
-                "Content-Type, Authorization"
+                "Content-Type, Authorization, mutilpart/form-data, applcation/json"
             );
             if (req.method == "OPTIONS") {
                 res.status(200).send();
@@ -76,7 +77,7 @@ if (cluster.isMaster) {
                 cb(null, "images");
             },
             filename: (req, file, cb) => {
-                cb(null, new Date().toISOString + '-' +file.originalname);
+                cb(null, cryptoRandomString({length: 20, type: 'base64'}) + path.extname(file.originalname));
             }
         });
 
@@ -93,6 +94,8 @@ if (cluster.isMaster) {
             }
         };
 
+        app.use(bodyParser.json());
+        
         app.use(
             multer({ storage: fileStorage, fileFilter: fileFilter }).single(
                 "image"

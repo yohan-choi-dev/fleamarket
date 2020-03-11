@@ -13,10 +13,6 @@ const UserItemBridge = sequelize.define('UserItemBridge', {
     },
     owned: DataTypes.BOOLEAN,
     isFavorite: DataTypes.BOOLEAN
-},{
-    timestamp: false,
-    updateAt: false,
-    createAt: false
 });
 
 User.belongsToMany(Item, { through: 'UserItemBridge' });

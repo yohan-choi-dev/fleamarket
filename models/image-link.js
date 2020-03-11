@@ -19,7 +19,7 @@ const ImageLink = sequelize.define('ImageLink',{
     createAt: false
 });
 
-Item.hasMany(ImageLink);
-ImageLink.belongsTo(Item);
-
+//ImageLink.belongsTo(Item, {foreignKey: 'itemId'});
+Item.hasMany(ImageLink, { foreignKey: 'itemId'});
 module.exports = ImageLink;
+
