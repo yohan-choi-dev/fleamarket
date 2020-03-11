@@ -8,6 +8,7 @@ import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 import VerifyYourEmailPage from '../../pages/VerifyYourEmailPage/VerifyYourEmailPage';
 import AccountSettingsPage from '../../pages/AccountSettingsPage/AccountSettingsPage';
 import ItemPage from '../../pages/ItemPage/ItemPage';
+import ChatroomPage from '../../pages/ChatroomPage/ChatroomPage';
 
 // Components
 import CreateAccountModal from '../../components/CreateAccountModal/CreateAccountModal';
@@ -31,6 +32,9 @@ function ModalSwitch() {
         </PrivateRoute>
         <PrivateRoute path="/account-settings">
           <AccountSettingsPage />
+        </PrivateRoute>
+        <PrivateRoute path="/chatroom">
+          <ChatroomPage />
         </PrivateRoute>
         <Route path={`/item/:itemId`}>
           <ItemPage />

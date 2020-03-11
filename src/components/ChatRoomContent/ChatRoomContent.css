@@ -1,20 +1,20 @@
 
 
-.ChatRoom-Reply .Button {
+.Chatroom-Reply .Button {
   background-color: var(--purple);
   color: white;
 }
 
-.ChatRoom-Reply .Button:hover {
+.Chatroom-Reply .Button:hover {
   background-color: var(--dark-purple);
 }
-.ChatRoom-Reply {
+.Chatroom-Reply {
   position: relative;
   top: 2.5rem;
   left: 4rem;
 }
 
-.ChatRoom-Message {
+.Chatroom-Message {
   overflow: auto;
   padding: 4rem;
   height: 50rem;
@@ -22,7 +22,7 @@
 
 
 
-.ChatRoom-MessageBox{
+.Chatroom-MessageBox{
    padding:0rem 2rem 3rem 1rem;
     background-color: #ececec;
     min-width: 5rem;
