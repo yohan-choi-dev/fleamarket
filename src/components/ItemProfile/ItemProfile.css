@@ -1,5 +1,5 @@
 .ItemProfile-background {
-    position: absolute;
+    position: relative;
     width: 1360px;
     height: 630px;
     left: 120px;
@@ -13,7 +13,7 @@
 }
 
 .ItemProfile-pic {
-    position: absolute;
+    position: relative;
     width: 500px;
     height: 500px;
     left: 175px;
@@ -24,7 +24,7 @@
 }
 
 .ItemProfile-description {
-    position: absolute;
+    position: relative;
     width: 562px;
     height: 127px;
     left: 863px;
@@ -36,11 +36,11 @@
     font-size: 18px;
     line-height: 26px;
 
-    color: #000000;
+    color: var(--black);
 }
 
 .ItemProfile-name {
-    position: absolute;
+    position: relative;
     width: 351px;
     height: 42px;
     left: 863px;
@@ -54,11 +54,11 @@
     font-size: 36px;
     line-height: 42px;
 
-    color: #000000;
+    color: var(--black);
 }
 
 .ItemProfile-from {
-    position: absolute;
+    position: relative;
     width: 105px;
     height: 21px;
     left: 863px;
@@ -72,22 +72,22 @@
     font-size: 18px;
     line-height: 21px;
 
-    color: #000000;
+    color: var(--black);
 }
 
 .ItemProfile-heart {
-    position: absolute;
+    position: relative;
     width: 40px;
     height: 40px;
     left: 863px;
     top: 476px;
 
-    border: 2px solid #8771A5;
+    border: 2px solid var(--purple);
     box-sizing: border-box;
 }
 
 .ItemProfile-rate {
-    position: absolute;
+    position: relative;
     width: 21px;
     height: 26px;
     left: 911px;
@@ -101,11 +101,11 @@
     font-size: 18px;
     line-height: 26px;
 
-    color: #000000;
+    color: var(--black);
 }
 
 .ItemProfile-small-pic {
-    position: absolute;
+    position: relative;
     width: 96px;
     height: 96px;
     left: 697px;
@@ -116,7 +116,7 @@
 }
 
 .ItemProfile-small-pic1 {
-    position: absolute;
+    position: relative;
     width: 96px;
     height: 96px;
     left: 697px;
@@ -129,7 +129,7 @@
 }
 
 .ItemProfile-small-pic2 {
-    position: absolute;
+    position: relative;
     width: 96px;
     height: 96px;
     left: 697px;
@@ -142,7 +142,7 @@
 }
 
 .ItemProfile-small-pic3 {
-    position: absolute;
+    position: relative;
     width: 96px;
     height: 96px;
     left: 697px;

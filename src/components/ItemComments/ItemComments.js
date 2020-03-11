@@ -8,8 +8,8 @@ import './ItemComments.css';
     <div>
      <div className="ItemComments">
       <div className="ItemComments-comments-info">
-        <h1 className="ItemComments-comments-picture">{comments.picture}</h1>
-        <h1 className="ItemComments-comments-name">{comments.name}</h1>
+        <img className="ItemComments-comments-picture" width="42" height="42">{comments.picture}</img>
+        <h4 className="ItemComments-comments-name">{comments.name}</h4>
         <h2 className="ItemComments-comments-rating">{comments.rating}</h2>
         <p className="ItemComments-comments-description">{comments.description}</p>
       </div>

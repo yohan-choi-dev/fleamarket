@@ -22,4 +22,5 @@ function ChatroomContent(props) {
     </div>
   );
 }
+
 export default ChatroomContent;
