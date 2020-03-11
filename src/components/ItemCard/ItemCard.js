@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import '../../vars/style.css';
 import './ItemCard.css';
 import LikeButton from '../LikeButton/LikeButton';
 
+// Contexts
+import AppContext from '../../contexts/AppContext';
+
+// API Route
+import APIRoute from '../../vars/api-routes';
+
 function ItemCard(props) {
   const { item } = props;
+
   return (
     <div className="ItemCard">
       <Link to={`/item/${item.id}`}>
@@ -18,8 +25,8 @@ function ItemCard(props) {
         <div className="ItemCard-item-info">
           <h1 className="ItemCard-item-name">{item.name}</h1>
           {/* <p className="ItemCard-item-owner">
-            posted by <span></span>
-          </p> */}
+          posted by <span></span>
+        </p> */}
           <p className="ItemCard-item-description">{item.description}</p>
           <div className="ItemCard-LikeButton-container">
             <LikeButton />
