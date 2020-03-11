@@ -19,6 +19,12 @@
   width: auto;
 }
 
+.ProfilePage-user-items-actions {
+  display: flex;
+  justify-content: center;
+  padding-top: 2.33rem;
+}
+
 @media (max-width: 1240px) {
   .ProfilePage-user-items-content {
     grid-template-columns: 1fr 1fr;

@@ -7,6 +7,7 @@ import ProfilePage from '../../pages/ProfilePage/ProfilePage';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 import VerifyYourEmailPage from '../../pages/VerifyYourEmailPage/VerifyYourEmailPage';
 import AccountSettingsPage from '../../pages/AccountSettingsPage/AccountSettingsPage';
+import ItemUploadPage from '../../pages/ItemUploadPage/ItemUploadPage';
 import ItemPage from '../../pages/ItemPage/ItemPage';
 import ChatroomPage from '../../pages/ChatroomPage/ChatroomPage';
 
@@ -32,6 +33,9 @@ function ModalSwitch() {
         </PrivateRoute>
         <PrivateRoute path="/account-settings">
           <AccountSettingsPage />
+        </PrivateRoute>
+        <PrivateRoute path="/upload-item">
+          <ItemUploadPage />
         </PrivateRoute>
         <PrivateRoute path="/chatroom">
           <ChatroomPage />

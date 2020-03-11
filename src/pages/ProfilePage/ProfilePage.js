@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import './ProfilePage.css';
 import APIRoute from '../../vars/api-routes';
 
@@ -10,6 +11,7 @@ import Navigation from '../../components/Navigation/Navigation';
 import ProfileCard from '../../components/ProfileCard/ProfileCard';
 import ItemCard from '../../components/ItemCard/ItemCard';
 import Footer from '../../components/Footer/Footer';
+import Button from '../../components/Button/Button';
 
 function ProfilePage(props) {
   const { appState } = useContext(AppContext);
@@ -44,6 +46,13 @@ function ProfilePage(props) {
               <ItemCard item={item} key={`ItemCard-${index}`} />
             ))
           }
+        </div>
+        <div className="ProfilePage-user-items-actions">
+          <Link to="/upload-item">
+            <Button otherClassNames="purple">
+              Upload Item
+            </Button>
+          </Link>
         </div>
       </div>
       <Footer />

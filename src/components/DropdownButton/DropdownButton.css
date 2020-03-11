@@ -1,0 +1,15 @@
+.DropdownButton {
+  display: inline-block;
+  padding: 0.64rem 0.56rem;
+  border-radius: 3px;
+  background-color: var(--light-grey);
+}
+
+.DropdownButton-select {
+  background-color: var(--light-grey);
+  outline: none;
+  border: none;
+  font-family: var(--font-family-global);
+  font-size: 1rem;
+  font-weight: 600;
+}
