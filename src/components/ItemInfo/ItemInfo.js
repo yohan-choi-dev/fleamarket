@@ -17,7 +17,6 @@ function ItemInfo(props) {
   }
 
   const imageList = item.imageUrls.map((currentImageUrl, index) => {
-
     return (
       <li
         className={`ItemInfo-images-thumbnail-small ${index == currentImage ? 'active' : ''}`}
