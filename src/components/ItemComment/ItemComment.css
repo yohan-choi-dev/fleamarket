@@ -1,0 +1,77 @@
+.ItemComment {
+  height: 40rem;
+  margin: 3rem 3rem 5rem 5rem;
+  width: 85rem;
+  border-radius: 1.5rem;
+  box-shadow: var(--shadow-card-normal);
+  clear: both;
+  padding-left: 4rem;
+  padding-top: 4rem;
+}
+
+.ItemComment-Detail-User img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 4rem;
+}
+
+.StarIcon {
+  width: 1rem;
+  fill: var(--lightcoral);
+  margin-left: 1rem;
+  position: relative;
+  top: 2px;
+}
+
+.ItemComment-Detail-User b {
+  padding-left: 1rem;
+  width: 94%;
+  margin-top: 0.5rem;
+}
+
+.ItemComment-Detail-User img,
+.ItemComment-Detail-User b {
+  float: left;
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.StarIcon,
+.ItemComment-Detail-User p {
+  float: left;
+  margin-top: 3px;
+}
+
+.ItemComment-Detail-User {
+  clear: both;
+}
+
+.ItemComment-Detail {
+  padding-bottom: 2rem;
+}
+
+.ItemComment-Detail-Content {
+  clear: both;
+  width: 60%;
+  padding-bottom: 2rem;
+}
+.ItemComment-Detail-User p {
+  font-size: 9px;
+  padding-left: 5px;
+  font-weight: 100;
+}
+
+.ItemComment-Detail-Container{
+    overflow: hidden;
+    height: 85%;
+
+}
+
+.ItemComment-Reply .Button{
+    background-color: var(--purple);    
+    color: white;
+}
+
+.ItemComment-Reply .Button:hover{
+    background-color: var(--dark-purple);
+}
