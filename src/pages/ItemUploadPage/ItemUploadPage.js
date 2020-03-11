@@ -30,24 +30,6 @@ function ItemUploadPage(props) {
   // Hooks
   const history = useHistory();
 
-  const fileUploadHandler = async () => {
-    let response;
-    try {
-      const fd = new FormData();
-      fd.append('image', itemState.itemImages, itemState.itemImages.name);
-      response = await axios.post(`${APIRoute}/api/items`, fd, {
-        onUploadProgress: progressEvent => {
-          console.log(
-            'Upload Progress: ' + Math.round(progressEvent.loaded / progressEvent.total) * 100
-          );
-        }
-      });
-    } catch (err) {
-      console.error(err);
-    }
-    return response;
-  };
-
   useEffect(() => {
     setIsValid(
       itemState.itemName != '' &&
@@ -61,20 +43,26 @@ function ItemUploadPage(props) {
     // 1. Verify all information is valid
     if (isValid) {
       // 2. Upload item to server
-      const response = await fetch(`${APIRoute}/api/items`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': true
-        },
-        body: JSON.stringify({
-          name: itemState.itemName,
-          description: itemState.itemDescription,
-          category: itemState.itemCategory
-        })
-      });
+      let response;
 
-      fileUploadHandler();
+      try {
+        const fd = new FormData();
+        fd.append('name', itemState.itemName);
+        fd.append('category', itemState.itemCategory);
+        fd.append('description', itemState.itemDescription);
+        fd.append('image', itemState.itemImages, itemState.itemImages.name);
+        response = await axios.post(`${APIRoute}/api/items`, fd, {
+          onUploadProgress: progressEvent => {
+            console.log(
+              'Upload Progress: ' + Math.round(progressEvent.loaded / progressEvent.total) * 100
+            );
+          }
+        });
+        console.log(response);
+      } catch (err) {
+        console.error(err);
+      }
+      return response;
 
       // 3. Redirect user to the newly-created item's page
       // For now, let's just redirect the user to homepage
@@ -96,7 +84,6 @@ function ItemUploadPage(props) {
 
   return (
     <div className="ItemUploadPage">
-      <Navigation />
       <div className="ItemUploadPage-upload-form-container container">
         <div className="ItemUploadPage-upload-form">
           <h3>Upload Item</h3>
