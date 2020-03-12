@@ -31,7 +31,6 @@ function HomePage(props) {
     fetchItems();
   }, []);
 
-
   return (
     <div className="HomePage">
       <Navigation />

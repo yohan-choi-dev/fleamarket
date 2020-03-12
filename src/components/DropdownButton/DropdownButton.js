@@ -6,10 +6,10 @@ function DropdownButton(props) {
   return (
     <div className="DropdownButton">
       <select className="DropdownButton-select" onChange={onChangeHandler}>
-        <option value="0">Category&nbsp;</option>
-        <option value="1">Electronics&nbsp;</option>
-        <option value="2">Apparels&nbsp;</option>
-        <option value="3">Books&nbsp;</option>
+        <option value="Category">Category&nbsp;</option>
+        <option value="Electronics">Electronics&nbsp;</option>
+        <option value="Apparels">Apparels&nbsp;</option>
+        <option value="Books">Books&nbsp;</option>
       </select>
     </div>
   );
