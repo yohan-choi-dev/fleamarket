@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/database');
 
-const { User } = require('./user');
+const User = require('./user');
 const Item = require('./item');
 
 const UserItemBridge = sequelize.define('UserItemBridge', {
@@ -13,10 +13,6 @@ const UserItemBridge = sequelize.define('UserItemBridge', {
     },
     owned: DataTypes.BOOLEAN,
     isFavorite: DataTypes.BOOLEAN
-},{
-    timestamp: false,
-    updateAt: false,
-    createAt: false
 });
 
 User.belongsToMany(Item, { through: 'UserItemBridge' });

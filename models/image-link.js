@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/database');
+const Item = require('../models/item');
 
 const ImageLink = sequelize.define('ImageLink',{
     id: {
@@ -18,4 +19,7 @@ const ImageLink = sequelize.define('ImageLink',{
     createAt: false
 });
 
+//ImageLink.belongsTo(Item, {foreignKey: 'itemId'});
+Item.hasMany(ImageLink, { foreignKey: 'itemId'});
 module.exports = ImageLink;
+
