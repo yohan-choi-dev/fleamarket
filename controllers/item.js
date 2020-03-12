@@ -18,22 +18,15 @@ exports.getItems = async (req, res, next) => {
         {
           model: User,
           through: {
-            attributes: ["id", "email", "name", "liked", "disliked"],
-            where: {
-              isActivated: true
-            }
+            attributes: ["id", "email", "name", "liked", "disliked"]
           }
         },
         {
-          model: ImageLink,
-          through: {
-            attributes: ["url"]
-          }
+          model: ImageLink
         }
       ]
     });
 
-    console.log(items[0].dataValues);
     res.status(200).send(JSON.stringify(items));
   } catch (err) {
     if (!err.statusCode) {
@@ -68,14 +61,29 @@ exports.getItemsByName = async (req, res, next) => {
 };
 
 exports.getItemsByUser = async (req, res, next) => {
-  let user = req.query.user;
-  let search_query = `SELECT * FROM Items
-                        WHERE (userId = ${user});`;
+  let userId = req.query.user;
+  
   try {
-    let results = await sequelize.query(search_query, {
-      type: sequelize.QueryTypes.SELECT
+
+    let items = await Item.findAll({
+      include: [
+        {
+          model: User,
+          through: {
+            attributes: ["id", "email", "name", "liked", "disliked"],
+            where: {
+              id: userId
+            } 
+          }
+        },
+        {
+          model: ImageLink
+        }
+      ]
     });
-    res.status(200).send(JSON.stringify(results));
+
+    res.status(200).send(JSON.stringify(items));
+
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
@@ -84,9 +92,7 @@ exports.getItemsByUser = async (req, res, next) => {
   }
 };
 
-exports.getItemsByCategory = async (req, res, next) => {
-
-};
+exports.getItemsByCategory = async (req, res, next) => {};
 
 exports.postItem = async (req, res, next) => {
   if (!req.file) {
@@ -94,7 +100,8 @@ exports.postItem = async (req, res, next) => {
     err.statusCode = 422;
     next(err);
   }
-  //console.log(req);
+
+  const userId = req.body.userId;
   const name = req.body.name;
   const category = req.body.category;
   const description = req.body.description;
@@ -107,17 +114,23 @@ exports.postItem = async (req, res, next) => {
       category: category,
       isHidden: false
     });
-    console.log(imageURL);
 
     const item = result.get();
-    console.log(item);
+
+    await UserItemBridge.create({
+      owned: true,
+      isFavorite: false,
+      ItemId: item.id,
+      UserId: userId
+    })
+
     await ImageLink.create({
       url: imageURL,
-      itemId: result.get().id
+      itemId: item.id
     });
 
     item.imageLink = imageURL;
-    console.log(ImageLink.rawAttributes);
+
     res.status(200).send(JSON.stringify(item));
   } catch (err) {
     if (!err.statusCode) {
