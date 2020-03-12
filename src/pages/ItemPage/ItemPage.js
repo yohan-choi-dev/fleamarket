@@ -27,29 +27,49 @@ function ItemPage(props) {
     });
 
     const body = await response.json();
+    return body;
+  }
 
+  const fetchItemImages = async (id) => {
+    const response = await fetch(`http://localhost:12218/api/images?itemId=${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': true
+      }
+    });
+
+    const body = await response.json();
     return body;
   }
 
   useEffect(() => {
     fetchItemById(itemId)
       .then(data => {
-        const fetchedItem = data[0];
+        const fetchedItem = data;
 
-        setAppState({
-          ...appState,
-          currentItem: {
-            ...appState.currentItem,
-            id: fetchedItem.id,
-            name: fetchedItem.name,
-            description: fetchedItem.description
-          }
-        });
+        fetchItemImages(fetchedItem.id)
+          .then(data => {
+            console.log(data);
+            setAppState({
+              ...appState,
+              currentItem: {
+                ...appState.currentItem,
+                id: fetchedItem.id,
+                name: fetchedItem.name,
+                description: fetchedItem.description,
+                imageUrls: data.map(itemImage => `http://myvmlab.senecacollege.ca:6765/${itemImage.url}`)
+              }
+            });
+          })
+          .catch(err => {
+            console.error(err);
+          });
       }).catch(err => {
         console.error(err);
       });
   }, []);
-  
+
   return (
     <div className="ItemPage">
       <Navigation />

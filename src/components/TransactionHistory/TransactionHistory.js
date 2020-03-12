@@ -1,12 +1,10 @@
 import React from 'react';
-import './TranscationHistory.css';
+import './TransactionHistory.css';
 import '../../vars/style.css';
-import TranscationStatus from '../TranscationStatus/TranscationStatus';
+import TransactionStatus from '../TransactionStatus/TransactionStatus';
 
-
-
-function TranscationHistory(props) {
-  const { items } = props;
+function TransactionHistory(props) {
+  const { items, otherClassNames } = props;
 
   const list = items.map(item => {
     return (
@@ -14,17 +12,17 @@ function TranscationHistory(props) {
         <th>{item.name}</th>   {/*need to be a link*/}
         <th>{item.date}</th>
         <th>{item.buyer}</th>  {/*link to the user's profile*/}
-        <th className={item.status}><TranscationStatus status={item.status}/></th>  
+        <th className={item.status}><TransactionStatus status={item.status} /></th>
       </tr>
     );
   });
 
   return (
-    <div className="TranscationHistory">
-      <h1>Transcation History</h1>
+    <div className={`TransactionHistory ${otherClassNames}`}>
+      <h2>Transaction History</h2>
       <div className="Content">
-        <table className='Transcation-Table'>
-          <tr className='Title'>
+        <table className="TransactionHistory-table">
+          <tr className="TransactionHistory-table-heading-row">
             <th>Item</th>
             <th>Date</th>
             <th>User</th>
@@ -37,4 +35,4 @@ function TranscationHistory(props) {
   );
 }
 
-export default TranscationHistory;
+export default TransactionHistory;
