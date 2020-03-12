@@ -10,6 +10,7 @@ import AccountSettingsPage from '../../pages/AccountSettingsPage/AccountSettings
 import ItemUploadPage from '../../pages/ItemUploadPage/ItemUploadPage';
 import ItemPage from '../../pages/ItemPage/ItemPage';
 import ChatroomPage from '../../pages/ChatroomPage/ChatroomPage';
+import TransactionPage from '../../pages/TransactionPage/TransactionPage';
 
 // Components
 import CreateAccountModal from '../../components/CreateAccountModal/CreateAccountModal';
@@ -39,6 +40,9 @@ function ModalSwitch() {
         </PrivateRoute>
         <PrivateRoute path="/chatroom">
           <ChatroomPage />
+        </PrivateRoute>
+        <PrivateRoute path="/transaction-history">
+          <TransactionPage />
         </PrivateRoute>
         <Route path={`/item/:itemId`}>
           <ItemPage />

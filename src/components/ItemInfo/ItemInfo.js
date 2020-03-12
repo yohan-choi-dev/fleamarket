@@ -9,7 +9,6 @@ import Button from '../Button/Button';
 
 function ItemInfo(props) {
   const { item } = props;
-  // const { appState } = useContext(AppContext);
   const [currentImage, setCurrentImage] = useState(0);
 
   const selectCurrentImage = (index) => {
@@ -29,6 +28,8 @@ function ItemInfo(props) {
       </li>
     );
   });
+
+  console.log(item);
 
   return (
     <div className="ItemInfo">

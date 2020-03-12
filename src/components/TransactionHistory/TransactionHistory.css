@@ -1,29 +1,20 @@
-.TranscationHistory {
+.TransactionHistory {
+  padding-top: 4.44rem;
   font-family: var(--font-family-global);
   text-align: left;
-  padding: 3rem 3rem 5rem 5rem;
 }
 
-h1 {
-  padding-bottom: 2rem;
+.TransactionHistory h2 {
+  padding-bottom: 1.78rem;
 }
 
-th {
-  width: 25%;
-}
-.Transcation-Table {
+.TransactionHistory-table {
+  width: 100%;
   font-size: 1rem;
   font-weight: normal;
-  width: 95%;
-  line-height: 3;
-  border-radius: 1.5rem;
+  border-radius: 0.83rem;
   box-shadow: var(--shadow-card-normal);
-  padding: 3rem 5rem 3rem 9rem;
   align-content: center;
-}
-
-.Title {
-  font-size: 1.5rem;
 }
 
 .Complete {
