@@ -31,9 +31,9 @@ exports.getItems = async (req, res, next) => {
     if (!err.statusCode) {
       err.statusCode = 500;
     }
+    console.log(err);
+    next(err);
   }
-
-  // res.status(200).send(JSON.stringify(items));
 };
 
 exports.getItemById = async (req, res, next) => {
