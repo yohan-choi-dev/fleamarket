@@ -7,9 +7,9 @@ const imageController = require('../controllers/image');
 // /api/images/ => GET
 router.get('/', (req, res, next) => {
     if (req.query.id) {
-        itemController.getImageById(req, res, next);
+        imageController.getImageById(req, res, next);
     } else if (req.query.itemId) {
-        itemController.getItemByItemId(req, res, next);
+        imageController.getImageByItemId(req, res, next);
     }
 });
 
