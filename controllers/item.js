@@ -26,7 +26,6 @@ exports.getItems = async (req, res, next) => {
         }
       ]
     });
-
     res.status(200).send(JSON.stringify(items));
   } catch (err) {
     if (!err.statusCode) {
@@ -36,6 +35,28 @@ exports.getItems = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.getItemById = async (req, res, next) => {
+  let itemId = req.params.itemId;
+  let search_query = `SELECT * FROM Items
+                        WHERE id=${itemId}`;
+  try {
+    let results = await sequelize.query(search_query, {
+      type: sequelize.QueryTypes.SELECT
+    });
+    if (results.length === 0) {
+      const error = new Error("No Search Result");
+      error.statusCode = 401;
+      throw error;
+    }
+    res.status(200).send(JSON.stringify(results[0]));
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+}
 
 exports.getItemsByName = async (req, res, next) => {
   let name = req.query.name;
@@ -62,7 +83,7 @@ exports.getItemsByName = async (req, res, next) => {
 
 exports.getItemsByUser = async (req, res, next) => {
   let userId = req.query.user;
-  
+
   try {
 
     let items = await Item.findAll({
@@ -73,7 +94,7 @@ exports.getItemsByUser = async (req, res, next) => {
             attributes: ["id", "email", "name", "liked", "disliked"],
             where: {
               id: userId
-            } 
+            }
           }
         },
         {
@@ -88,11 +109,10 @@ exports.getItemsByUser = async (req, res, next) => {
     if (!err.statusCode) {
       err.statusCode = 500;
     }
-    next(err);
   }
-};
+}
 
-exports.getItemsByCategory = async (req, res, next) => {};
+exports.getItemsByCategory = async (req, res, next) => { };
 
 exports.postItem = async (req, res, next) => {
   if (!req.file) {
@@ -136,10 +156,8 @@ exports.postItem = async (req, res, next) => {
     if (!err.statusCode) {
       err.statusCode = 500;
     }
-    console.log(err);
-    next(err);
-  }
-};
+  };
+}
 
-exports.patchItem = async (req, res, next) => {};
-exports.deleteItem = async (req, res, next) => {};
+exports.patchItem = async (req, res, next) => { };
+exports.deleteItem = async (req, res, next) => { };

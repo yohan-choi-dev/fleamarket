@@ -13,6 +13,10 @@ router.get("/", (req, res, next) => {
     }
 });
 
+router.get("/:itemId", (req, res, next) => {
+    itemController.getItemById(req, res, next);
+});
+
 // /api/items/ => POST 
 router.post("/", itemController.postItem);
 
