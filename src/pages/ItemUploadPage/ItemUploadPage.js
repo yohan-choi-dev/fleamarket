@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import './ItemUploadPage.css';
 
@@ -18,6 +18,8 @@ import axios from 'axios';
 
 function ItemUploadPage(props) {
   // States
+  const { appState } = useContext(AppContext);
+
   const [itemState, setItemState] = useState({
     itemName: '',
     itemCategory: 0,
@@ -47,10 +49,13 @@ function ItemUploadPage(props) {
 
       try {
         const fd = new FormData();
+        fd.append('userId', appState.user.id);
         fd.append('name', itemState.itemName);
         fd.append('category', itemState.itemCategory);
         fd.append('description', itemState.itemDescription);
         fd.append('image', itemState.itemImages, itemState.itemImages.name);
+        console.log(`app state is ${appState}`);
+        console.log(appState);
         response = await axios.post(`${APIRoute}/api/items`, fd, {
           onUploadProgress: progressEvent => {
             console.log(
@@ -58,16 +63,15 @@ function ItemUploadPage(props) {
             );
           }
         });
-        console.log(response);
+        history.push('/profile');
+        return response;
       } catch (err) {
         console.error(err);
       }
-      return response;
 
       // 3. Redirect user to the newly-created item's page
       // For now, let's just redirect the user to homepage
       // until the item page is completed.
-      //     history.push('/');
     } else {
       // For now, let's just put up an alert message
       if (itemState.itemName == '') {
@@ -84,6 +88,7 @@ function ItemUploadPage(props) {
 
   return (
     <div className="ItemUploadPage">
+      <Navigation />
       <div className="ItemUploadPage-upload-form-container container">
         <div className="ItemUploadPage-upload-form">
           <h3>Upload Item</h3>
