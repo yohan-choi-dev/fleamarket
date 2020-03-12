@@ -1,0 +1,44 @@
+.Chatroom-Reply .Button {
+  background-color: var(--purple);
+  color: white;
+}
+
+.Chatroom-Reply .Button:hover {
+  background-color: var(--dark-purple);
+}
+.Chatroom-Reply {
+  position: relative;
+  top: 2.5rem;
+  left: 4rem;
+}
+
+
+.Chatroom-Message {
+  overflow: auto;
+  padding: 4rem;
+  height: 50rem;
+}
+
+
+
+
+.Chatroom-MessageBox{
+   padding:0rem 2rem 3rem 1rem;
+    background-color: #ececec;
+    min-width: 5rem;
+    max-width: 30rem;
+    border-radius: 1rem;
+    
+}
+
+.username{
+
+    font-weight: 900;
+    color: var(--purple);
+}
+
+p{
+    line-height: 1.5rem;
+    padding-left: 4.5rem;
+    padding-top: 1.5rem;
+}

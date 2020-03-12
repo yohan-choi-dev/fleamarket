@@ -1,5 +1,13 @@
+.ItemComments-comments-section{
+    position: relative;
+    width: 812px;
+    height: 540px;
+    left: 175px;
+    top: 985px;
+}
+
 .ItemComments-background {
-    position: absolute;
+    position: relative;
     width: 1360px;
     height: 746px;
     left: 120px;
@@ -13,7 +21,7 @@
 }
 
 .ItemComments-title-comment {
-    position: absolute;
+    position: relative;
     width: 177px;
     height: 42px;
     left: 120px;
@@ -29,37 +37,37 @@
 }
 
 .ItemComments-profile-picture {
-    position: absolute;
+    position: relative;
     width: 64px;
     height: 64px;
     left: 175px;
     top: 985px;
 
-    background: #C4C4C4;
+    background: var(--grey);
 }
 
 .ItemComments-profile-picture1 {
-    position: absolute;
+    position: relative;
     width: 64px;
     height: 64px;
     left: 175px;
     top: 1191px;
 
-    background: #C4C4C4;
+    background: var(--grey);
 }
 
 .ItemComments-profile-picture2 {
-    position: absolute;
+    position: relative;
     width: 64px;
     height: 64px;
     left: 175px;
     top: 1371px;
 
-    background: #C4C4C4;
+    background: var(--grey);
 }
 
 .ItemComments-star {
-    position: absolute;
+    position: relative;
     width: 13px;
     height: 12.4px;
     left: 247px;
@@ -71,7 +79,7 @@
 }
 
 .ItemComments-star1 {
-    position: absolute;
+    position: relative;
     width: 13px;
     height: 12.4px;
     left: 247px;
@@ -83,7 +91,7 @@
 }
 
 .ItemComments-star2 {
-    position: absolute;
+    position: relative;
     width: 13px;
     height: 12.4px;
     left: 247px;
@@ -95,7 +103,7 @@
 }
 
 .ItemComments-rate {
-    position: absolute;
+    position: relative;
     width: 19px;
     height: 16px;
     left: 264px;
@@ -111,7 +119,7 @@
 }
 
 .ItemComments-rate1 {
-    position: absolute;
+    position: relative;
     width: 19px;
     height: 16px;
     left: 264px;
@@ -127,7 +135,7 @@
 }
 
 .ItemComments-rate2 {
-    position: absolute;
+    position: relative;
     width: 19px;
     height: 16px;
     left: 264px;
@@ -143,7 +151,7 @@
 }
 
 .ItemComments-user {
-    position: absolute;
+    position: relative;
     width: 92px;
     height: 21px;
     left: 247px;
@@ -160,7 +168,7 @@
 
 
 .ItemComments-user1 {
-    position: absolute;
+    position: relative;
     width: 131px;
     height: 21px;
     left: 247px;
@@ -176,7 +184,7 @@
 }
 
 .ItemComments-user2 {
-    position: absolute;
+    position: relative;
     width: 56px;
     height: 21px;
     left: 247px;
@@ -193,7 +201,7 @@
 
 
 .ItemComments-comments {
-    position: absolute;
+    position: relative;
     width: 812px;
     height: 78px;
     left: 175px;
@@ -209,7 +217,7 @@
 }
 
 .ItemComments-comments1 {
-    position: absolute;
+    position: relative;
     width: 812px;
     height: 52px;
     left: 175px;
@@ -225,7 +233,7 @@
 }
 
 .ItemComments-comments2 {
-    position: absolute;
+    position: relative;
     width: 812px;
     height: 78px;
     left: 175px;
@@ -241,7 +249,7 @@
 }
 
 .ItemComments-write-comments {
-    position: absolute;
+    position: relative;
     width: 1114px;
     height: 47px;
     left: 175px;
