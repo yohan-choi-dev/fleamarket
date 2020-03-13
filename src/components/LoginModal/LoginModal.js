@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import './LoginModal.css';
 
 // Context
@@ -32,6 +32,7 @@ function LoginModal(props) {
 
   // Hooks
   const history = useHistory();
+  let location = useLocation();
 
   // Effects
   useEffect(() => {
@@ -120,9 +121,14 @@ function LoginModal(props) {
               }}
             />
           </div>
-          <Button handleOnClick={handleOnClick} disabled={!formIsValid}>
-            Login
-          </Button>
+          <div className="LoginModal-actions">
+            <Button handleOnClick={handleOnClick} disabled={!formIsValid}>
+              Login
+            </Button>
+            <Link to="/reset-password">
+              I forgot my password
+            </Link>
+          </div>
         </form>
       </Modal>
     </div>

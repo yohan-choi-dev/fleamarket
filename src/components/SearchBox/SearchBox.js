@@ -38,11 +38,13 @@ const SearchBox = () => {
           signal: signal
         }).then((response) => {
           response.json().then((data) => {
-            setSearchItems(data);
-            setSearchStatus({
-              ...searchStatus,
-              loading: false
-            });
+            if (!data.message) {
+              setSearchItems(data);
+              setSearchStatus({
+                ...searchStatus,
+                loading: false
+              });
+            }
           });
         }).catch(err => {
           console.error(err);
