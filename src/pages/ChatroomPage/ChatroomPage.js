@@ -7,7 +7,7 @@ import AppContext from '../../contexts/AppContext';
 // Components
 import Navigation from '../../components/Navigation/Navigation';
 import Footer from '../../components/Footer/Footer';
-import Chatroom from '../../components/Chatroom/Chatroom';
+import Chatroom from '../../components/ChatRoom/ChatRoom';
 
 function ChatroomPage(props) {
   const { appState } = useContext(AppContext);

@@ -1,4 +1,4 @@
-.Chatroom-Nav {
+.ChatRoom-Nav {
   background-color: #ececec;
 
   padding-left: 2rem;
@@ -15,7 +15,7 @@
   overflow: auto;
 }
 
-.Chatroom {
+.ChatRoom {
   height: 58rem;
   margin: 3rem 3rem 5rem 5rem;
   width: 80rem;
@@ -23,7 +23,7 @@
   box-shadow: var(--shadow-card-normal);
 }
 
-.Chatroom-Context {
+.ChatRoom-Context {
   float: left;
 
   line-height: 3rem;
