@@ -125,7 +125,7 @@ function LoginModal(props) {
             <Button handleOnClick={handleOnClick} disabled={!formIsValid}>
               Login
             </Button>
-            <Link to="/reset-password">
+            <Link to="/recover-account">
               I forgot my password
             </Link>
           </div>

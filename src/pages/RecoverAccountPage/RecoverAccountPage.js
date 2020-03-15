@@ -7,13 +7,38 @@ import Footer from '../../components/Footer/Footer';
 import LabeledInputField from '../../components/LabeledInputField/LabeledInputField';
 import Button from '../../components/Button/Button';
 
+import APIRoute from '../../vars/api-routes';
+
 function RecoverAccountPage(props) {
   const [userEmail, setUserEmail] = useState('');
 
-  const handleOnClick = () => {
-    // 1. Send a request to the recovery route on the server
+  const getRecoveryEmail = async () => {
+    const response = await fetch(`${APIRoute}/api/auth/recover-account`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': true
+      },
+      body: JSON.stringify({
+        email: userEmail
+      })
+    });
 
+    if (response.status >= 200 && response.status < 300) {
+      const body = await response.json();
+
+      window.alert(`Recovery email sent successfully!`);
+    }
+  }
+
+  console.log(APIRoute);
+
+  const handleOnClick = (event) => {
+    event.preventDefault();
+    // 1. Send a request to the recovery route on the server
+    getRecoveryEmail();
     // 2. Redirect user to a page that says it is successful lol
+
   }
 
   return (
