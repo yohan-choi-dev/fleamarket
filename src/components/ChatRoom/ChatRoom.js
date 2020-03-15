@@ -1,10 +1,10 @@
 import React from 'react';
 import '../../vars/style.css';
-import './Chatroom.css';
-import ChatroomContent from '../ChatroomContent/ChatroomContent';
+import './ChatRoom.css';
+import ChatRoomContent from '../ChatRoomContent/ChatRoomContent';
 import TextField from '../TextField/TextField';
 
-class Chatroom extends React.Component {
+class ChatRoom extends React.Component {
   constructor(props) {
     super(props);
     this.state = { user: '' };
@@ -19,7 +19,7 @@ class Chatroom extends React.Component {
     const users = this.props.users;
     const list = users.map(u => {
       return (
-        <div className="Chatroom-Nav-User" id="wing" onClick={() => this.handleClick(u)}>
+        <div className="ChatRoom-Nav-User" id="wing" onClick={() => this.handleClick(u)}>
           <li>
             <img src="https://interactive-examples.mdn.mozilla.net/media/examples/grapefruit-slice-332-332.jpg"></img>
             {u}
@@ -29,14 +29,14 @@ class Chatroom extends React.Component {
     });
 
     return (
-      <div className="Chatroom">
-        <div className="Chatroom-Nav">{list}</div>
-        <div className="Chatroom-Context">
-          <ChatroomContent user={this.state.user} />
+      <div className="ChatRoom">
+        <div className="ChatRoom-Nav">{list}</div>
+        <div className="ChatRoom-Context">
+          <ChatRoomContent user={this.state.user} />
         </div>
       </div>
     );
   }
 }
 
-export default Chatroom;
+export default ChatRoom;

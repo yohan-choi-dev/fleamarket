@@ -1,13 +1,13 @@
 import React from 'react';
 import TextField from '../TextField/TextField';
 import Button from '../Button/Button';
-import './ChatroomContent.css';
+import './ChatRoomContent.css';
 
-function ChatroomContent(props) {
+function ChatRoomContent(props) {
   return (
-    <div className="ChatroomContent">
-      <div className="Chatroom-Message">
-        <div className="Chatroom-MessageBox">
+    <div className="ChatRoomContent">
+      <div className="ChatRoom-Message">
+        <div className="ChatRoom-MessageBox">
           <div className="username">
             <img src="https://interactive-examples.mdn.mozilla.net/media/examples/grapefruit-slice-332-332.jpg"></img>
             Wing Tung Lau
@@ -15,7 +15,7 @@ function ChatroomContent(props) {
           <p>hello my name is Wing Tung and I want to buy your product</p>
         </div>
       </div>
-      <div className="Chatroom-Reply">
+      <div className="ChatRoom-Reply">
         <TextField text="Type your message..." size="80" />
         <Button>Reply</Button>
       </div>
@@ -23,4 +23,4 @@ function ChatroomContent(props) {
   );
 }
 
-export default ChatroomContent;
+export default ChatRoomContent;
