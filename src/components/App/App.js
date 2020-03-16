@@ -11,6 +11,8 @@ import ItemUploadPage from '../../pages/ItemUploadPage/ItemUploadPage';
 import ItemPage from '../../pages/ItemPage/ItemPage';
 import ChatroomPage from '../../pages/ChatroomPage/ChatroomPage';
 import TransactionPage from '../../pages/TransactionPage/TransactionPage';
+import RecoverAccountPage from '../../pages/RecoverAccountPage/RecoverAccountPage';
+import RecoverPasswordPage from '../../pages/RecoverPasswordPage/RecoverPasswordPage';
 
 // Components
 import CreateAccountModal from '../../components/CreateAccountModal/CreateAccountModal';
@@ -47,6 +49,12 @@ function ModalSwitch() {
         <Route path={`/item/:itemId`}>
           <ItemPage />
         </Route>
+        <Route exact path="/recover-account">
+          <RecoverAccountPage />
+        </Route>
+        <Route path="/recover-account/change-password">
+          <RecoverPasswordPage />
+        </Route>
         <Route path="/" exact={true}>
           <HomePage />
         </Route>
@@ -60,6 +68,7 @@ function ModalSwitch() {
 
       {background && <Route path="/signup" children={<CreateAccountModal />} />}
       {background && <Route path="/login" children={<LoginModal />} />}
+      {/* {background && <Route path="/reset-password" children={<ResetPasswordModal />} />} */}
     </div>
   );
 }

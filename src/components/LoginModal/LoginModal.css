@@ -11,3 +11,19 @@
 .LoginModal-form .LabeledInputField {
   padding-bottom: 1.4rem;
 }
+
+.LoginModal-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.LoginModal-actions a {
+  color: var(--black);
+  font-size: 1rem;
+  transition: color 200ms ease-in-out;
+}
+
+.LoginModal-actions a:hover {
+  color: var(--dark-grey);
+}
