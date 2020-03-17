@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const { validationResult } = require("express-validator");
 
 const bcrypt = require("bcryptjs");
@@ -177,3 +178,51 @@ exports.confirmEmail = async (req, res, next) => {
         next(error);
     }
 };
+
+exports.recoverAccount = async (req, res, next) => {
+    const email = req.body.email;
+
+    try {
+        let loadedUser = await User.findOne({
+            where: {
+                email: email
+            }
+        });
+
+        if (loadedUser === null) {
+            const error = new Error(`${email} does not exist!`);
+            error.statusCode = 401;
+            throw error;
+        } else if (!loadedUser.isActivated) {
+            const error = new Error(`User account ${email} is not activated!`);
+            error.statusCode = 403;
+            throw error;
+        }
+
+        const cryptoURL = cryptoRandomString({ length: 48, type: "url-safe" });
+
+        const token = await Token.create({
+            token: cryptoURL,
+            UserId: loadedUser.id
+        });
+
+        const resetUrl =
+            `http://localhost:3000/recover-account/change-password?userId=${loadedUser.id}&token=${cryptoURL}`;
+
+        MailService.sendMail(loadedUser.email, {
+            subject: "FleaMarket - Recover your account",
+            text: resetUrl,
+            html: `<a href='${resetUrl}'>Reset your password here</a>`
+        });
+
+        res.status(200).json({
+            message: "Successfully sent email to recover account!"
+        });
+
+    } catch (error) {
+        if (!error.statusCode) {
+            error.statusCode = 500;
+        }
+        next(error);
+    }
+}

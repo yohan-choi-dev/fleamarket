@@ -38,4 +38,6 @@ router.post('/login', authController.login);
 
 router.get('/confirmEmail', authController.confirmEmail);
 
+router.post('/recover-account', authController.recoverAccount);
+
 module.exports = router;
