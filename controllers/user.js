@@ -28,61 +28,23 @@ const updateUserEmail = async (req, res, next) => {
   }
 };
 
-const updateUserPassword = async (req, res, next) => {
-  const userId = req.params.userId;
-  const newPassword = req.body.newPassword;
-
-  // Update user's email
-  let query = `UPDATE Users SET password="${newPassword}" WHERE id=${userId};`;
-  try {
-    let results = await sequelize.query(query, {
-      type: sequelize.QueryTypes.UPDATE
-    });
-    if (results.length === 0) {
-      const error = new Error("No Search Result");
-      error.statusCode = 401;
-      throw error;
-    }
-    res.status(200).send(JSON.stringify(results));
-  } catch (err) {
-    if (!err.statusCode) {
-      err.statusCode = 500;
-    }
-    next(err);
-  }
-};
-
 const updateUserAddress = async (req, res, next) => {
   const userId = req.params.userId;
-  const newApartmentNumber = req.params.newAppartmentNumber;
-  const newBuildingNumber = req.params.newBuildingNumber;
-  const newStreetNumber = req.params.newStreetNumber;
-  const newStreetName = req.params.newStreetName;
-  const newCity = req.params.newCity;
-  const newProvince = req.params.newProvince;
-  const newPostalCode = req.params.newPostalCode;
-  const newCountry = req.params.newCountry;
-  const newPhoneNumber = req.params.newPhoneNumber;
+  const newApartmentNumber = req.body.newAppartmentNumber;
+  const newBuildingNumber = req.body.newBuildingNumber;
+  const newStreetNumber = req.body.newStreetNumber;
+  const newStreetName = req.body.newStreetName;
+  const newCity = req.body.newCity;
+  const newProvince = req.body.newProvince;
+  const newPostalCode = req.body.newPostalCode;
+  const newCountry = req.body.newCountry;
+  const newPhoneNumber = req.body.newPhoneNumber;
 
   const newAddress =
-    newApartmentNumber +
-    "" +
-    newBuildingNumber +
-    "" +
-    newStreetNumber +
-    "" +
-    newStreetName +
-    "" +
-    newCity +
-    "" +
-    newProvince +
-    "" +
-    newPostalCode +
-    "" +
-    newCountry;
+    `${newApartmentNumber} ${newBuildingNumber} ${newStreetNumber} ${newStreetName} ${newCity} ${newProvince} ${newPostalCode} ${newCountry}`;
 
   // Update user's address
-  let query = `UPDATE Users SET address="${newAddress}",phoneNumber="${newPhoneNumber}" WHERE id=${userId};`;
+  let query = `UPDATE Users SET address="${newAddress}" WHERE id=${userId};`;
   try {
     let results = await sequelize.query(query, {
       type: sequelize.QueryTypes.UPDATE
@@ -93,29 +55,6 @@ const updateUserAddress = async (req, res, next) => {
       throw error;
     }
     res.status(200).send(JSON.stringify(results));
-  } catch (err) {
-    if (!err.statusCode) {
-      err.statusCode = 500;
-    }
-    next(err);
-  }
-};
-
-exports.getUserById = async (req, res, next) => {
-  let userId = req.params.userId;
-  let search_query = `SELECT name,email,address,paymentID 
-                        FROM Users
-                          WHERE id=${userId}`;
-  try {
-    let results = await sequelize.query(search_query, {
-      type: sequelize.QueryTypes.SELECT
-    });
-    if (results.length === 0) {
-      const error = new Error("No Search Result");
-      error.statusCode = 401;
-      throw error;
-    }
-    res.status(200).send(JSON.stringify(results[0]));
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
@@ -176,6 +115,29 @@ const updateUserPassword = async (req, res, next) => {
   }
 }
 
+exports.getUserById = async (req, res, next) => {
+  let userId = req.params.userId;
+  let search_query = `SELECT name,email,address,image,liked,disliked 
+                        FROM Users
+                          WHERE id=${userId}`;
+  try {
+    let results = await sequelize.query(search_query, {
+      type: sequelize.QueryTypes.SELECT
+    });
+    if (results.length === 0) {
+      const error = new Error("No Search Result");
+      error.statusCode = 401;
+      throw error;
+    }
+    res.status(200).send(JSON.stringify(results[0]));
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};
+
 exports.updateAccountSettings = async (req, res, next) => {
   if (req.body.newEmail) {
     // update user's email
@@ -189,7 +151,7 @@ exports.updateAccountSettings = async (req, res, next) => {
 
   if (req.body.newAddress) {
     // Update user's address
-    await updateUserAddress(res);
+    await updateUserAddress(req, res, next);
   }
 
   next();
