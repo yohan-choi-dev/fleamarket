@@ -84,31 +84,18 @@ exports.getItemsByName = async (req, res, next) => {
 exports.getItemsByUser = async (req, res, next) => {
   let userId = req.query.user;
 
+  let search_query = `SELECT * FROM Items i, Users u, UserItemBridges ui 
+                      WHERE ui.UserId = u.id AND ui.ItemId = i.id AND u.id=${userId}`;
   try {
-
-    let items = await Item.findAll({
-      include: [
-        {
-          model: User,
-          through: {
-            attributes: ["id", "email", "name", "liked", "disliked"],
-            where: {
-              id: userId
-            }
-          }
-        },
-        {
-          model: ImageLink
-        }
-      ]
+    let results = await sequelize.query(search_query, {
+      type: sequelize.QueryTypes.SELECT
     });
-
-    res.status(200).send(JSON.stringify(items));
-
+    res.status(200).send(JSON.stringify(results));
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
     }
+    next(err);
   }
 }
 

@@ -8,6 +8,8 @@ const itemController = require("../controllers/item");
 router.get("/", (req, res, next) => {
     if (req.query.name) {
         itemController.getItemsByName(req, res, next);
+    } else if (req.query.user) {
+        itemController.getItemsByUser(req, res, next);
     } else {
         itemController.getItems(req, res, next);
     }
