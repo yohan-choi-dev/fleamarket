@@ -50,7 +50,7 @@ function ItemInfo(props) {
           </div>
         </div>
         <div className="ItemInfo-contact-owner">
-          <Button otherClassName="purple">Contact User</Button>
+          <Link to="/chatroom"><Button otherClassName="purple">Contact User</Button></Link>
         </div>
       </div>
     </div>

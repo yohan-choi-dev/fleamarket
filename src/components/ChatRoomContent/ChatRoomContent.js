@@ -4,21 +4,25 @@ import Button from '../Button/Button';
 import './ChatRoomContent.css';
 
 function ChatRoomContent(props) {
+  const { loggedInUserId, otherUserId } = props;
+
+  const messages = [];
+
   return (
     <div className="ChatRoomContent">
-      <div className="ChatRoom-Message">
-        <div className="ChatRoom-MessageBox">
-          <div className="username">
-            <img src="https://interactive-examples.mdn.mozilla.net/media/examples/grapefruit-slice-332-332.jpg"></img>
-            Wing Tung Lau
+      <div className="ChatRoomContent-Message">
+        {/* <div className="ChatRoomContent-MessageBox">
+          <div className="ChatRoomContent-MessageBox-user">
+            <div className="ChatRoomContent-MessageBox-user-profile-photo"></div>
+            <span className="ChatRoomContent-MessageBox-user-name">Wing Tung Lau</span>
           </div>
-          <p>hello my name is Wing Tung and I want to buy your product</p>
-        </div>
+          <p className="ChatRoomContent-MessageBox-message">hello my name is Wing Tung and I want to buy your product</p>
+        </div> */}
       </div>
-      <div className="ChatRoom-Reply">
+      {/* <div className="ChatRoom-Reply">
         <TextField text="Type your message..." size="80" />
         <Button>Reply</Button>
-      </div>
+      </div> */}
     </div>
   );
 }
