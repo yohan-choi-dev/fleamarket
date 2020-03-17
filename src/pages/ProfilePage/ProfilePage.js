@@ -38,6 +38,13 @@ function ProfilePage(props) {
     <div className="ProfilePage">
       <Navigation />
       <ProfileCard profile={appState.user} />
+      <div className="ProfilePage-user-items-actions">
+        <Link to="/upload-item">
+          <Button otherClassNames="purple">
+            Upload Item
+          </Button>
+        </Link>
+      </div>
       <div className="ProfilePage-user-items container">
         <h2>My items</h2>
         <div className="ProfilePage-user-items-content">
@@ -46,13 +53,6 @@ function ProfilePage(props) {
               <ItemCard item={item} key={`ItemCard-${index}`} />
             ))
           }
-        </div>
-        <div className="ProfilePage-user-items-actions">
-          <Link to="/upload-item">
-            <Button otherClassNames="purple">
-              Upload Item
-            </Button>
-          </Link>
         </div>
       </div>
       <Footer />

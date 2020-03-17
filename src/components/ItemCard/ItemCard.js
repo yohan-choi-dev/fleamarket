@@ -13,7 +13,7 @@ import APIRoute from '../../vars/api-routes';
 function ItemCard(props) {
   const { item } = props;
 
-  const url = `http://myvmlab.senecacollege.ca:6765/${item.ImageLinks[0].url}`;
+  const url = `http://myvmlab.senecacollege.ca:6761/${item.ImageLinks[0].url}`;
 
   return (
     <div className="ItemCard">

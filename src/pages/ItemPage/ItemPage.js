@@ -31,7 +31,7 @@ function ItemPage(props) {
   }
 
   const fetchItemImages = async (id) => {
-    const response = await fetch(`http://localhost:12218/api/images?itemId=${id}`, {
+    const response = await fetch(`${APIRoute}/api/images?itemId=${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ function ItemPage(props) {
                 id: fetchedItem.id,
                 name: fetchedItem.name,
                 description: fetchedItem.description,
-                imageUrls: data.map(itemImage => `http://myvmlab.senecacollege.ca:6765/${itemImage.url}`)
+                imageUrls: data.map(itemImage => `${APIRoute}/${itemImage.url}`)
               }
             });
           })
