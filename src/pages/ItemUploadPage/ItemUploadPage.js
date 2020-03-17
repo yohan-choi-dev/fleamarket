@@ -35,9 +35,9 @@ function ItemUploadPage(props) {
   useEffect(() => {
     setIsValid(
       itemState.itemName != '' &&
-        itemState.itemCategory != 0 &&
-        itemState.itemDescription != '' &&
-        itemState.itemImages != null
+      itemState.itemCategory != 0 &&
+      itemState.itemDescription != '' &&
+      itemState.itemImages != null
     );
   }, [itemState]);
 
@@ -139,7 +139,7 @@ function ItemUploadPage(props) {
               <p>Item's Images</p>
               <input
                 type="file"
-                multiple={true}
+                multiple={false}
                 onChange={event => {
                   console.log(event.target.files[0]);
                   setItemState({
@@ -155,7 +155,7 @@ function ItemUploadPage(props) {
               Upload
             </Button>
             <Link to="/profile">
-              <Button handleOnClick={() => {}} otherClassNames="grey">
+              <Button handleOnClick={() => { }} otherClassNames="grey">
                 Cancel
               </Button>
             </Link>
