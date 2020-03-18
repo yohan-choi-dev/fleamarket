@@ -13,6 +13,8 @@ import ChatroomPage from '../../pages/ChatroomPage/ChatroomPage';
 import TransactionPage from '../../pages/TransactionPage/TransactionPage';
 import RecoverAccountPage from '../../pages/RecoverAccountPage/RecoverAccountPage';
 import RecoverPasswordPage from '../../pages/RecoverPasswordPage/RecoverPasswordPage';
+import AboutUsPage from '../../pages/AboutUsPage/AboutUsPage';
+import PrivacyPolicyPage from '../../pages/PrivacyPolicyPage/PrivacyPolicyPage';
 
 // Components
 import CreateAccountModal from '../../components/CreateAccountModal/CreateAccountModal';
@@ -30,6 +32,12 @@ function ModalSwitch() {
       <Switch location={background || location}>
         <Route path="/verify-your-email">
           <VerifyYourEmailPage />
+        </Route>
+        <Route path="/about-us">
+          <AboutUsPage />
+        </Route>
+        <Route path="/privacy-policy">
+          <PrivacyPolicyPage />
         </Route>
         <PrivateRoute path="/profile">
           <ProfilePage />

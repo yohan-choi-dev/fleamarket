@@ -11,13 +11,10 @@ function Footer() {
           <h4 className="Footer-content-heading">About</h4>
           <ul>
             <li>
-              <Link to="/about/company">Company</Link>
+              <Link to="/about-us">About Us</Link>
             </li>
             <li>
-              <Link to="/about/policy">Privacy Policy</Link>
-            </li>
-            <li>
-              <Link to="/about/contact-us">Contact Us</Link>
+              <Link to="/privacy-policy">Privacy Policy</Link>
             </li>
           </ul>
         </div>

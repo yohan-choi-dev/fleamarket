@@ -67,8 +67,11 @@
   box-shadow: 0 0 4px 0 #ccc;
 }
 
-.SearchBox .SearchBox-results-item .SearchBox-results-item-info-name {
+.SearchBox-results-item-info {
   padding-left: 0.56rem;
+}
+
+.SearchBox .SearchBox-results-item .SearchBox-results-item-info-name {
   font-weight: 600;
   color: var(--black);
 }

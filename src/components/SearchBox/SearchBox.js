@@ -5,6 +5,8 @@ import { ReactComponent as SearchIcon } from '@fortawesome/fontawesome-free/svgs
 import '../../vars/style.css';
 import './SearchBox.css';
 
+import APIRoute from '../../vars/api-routes';
+
 const SearchBox = () => {
 
   const [searchStatus, setSearchStatus] = useState({
@@ -76,11 +78,13 @@ const SearchBox = () => {
         <ul className="SearchBox-search-results-items">
           {
             searchItems.map((item, index) => {
+              const itemImageUrl = `${APIRoute}/${item.url}`;
               return (
                 <li className="SearchBox-results-item" key={`SearchBox-results-item-${index}`}>
-                  <img className="SearchBox-results-item-image" src={item.image} alt="item" />
+                  <img className="SearchBox-results-item-image" src={itemImageUrl} alt="item" />
                   <div className="SearchBox-results-item-info">
-                    <Link className="SearchBox-results-item-info-name" to="/">{item.name}</Link>
+                    <Link className="SearchBox-results-item-info-name" to={`/item/${item.id}`}>{item.name}</Link>
+                    <p className="SearchBox-results-item-info-username">posted by <span>{item.userName}</span></p>
                   </div>
                 </li>
               );
