@@ -12,44 +12,34 @@ const UserItemBridge = require("../models/user-item-bridge");
 const ImageLink = require("../models/image-link");
 
 exports.getItems = async (req, res, next) => {
+  let search_query = `SELECT i.id, i.name as "name", il.url, i.description, u.id as "userId", u.name as "userName" FROM Items i, Users u, UserItemBridges ui, ImageLinks il 
+                      WHERE ui.UserId = u.id AND ui.ItemId = i.id AND il.itemId = i.id`;
   try {
-    let items = await Item.findAll({
-      include: [
-        {
-          model: User,
-          through: {
-            attributes: ["id", "email", "name", "liked", "disliked"]
-          }
-        },
-        {
-          model: ImageLink
-        }
-      ]
+    let results = await sequelize.query(search_query, {
+      type: sequelize.QueryTypes.SELECT
     });
-    res.status(200).send(JSON.stringify(items));
+    res.status(200).send(JSON.stringify(results));
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
     }
-    console.log(err);
     next(err);
   }
 };
 
 exports.getItemById = async (req, res, next) => {
   let itemId = req.params.itemId;
-  let search_query = `SELECT * FROM Items
-                        WHERE id=${itemId}`;
+  let search_query = `
+    SELECT  i.id, i.name as "name", il.url, i.description, 
+            u.id as "userId", u.name as "userName" 
+    FROM Items i, Users u, UserItemBridges ui, ImageLinks il 
+    WHERE ui.UserId = u.id AND ui.ItemId = i.id AND il.itemId = i.id AND i.id=${itemId};
+  `;
   try {
     let results = await sequelize.query(search_query, {
       type: sequelize.QueryTypes.SELECT
     });
-    if (results.length === 0) {
-      const error = new Error("No Search Result");
-      error.statusCode = 401;
-      throw error;
-    }
-    res.status(200).send(JSON.stringify(results[0]));
+    res.status(200).send(JSON.stringify(results));
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
@@ -60,18 +50,18 @@ exports.getItemById = async (req, res, next) => {
 
 exports.getItemsByName = async (req, res, next) => {
   let name = req.query.name;
-  let search_query = `SELECT * FROM Items
-                        WHERE (name LIKE '%${name}%'
-                        OR description LIKE '%${name}%');`;
+  let search_query = `
+    SELECT  i.id, i.name as "name", il.url, i.description, 
+            u.id as "userId", u.name as "userName" 
+    FROM Items i, Users u, UserItemBridges ui, ImageLinks il 
+    WHERE ui.UserId = u.id AND ui.ItemId = i.id AND il.itemId = i.id
+    AND (i.name LIKE '%${name}%'
+    OR i.description LIKE '%${name}%');
+  `;
   try {
     let results = await sequelize.query(search_query, {
       type: sequelize.QueryTypes.SELECT
     });
-    if (results.length === 0) {
-      const error = new Error("No Search Result");
-      error.statusCode = 401;
-      throw error;
-    }
     res.status(200).send(JSON.stringify(results));
   } catch (err) {
     if (!err.statusCode) {
@@ -84,31 +74,18 @@ exports.getItemsByName = async (req, res, next) => {
 exports.getItemsByUser = async (req, res, next) => {
   let userId = req.query.user;
 
+  let search_query = `SELECT i.id, i.name as "name", il.url, i.description, u.id as "userId", u.name as "userName" FROM Items i, Users u, UserItemBridges ui, ImageLinks il 
+                      WHERE ui.UserId = u.id AND ui.ItemId = i.id AND il.itemId = i.id AND u.id=${userId}`;
   try {
-
-    let items = await Item.findAll({
-      include: [
-        {
-          model: User,
-          through: {
-            attributes: ["id", "email", "name", "liked", "disliked"],
-            where: {
-              id: userId
-            }
-          }
-        },
-        {
-          model: ImageLink
-        }
-      ]
+    let results = await sequelize.query(search_query, {
+      type: sequelize.QueryTypes.SELECT
     });
-
-    res.status(200).send(JSON.stringify(items));
-
+    res.status(200).send(JSON.stringify(results));
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
     }
+    next(err);
   }
 }
 
