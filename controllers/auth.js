@@ -207,7 +207,7 @@ exports.recoverAccount = async (req, res, next) => {
         });
 
         const resetUrl =
-            `http://myvmlab.senecacollege.ca:6761/recover-account/change-password?userId=${loadedUser.id}&token=${cryptoURL}`;
+            `http://myvmlab.senecacollege.ca:6761/reset-password?userId=${loadedUser.id}&token=${cryptoURL}`;
 
         MailService.sendMail(loadedUser.email, {
             subject: "FleaMarket - Recover your account",
