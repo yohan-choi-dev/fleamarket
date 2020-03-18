@@ -29,7 +29,7 @@ function AppContextProvider(props) {
       name: '',
       owner: {
         id: 0,
-        name: 'William To'
+        name: ''
       },
       imageUrls: [],
       description: '',

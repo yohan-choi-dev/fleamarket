@@ -37,7 +37,7 @@ function ItemUploadPage(props) {
       itemState.itemName != '' &&
       itemState.itemCategory != 0 &&
       itemState.itemDescription != '' &&
-      itemState.itemImages != null
+      itemState.itemImages.length > 0
     );
   }, [itemState]);
 

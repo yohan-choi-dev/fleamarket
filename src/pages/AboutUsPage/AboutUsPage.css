@@ -1,0 +1,15 @@
+.AboutUsPage-content {
+  padding-top: 3.2rem;
+  padding-bottom: 3.2rem;
+  font-family: var(--font-family-global);
+  line-height: var(--font-line-height);
+}
+
+.AboutUsPage-content h2 {
+  padding-bottom: 1.2rem;
+}
+
+.AboutUsPage-content p {
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
+}
