@@ -36,8 +36,7 @@ function ItemUploadPage(props) {
     setIsValid(
       itemState.itemName != '' &&
       itemState.itemCategory != 0 &&
-      itemState.itemDescription != '' &&
-      Object.keys(itemState.itemImages).length > 0
+      itemState.itemDescription != ''
     );
   }, [itemState]);
 
