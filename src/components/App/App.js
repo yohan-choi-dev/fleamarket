@@ -60,7 +60,7 @@ function ModalSwitch() {
         <Route exact path="/recover-account">
           <RecoverAccountPage />
         </Route>
-        <Route path="/recover-account/change-password">
+        <Route path="/reset-password">
           <RecoverPasswordPage />
         </Route>
         <Route path="/" exact={true}>
