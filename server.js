@@ -18,7 +18,6 @@ if (cluster.isMaster) {
     const path = require("path");
     const fs = require("fs");
     const bodyParser = require("body-parser");
-    const multer = require('multer');
     const cryptoRandomString = require('crypto-random-string');
     const cors = require('cors');
 
@@ -73,36 +72,8 @@ if (cluster.isMaster) {
         next();
     });
 
-
-    const fileStorage = multer.diskStorage({
-        destination: (req, res, cb) => {
-            cb(null, "images");
-        },
-        filename: (req, file, cb) => {
-            cb(null, cryptoRandomString({ length: 20, type: 'base64' }) + path.extname(file.originalname));
-        }
-    });
-
-    const fileFilter = (req, file, cb) => {
-        if (
-            file.mimetype == "image/png" ||
-            file.mimetype == "image/jpg" ||
-            file.mimetype == "image/jpeg"
-        ) {
-            cb(null, true);
-        }
-        {
-            cb(null, false);
-        }
-    };
-
     app.use(bodyParser.json());
-
-    app.use(
-        multer({ storage: fileStorage, fileFilter: fileFilter }).single(
-            "image"
-        )
-    );
+    app.use(express.urlencoded({ extended: false, limit: '50mb' }));
 
     app.use("/images", express.static(path.join(__dirname, "images")));
 
