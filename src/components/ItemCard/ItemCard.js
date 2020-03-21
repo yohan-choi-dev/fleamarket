@@ -13,7 +13,7 @@ import APIRoute from '../../vars/api-routes';
 function ItemCard(props) {
   const { item } = props;
 
-  const url = `${APIRoute}/${item.url}`;
+  const url = `${APIRoute}/${item.url[0]}`;
 
   return (
     <div className="ItemCard">
