@@ -3,18 +3,33 @@ const path = require("path");
 const formidable = require("formidable");
 
 const sequelize = require("../utils/database");
-
+const { asyncForEach } = require('../utils/async-for-each');
 const Item = require("../models/item");
 const UserItemBridge = require("../models/user-item-bridge");
 const ImageLink = require("../models/image-link");
 
 exports.getItems = async (req, res, next) => {
-  let search_query = `SELECT i.id, i.name as "name", il.url, i.description, u.id as "userId", u.name as "userName" FROM Items i, Users u, UserItemBridges ui, ImageLinks il 
-                      WHERE ui.UserId = u.id AND ui.ItemId = i.id AND il.itemId = i.id`;
+  let search_query = `SELECT i.id, i.name as "name", i.description, u.id as "userId", u.name as "userName" FROM Items i, Users u, UserItemBridges ui 
+                      WHERE ui.UserId = u.id AND ui.ItemId = i.id`;
   try {
-    let results = await sequelize.query(search_query, {
+    let items = await sequelize.query(search_query, {
       type: sequelize.QueryTypes.SELECT
     });
+
+    let results = [];
+
+    await asyncForEach(items, async (item) => {
+      let search_query = `SELECT il.url FROM ImageLinks il
+                      WHERE il.itemId=${item.id} LIMIT 1`;
+      let images = await sequelize.query(search_query, {
+        type: sequelize.QueryTypes.SELECT
+      });
+      results.push({
+        ...item,
+        url: images.map(image => image.url)
+      });
+    });
+
     res.status(200).send(JSON.stringify(results));
   } catch (err) {
     if (!err.statusCode) {
@@ -103,18 +118,7 @@ exports.getItemsByUser = async (req, res, next) => {
 
 exports.getItemsByCategory = async (req, res, next) => { };
 
-async function asyncForEach(array, callback) {
-  for (let index = 0; index < array.length; index++) {
-    await callback(array[index], index, array);
-  }
-}
-
 exports.postItem = async (req, res, next) => {
-  // if (!req.file) {
-  //   const err = new Error("Image file is not valid");
-  //   err.statusCode = 422;
-  //   next(err);
-  // }
 
   const userId = req.body.userId;
   const name = req.body.name;
