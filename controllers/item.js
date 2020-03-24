@@ -85,9 +85,18 @@ exports.getItemsByName = async (req, res, next) => {
 
 exports.getItemsByUser = async (req, res, next) => {
   let userId = req.query.user;
+  let favorited = req.query.favorited;
+  let owned = req.query.owned;
 
   let search_query = `SELECT i.id, i.name as "name", i.description, u.id as "userId", u.name as "userName" FROM Items i, Users u, UserItemBridges ui 
-                      WHERE ui.UserId = u.id AND ui.ItemId = i.id AND u.id=${userId}`;
+                      WHERE ui.UserId = u.id AND ui.ItemId = i.id AND u.id=${userId} `;
+
+  if (favorited) {
+    search_query += ` AND ui.favorited=${favorited}`;
+  } else if (owned) {
+    search_query += ` AND ui.owned=${owned}`;
+  }
+
   try {
     let items = await sequelize.query(search_query, {
       type: sequelize.QueryTypes.SELECT
@@ -165,3 +174,47 @@ exports.postItem = async (req, res, next) => {
 
 exports.patchItem = async (req, res, next) => { };
 exports.deleteItem = async (req, res, next) => { };
+
+exports.updateItem = async (req, res, next) => {
+  const itemId = req.body.itemId;
+  const userId = req.body.userId;
+
+  const favorited = req.body.favorited;
+  const owned = req.body.owned;
+  const name = req.body.name;
+  const description = req.body.description;
+
+  let update_query = ``;
+  let search_query = `
+    SELECT i.id, i.name, i.description, i.price 
+    FROM Items i, Users u, UserItemBridges ui
+    WHERE i.id = ui.ItemId AND u.id = ui.UserId AND ui.ItemId=${itemId} AND ui.UserId=${userId};
+  `;
+
+  if (favorited)
+    update_query += `UPDATE UserItemBridges SET favorited=${favorited} WHERE ItemId=${itemId} AND UserId=${userId};`;
+  if (owned)
+    update_query += `UPDATE UserItemBridges SET owned=${owned} WHERE ItemId=${itemId} AND UserId=${userId};`;
+  if (name)
+    update_query += `UPDATE Items SET name='${name}' WHERE ItemId=${itemId};`;
+  if (description)
+    update_query += `UPDATE Items SET description='${description}' WHERE ItemId=${itemId};`;
+
+  try {
+    await sequelize.query(update_query, {
+      type: sequelize.QueryTypes.UPDATE
+    });
+
+    let results = await sequelize.query(search_query, {
+      type: sequelize.QueryTypes.SELECT
+    });
+
+    res.status(200).send(JSON.stringify(results));
+
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};
