@@ -23,8 +23,8 @@ router.get("/:itemId", (req, res, next) => {
 // /api/items/ => POST
 router.post("/", storageMiddleware, itemController.postItem);
 
-// /api/items/ => PATCH
-// router.post("/", itemController.patchItem);
+// /api/items/ => PUT
+router.put("/", itemController.updateItem);
 
 // /api/items/ => DELETE
 // router.post("/", itemController.deleteItem);
