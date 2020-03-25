@@ -20,6 +20,7 @@ function ProfileDropdown(props) {
       <div className="ProfileDropdown-content">
         <ul>
           <li><Link to="/profile">Profile</Link></li>
+          <li><Link to="/chatroom">Chatroom</Link></li>
           <li><Link to="/account-settings">Account Settings</Link></li>
           <li><Link to="/" onClick={() => {
             // Set app state 

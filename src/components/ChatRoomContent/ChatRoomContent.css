@@ -1,44 +1,19 @@
-.ChatRoom-Reply .Button {
-  background-color: var(--purple);
-  color: white;
-}
-
-.ChatRoom-Reply .Button:hover {
-  background-color: var(--dark-purple);
-}
 .ChatRoom-Reply {
   position: relative;
   top: 2.5rem;
   left: 4rem;
 }
 
-
-.ChatRoom-Message {
+.ChatRoomContent-Message {
   overflow: auto;
   padding: 4rem;
   height: 50rem;
 }
 
-
-
-
-.ChatRoom-MessageBox{
-   padding:0rem 2rem 3rem 1rem;
-    background-color: #ececec;
-    min-width: 5rem;
-    max-width: 30rem;
-    border-radius: 1rem;
-    
+.ChatRoomContent-MessageBox {
+  padding: 0rem 2rem 3rem 1rem;
+  background-color: #ececec;
+  min-width: 5rem;
+  max-width: 30rem;
+  border-radius: 1rem;
 }
-
-.username{
-
-    font-weight: 900;
-    color: var(--purple);
-}
-
-/* p{
-    line-height: 1.5rem;
-    padding-left: 4.5rem;
-    padding-top: 1.5rem;
-} */
