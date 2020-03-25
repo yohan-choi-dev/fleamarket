@@ -3,6 +3,7 @@ const router = express.Router();
 const { check } = require("express-validator");
 
 const itemController = require("../controllers/item");
+const { storageMiddleware } = require('../middlewares/storage');
 
 // /api/items/ => GET
 router.get("/", (req, res, next) => {
@@ -16,16 +17,16 @@ router.get("/", (req, res, next) => {
 });
 
 router.get("/:itemId", (req, res, next) => {
-  itemController.getItemById(req, res, next);
+    itemController.getItemById(req, res, next);
 });
 
 // /api/items/ => POST
-router.post("/", itemController.postItem);
+router.post("/", storageMiddleware, itemController.postItem);
 
 // /api/items/ => PATCH
-router.post("/", itemController.patchItem);
+// router.post("/", itemController.patchItem);
 
 // /api/items/ => DELETE
-router.post("/", itemController.deleteItem);
+// router.post("/", itemController.deleteItem);
 
 module.exports = router;
