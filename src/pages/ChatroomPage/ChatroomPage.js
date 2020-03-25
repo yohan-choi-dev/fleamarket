@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import './ChatroomPage.css';
 
 // Contexts
@@ -9,34 +9,38 @@ import Navigation from '../../components/Navigation/Navigation';
 import Footer from '../../components/Footer/Footer';
 import ChatRoom from '../../components/ChatRoom/ChatRoom';
 
+// APIRoute
+import APIRoute from '../../vars/api-routes';
+
 function ChatroomPage(props) {
   const { appState } = useContext(AppContext);
 
-  const users = [
-    {
-      id: 1,
-      name: 'Wing Tung Lau',
-      profileImageURL: 'https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg.jpg',
-      messages: []
-    },
-    {
-      id: 2,
-      name: 'Yohan Choi',
-      profileImageURL: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
-      messages: []
-    },
-    {
-      id: 3,
-      name: 'Ahmad Anees',
-      profileImageURL: 'https://images.unsplash.com/photo-1539605480396-a61f99da1041?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
-      messages: []
-    }
-  ];
+  // States
+  const [chatrooms, setChatrooms] = useState([]);
+
+  // Context
+  useEffect(() => {
+    fetchChatrooms(appState.user.id);
+  }, []);
+
+  const fetchChatrooms = async (userId) => {
+    const response = await fetch(`${APIRoute}/api/chatrooms?userId=${userId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': true
+      }
+    });
+
+    const body = await response.json();
+
+    setChatrooms(body);
+  }
 
   return (
     <div className="ChatroomPage">
       <Navigation />
-      <ChatRoom users={users} />
+      <ChatRoom chatrooms={chatrooms} />
       <Footer />
     </div>
   )

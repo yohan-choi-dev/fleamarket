@@ -7,42 +7,87 @@ import TextField from '../TextField/TextField';
 // Contexts
 import AppContext from '../../contexts/AppContext';
 
+// Utilities
+import asyncForEach from '../../utils/async-for-each';
+import APIRoute from '../../vars/api-routes';
+
 const ChatRoom = (props) => {
   // Props
-  const { users } = props;
+  const { chatrooms } = props;
 
   // Contexts
   const { appState } = useContext(AppContext);
 
   // States
-  const [chosenUserIndex, setChosenUserIndex] = useState(0);
-  const [chosenUser, setchosenUser] = useState({
+  const [detailedChatrooms, setDetailedChatrooms] = useState([]);
+  const [currentChatroom, setCurrentChatroom] = useState({
     id: 0,
-    name: '',
-    profileImageURL: ''
+    otherUser: {
+      id: 0,
+      name: '',
+      image: ''
+    }
   });
+  const [chosenChatroomIndex, setChosenChatroomIndex] = useState(0);
+
+  // Actions
+  const fetchChatroomDetails = async (chatrooms) => {
+    let results = chatrooms;
+
+    await asyncForEach(chatrooms, async (chatroom, index) => {
+      const response = await fetch(`${APIRoute}/api/users/${chatroom.userId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': true
+        }
+      });
+
+      const otherUserInfo = await response.json();
+
+      results[index] = {
+        ...results[index],
+        otherUser: {
+          name: otherUserInfo.name,
+          image: otherUserInfo.image
+        }
+      }
+    });
+
+    setDetailedChatrooms(results);
+  }
 
   // Effects
   useEffect(() => {
-    setchosenUser({
-      ...users[chosenUserIndex]
-    });
-  }, [chosenUserIndex]);
+    fetchChatroomDetails(chatrooms);
+  }, [chatrooms]);
+
+  useEffect(() => {
+    // setCurrentChatroom({
+    //   ...currentChatroom,
+    //   id: detailedChatrooms[chosenChatroomIndex].id,
+    //   otherUser: {
+    //     id: detailedChatrooms[chosenChatroomIndex].otherUser.id,
+    //     name: detailedChatrooms[chosenChatroomIndex].otherUser.name,
+    //     image: detailedChatrooms[chosenChatroomIndex].otherUser.image
+    //   }
+    // });
+  }, [chosenChatroomIndex]);
 
   // Actions
   const handleClick = (userIndex) => {
-    setChosenUserIndex(userIndex);
+    setChosenChatroomIndex(userIndex);
   }
 
-  const list = users.map((user, index) => {
+  const list = detailedChatrooms.map((detailedChatroom, index) => {
     return (
       <li className="ChatRoom-Nav-User" onClick={() => handleClick(index)} key={`ChatRoom-Nav-User-${index}`}>
         <div className='ChatRoom-Nav-User-profile-photo' style={{
-          backgroundImage: `url(${user.profileImageURL})`
+          backgroundImage: `url(${detailedChatroom.otherUser.image})`
         }}></div>
         <span style={{
-          color: index == chosenUserIndex ? '#8771A5' : '#CCCCCC'
-        }}>{user.name}</span>
+          color: index == chosenChatroomIndex ? '#8771A5' : '#CCCCCC'
+        }}>{detailedChatroom.otherUser.name}</span>
       </li>
     );
   });
@@ -53,46 +98,14 @@ const ChatRoom = (props) => {
         <ul className="ChatRoom-Nav">{list}</ul>
         <div className="ChatRoom-Context">
           <ChatRoomContent
+            chatroomId={currentChatroom.id}
             loggedInUserId={appState.user.id}
-            otherUserId={chosenUser.id}
+            otherUserId={currentChatroom.otherUser.id}
           />
         </div>
       </div>
     </div>
   );
 }
-
-// class ChatRoom extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {}
-//     this.handleClick = this.handleClick.bind(this);
-//   }
-//   handleClick(props) {
-
-//   }
-//   render() {
-//     const users = this.props.users;
-//     const list = users.map(u => {
-//       return (
-//         <div className="ChatRoom-Nav-User" id="wing" onClick={() => this.handleClick(u)}>
-//           <li>
-//             <img src="https://interactive-examples.mdn.mozilla.net/media/examples/grapefruit-slice-332-332.jpg"></img>
-//             {u}
-//           </li>
-//         </div>
-//       );
-//     });
-
-//     return (
-//       <div className="ChatRoom">
-//         <div className="ChatRoom-Nav">{list}</div>
-//         <div className="ChatRoom-Context">
-//           <ChatRoomContent user={this.state.user} />
-//         </div>
-//       </div>
-//     );
-//   }
-// }
 
 export default ChatRoom;
