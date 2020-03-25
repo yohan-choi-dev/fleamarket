@@ -31,7 +31,7 @@ function ItemPage(props) {
   }
 
   const fetchItemImages = async (id) => {
-    const response = await fetch(`http://localhost:12218/api/images?itemId=${id}`, {
+    const response = await fetch(`${APIRoute}/api/images?itemId=${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -46,7 +46,8 @@ function ItemPage(props) {
   useEffect(() => {
     fetchItemById(itemId)
       .then(data => {
-        const fetchedItem = data;
+        const fetchedItem = data[0];
+        // console.log(data);
 
         fetchItemImages(fetchedItem.id)
           .then(data => {
@@ -58,7 +59,11 @@ function ItemPage(props) {
                 id: fetchedItem.id,
                 name: fetchedItem.name,
                 description: fetchedItem.description,
-                imageUrls: data.map(itemImage => `http://myvmlab.senecacollege.ca:6765/${itemImage.url}`)
+                imageUrls: data.map(itemImage => `${APIRoute}/${itemImage.url}`),
+                owner: {
+                  id: fetchedItem.userId,
+                  name: fetchedItem.userName
+                },
               }
             });
           })

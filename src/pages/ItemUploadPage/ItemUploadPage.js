@@ -35,9 +35,9 @@ function ItemUploadPage(props) {
   useEffect(() => {
     setIsValid(
       itemState.itemName != '' &&
-        itemState.itemCategory != 0 &&
-        itemState.itemDescription != '' &&
-        itemState.itemImages != null
+      itemState.itemCategory != 0 &&
+      itemState.itemDescription != '' &&
+      Object.keys(itemState.itemImages).length > 0
     );
   }, [itemState]);
 
@@ -53,9 +53,11 @@ function ItemUploadPage(props) {
         fd.append('name', itemState.itemName);
         fd.append('category', itemState.itemCategory);
         fd.append('description', itemState.itemDescription);
-        fd.append('image', itemState.itemImages, itemState.itemImages.name);
-        console.log(`app state is ${appState}`);
-        console.log(appState);
+
+        for (const key of Object.keys(itemState.itemImages)) {
+          fd.append('image', itemState.itemImages[key]);
+        }
+
         response = await axios.post(`${APIRoute}/api/items`, fd, {
           onUploadProgress: progressEvent => {
             console.log(
@@ -141,10 +143,9 @@ function ItemUploadPage(props) {
                 type="file"
                 multiple={true}
                 onChange={event => {
-                  console.log(event.target.files[0]);
                   setItemState({
                     ...itemState,
-                    itemImages: event.target.files[0]
+                    itemImages: event.target.files
                   });
                 }}
               />
@@ -155,7 +156,7 @@ function ItemUploadPage(props) {
               Upload
             </Button>
             <Link to="/profile">
-              <Button handleOnClick={() => {}} otherClassNames="grey">
+              <Button handleOnClick={() => { }} otherClassNames="grey">
                 Cancel
               </Button>
             </Link>
