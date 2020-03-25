@@ -1,0 +1,24 @@
+.LabeledTextField {
+  padding-bottom: 1.4rem;
+}
+
+.LabeledTextField textarea {
+  width: 100%;
+  height: 10rem;
+  padding: 0.72rem 0.56rem;
+  background-color: var(--light-grey);
+  border: none;
+  border-radius: 3px;
+  resize: none;
+  outline: none;
+  font-size: 1rem;
+}
+
+.LabeledTextField-label {
+  display: block;
+  padding-bottom: 6px;
+  font-family: var(--font-family-global);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--lighter-black);
+}

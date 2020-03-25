@@ -2,6 +2,9 @@ import React from 'react';
 import '../../vars/style.css';
 import './ProfileCard.css';
 
+// API Route
+import APIRoute from '../../vars/api-routes';
+
 function ProfileCard(props) {
   const { profile } = props;
   return (
@@ -11,7 +14,7 @@ function ProfileCard(props) {
           className="ProfileCard-profile-image"
         >
           <div style={{
-            backgroundImage: `url(${profile.image})`
+            backgroundImage: `url(${APIRoute}/${profile.image})`
           }}></div>
         </div>
         <div className="ProfileCard-profile-info">
