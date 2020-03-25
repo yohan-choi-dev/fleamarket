@@ -12,6 +12,33 @@
   padding-bottom: 1.4rem;
 }
 
+.CreateAccount-name-input .LabeledInputField:first-child {
+  margin-right: 2rem;
+}
+
+.CreateAccount-name-input .LabeledInputField-input {
+  width: auto;
+  min-width: auto;
+}
+
 .CreateAccountModal-form .LabeledInputField-input {
-  min-width: 420px;
+  width: 100%;
+}
+
+.CreateAccount-name-input {
+  display: flex;
+  justify-content: space-between;
+}
+
+.CreateAccount-user-image {
+  padding-bottom: 1.4rem;
+}
+
+.CreateAccount-user-image label {
+  display: block;
+  padding-bottom: 6px;
+  font-family: var(--font-family-global);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--lighter-black);
 }

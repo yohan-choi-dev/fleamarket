@@ -6,6 +6,7 @@ import './CreateAccountModal.css';
 import Modal from '../Modal/Modal';
 import Button from '../Button/Button';
 import LabeledInputField from '../LabeledInputField/LabeledInputField';
+import LabeledTextField from '../LabeledTextField/LabeledTextField';
 
 import APIRoute from '../../vars/api-routes';
 
@@ -30,6 +31,8 @@ function CreateAccountModal(props) {
   });
   const [passwordIsSame, setPasswordIsSame] = useState(false);
   const [valid, setValid] = useState(false);
+  const [userDescription, setUserDescription] = useState('');
+  const [userImage, setUserImage] = useState('');
 
   const history = useHistory();
 
@@ -55,17 +58,21 @@ function CreateAccountModal(props) {
 
   const handleOnClick = async event => {
     event.preventDefault();
+
+    const fd = new FormData();
+    fd.append('email', userEmail.content);
+    fd.append('name', `${userName.first} ${userName.last}`);
+    fd.append('password', userPassword.content);
+    fd.append('description', userDescription);
+    fd.append('image', userImage);
+
     const response = await fetch(`${APIRoute}/api/auth/signup`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data',
         'Access-Control-Allow-Origin': true
       },
-      body: JSON.stringify({
-        email: userEmail.content,
-        name: `${userName.first} ${userName.last}`,
-        password: userPassword.content
-      })
+      body: fd
     });
 
     if (response.status !== 201) {
@@ -183,6 +190,25 @@ function CreateAccountModal(props) {
               value: userPasswordConfirm.content
             }}
           />
+          <LabeledTextField
+            label="Description"
+            id="CreateAccount-description"
+            onChangeHandler={event => {
+              const userInput = event.target.value.trim();
+              setUserDescription(userInput);
+            }}
+            textFieldValue={userDescription}
+          />
+          <div className="CreateAccount-user-image">
+            <label>Profile Photo (maximum 5MB)</label>
+            <input
+              type="file"
+              multiple={false}
+              onChange={event => {
+                setUserImage(event.target.files[0]);
+              }}
+            />
+          </div>
           <Button handleOnClick={handleOnClick} disabled={!valid}>
             Sign Up
           </Button>
