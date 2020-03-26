@@ -36,7 +36,7 @@ if (cluster.isMaster) {
     const Notification = require("./models/notification");
     const Trade = require("./models/trade");
 
-    const port = 12218;
+    const port = 10034;
 
     const authRoutes = require("./routes/auth");
     const itemRoutes = require("./routes/items");

@@ -26,7 +26,7 @@ exports.getItems = async (req, res, next) => {
       });
       results.push({
         ...item,
-        url: images.map(image => image.url)
+        imageUrls: images.map(image => image.url)
       });
     });
 
@@ -41,17 +41,36 @@ exports.getItems = async (req, res, next) => {
 
 exports.getItemById = async (req, res, next) => {
   let itemId = req.params.itemId;
+
   let search_query = `
-    SELECT  i.id, i.name as "name", il.url, i.description, 
+    SELECT  i.id, i.name as "name", i.description, 
             u.id as "userId", u.name as "userName" 
     FROM Items i, Users u, UserItemBridges ui, ImageLinks il 
-    WHERE ui.UserId = u.id AND ui.ItemId = i.id AND il.itemId = i.id AND i.id=${itemId};
+    WHERE ui.UserId = u.id AND ui.ItemId = i.id AND il.itemId = i.id AND i.id=${itemId} LIMIT 1;
   `;
   try {
-    let results = await sequelize.query(search_query, {
+    let item = await sequelize.query(search_query, {
       type: sequelize.QueryTypes.SELECT
     });
-    res.status(200).send(JSON.stringify(results));
+
+    let item_images_query = `
+      SELECT il.url
+      FROM Items i, ImageLinks il 
+      WHERE il.itemId = i.id AND i.id=${item[0].id};
+    `;
+
+    let itemImages = await sequelize.query(item_images_query, {
+      type: sequelize.QueryTypes.SELECT
+    });
+    item[0].imageUrls = [];
+
+    itemImages.forEach((image, index) => {
+      item[0].imageUrls.push(image.url);
+    })
+
+    const result = item[0];
+
+    res.status(200).send(JSON.stringify(result));
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
@@ -63,17 +82,36 @@ exports.getItemById = async (req, res, next) => {
 exports.getItemsByName = async (req, res, next) => {
   let name = req.query.name;
   let search_query = `
-    SELECT  i.id, i.name as "name", il.url, i.description, 
+    SELECT  i.id, i.name as "name", i.description, 
             u.id as "userId", u.name as "userName" 
-    FROM Items i, Users u, UserItemBridges ui, ImageLinks il 
-    WHERE ui.UserId = u.id AND ui.ItemId = i.id AND il.itemId = i.id
+    FROM Items i, Users u, UserItemBridges ui
+    WHERE ui.UserId = u.id AND ui.ItemId = i.id
     AND (i.name LIKE '%${name}%'
     OR i.description LIKE '%${name}%');
   `;
   try {
-    let results = await sequelize.query(search_query, {
+    let items = await sequelize.query(search_query, {
       type: sequelize.QueryTypes.SELECT
     });
+
+    let results = [];
+
+    await asyncForEach(items, async (item) => {
+      let item_images_query = `
+        SELECT il.url
+        FROM Items i, ImageLinks il
+        WHERE i.id=il.itemId AND i.id=${item.id} LIMIT 1;
+      `;
+      let itemImageUrls = await sequelize.query(item_images_query, {
+        type: sequelize.QueryTypes.SELECT
+      });
+
+      results.push({
+        ...item,
+        imageUrl: itemImageUrls[0].url
+      });
+    });
+
     res.status(200).send(JSON.stringify(results));
   } catch (err) {
     if (!err.statusCode) {
@@ -110,9 +148,10 @@ exports.getItemsByUser = async (req, res, next) => {
       let images = await sequelize.query(search_query, {
         type: sequelize.QueryTypes.SELECT
       });
+
       results.push({
         ...item,
-        url: images.map(image => image.url)
+        imageUrls: images.map(image => image.url)
       });
     });
 
@@ -147,10 +186,10 @@ exports.postItem = async (req, res, next) => {
 
     await UserItemBridge.create({
       owned: true,
-      isFavorite: false,
+      favorited: false,
       ItemId: item.id,
       UserId: userId
-    })
+    });
 
     await asyncForEach(images, async (image) => {
       await ImageLink.create({
@@ -158,11 +197,6 @@ exports.postItem = async (req, res, next) => {
         itemId: item.id
       });
     });
-
-    // await ImageLink.create({
-    //   url: imageURL,
-    //   itemId: item.id
-    // });
 
     res.status(200).send(JSON.stringify(item));
   } catch (err) {

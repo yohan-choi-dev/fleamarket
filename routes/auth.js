@@ -1,15 +1,17 @@
 const express = require('express');
-const { check } = require('express-validator');
+const { body } = require('express-validator');
 
 const User = require('../models/user');
 const Token = require('../models/token');
 const authController = require('../controllers/auth');
+const { storageMiddleware } = require('../middlewares/storage');
 
 const router = express.Router();
 
 router.post('/signup',
     [
-        check('email')
+        storageMiddleware,
+        body('email')
             .normalizeEmail()
             .isEmail()
             .bail()
@@ -29,7 +31,7 @@ router.post('/signup',
             })
             .bail()
         ,
-        check('password')
+        body('password')
             .isLength({ min: 8 })
             .withMessage('must be at least 8 chars long and at most 25 chars long')
     ], authController.signup);
