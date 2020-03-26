@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Cookies from 'universal-cookie';
 
 // Contexts
-import AppContext from '../contexts/AppContext';
+import AppContext from './AppContext';
 
 // Cookie strings
 import COOKIES from '../vars/cookies';
