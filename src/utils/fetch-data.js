@@ -43,7 +43,7 @@ const updateData = async (url, body, contentType) => {
 }
 
 const deleteData = async (url, body) => {
-  const response = await fetch(url, {
+  await fetch(url, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -51,10 +51,6 @@ const deleteData = async (url, body) => {
     },
     body: body
   });
-
-  const responseBody = await response.json();
-  responseBody.status = response.status;
-  return responseBody;
 }
 
 export {

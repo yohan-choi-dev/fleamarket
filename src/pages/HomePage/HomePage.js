@@ -15,7 +15,7 @@ import AppContext from '../../contexts/AppContext';
 
 // Utilities
 import APIRoute from '../../vars/api-routes';
-import { getData } from '../../utils/fetch-data';
+import { getData, postData, deleteData } from '../../utils/fetch-data';
 import asyncForEach from '../../utils/async-for-each';
 
 function HomePage(props) {
@@ -48,9 +48,41 @@ function HomePage(props) {
 
       setItems(itemList);
     }
-
     fetchItems();
   }, []);
+
+  const handleLikedStatus = async (liked, itemId) => {
+    if (liked) {
+      await postData(
+        `${APIRoute}/api/favorites`,
+        JSON.stringify({
+          userId: appState.user.id,
+          itemId: itemId
+        }),
+        'application/json'
+      );
+
+    } else {
+      await deleteData(
+        `${APIRoute}/api/favorites`,
+        JSON.stringify({
+          userId: appState.user.id,
+          itemId: itemId
+        })
+      )
+    }
+    const updatedItemList = items.map(item => (
+      item.id === itemId ?
+        {
+          ...item,
+          favoritedByUser: liked
+        } :
+        {
+          ...item
+        }
+    ));
+    setItems(updatedItemList);
+  }
 
   return (
     <div className="HomePage">
@@ -82,7 +114,7 @@ function HomePage(props) {
         <div className="HomePage-main-section-items">
           {
             items.map((item, index) => (
-              <ItemCard item={item} key={`ItemCard-${index}`} />
+              <ItemCard item={item} key={`ItemCard-${index}`} handleLikedStatus={handleLikedStatus} />
             ))
           }
         </div>

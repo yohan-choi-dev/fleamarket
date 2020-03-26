@@ -24,28 +24,15 @@ const LikeButton = (props) => {
     }
   };
 
-  const [liked, setLiked] = useState(likedByUser);
-  const [heartStyle, setHeartStyle] = useState(likedByUser ? likeStyle : unlikeStyle);
-
-  // Effects
-  useEffect(() => {
-    setHeartStyle(liked ? likeStyle : unlikeStyle);
-    onClickHandler(liked);
-  }, [liked]);
-
-  const handleClick = () => {
-    setLiked(!liked);
-  }
-
   return (
     <div className="LikeButton">
       <div className="LikeButton-heart">
         <div
-          onClick={handleClick}
-          style={heartStyle.iconContainerStyle}
+          onClick={onClickHandler}
+          style={likedByUser ? likeStyle.iconContainerStyle : unlikeStyle.iconContainerStyle}
           className="LikeButton-heart-icon-container"
         >
-          <HeartIcon style={heartStyle.iconStyle} className="LikeButton-heart-icon" />
+          <HeartIcon style={likedByUser ? likeStyle.iconStyle : unlikeStyle.iconStyle} className="LikeButton-heart-icon" />
         </div>
       </div>
     </div>

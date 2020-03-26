@@ -8,35 +8,12 @@ import AppContext from '../../contexts/AppContext';
 
 // Utilities
 import APIRoute from '../../vars/api-routes';
-import { postData, deleteData } from '../../utils/fetch-data';
 
 function ItemCard(props) {
-  const { item } = props;
+  const { item, handleLikedStatus } = props;
 
   // Context
   const { appState } = useContext(AppContext);
-
-  const updateLikeStatus = async (liked) => {
-    if (liked) {
-      await postData(
-        `${APIRoute}/api/favorites`,
-        JSON.stringify({
-          userId: appState.user.id,
-          itemId: item.id
-        }),
-        'application/json'
-      );
-    } else {
-      await deleteData(
-        `${APIRoute}/api/favorites`,
-        JSON.stringify({
-          userId: appState.user.id,
-          itemId: item.id
-        })
-      )
-    }
-
-  }
 
   return (
     <div className="ItemCard">
@@ -50,9 +27,16 @@ function ItemCard(props) {
           <p className="ItemCard-item-description">{item.description}</p>
         </div>
       </Link>
-      <div className="ItemCard-LikeButton-container">
-        <LikeButton onClickHandler={updateLikeStatus} likedByUser={item.favoritedByUser} />
-      </div>
+      {
+        appState.user.isLoggedIn ?
+          (
+            <div className="ItemCard-LikeButton-container">
+              <LikeButton onClickHandler={() => {
+                handleLikedStatus(!item.favoritedByUser, item.id);
+              }} likedByUser={item.favoritedByUser} />
+            </div>
+          ) : ''
+      }
     </div>
   );
 }
