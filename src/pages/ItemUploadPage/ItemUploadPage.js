@@ -15,7 +15,6 @@ import Button from '../../components/Button/Button';
 
 // Utilities
 import APIRoute from '../../vars/api-routes';
-import { postData } from '../../utils/fetch-data';
 
 function ItemUploadPage(props) {
   // States

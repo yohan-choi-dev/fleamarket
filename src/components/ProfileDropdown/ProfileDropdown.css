@@ -1,6 +1,7 @@
 .ProfileDropdown {
   position: relative;
   font-family: var(--font-family-global);
+  z-index: 10;
 }
 
 .ProfileDropdown-button {

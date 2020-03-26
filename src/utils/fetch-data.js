@@ -42,8 +42,24 @@ const updateData = async (url, body, contentType) => {
   return responseBody;
 }
 
+const deleteData = async (url, body) => {
+  const response = await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': true
+    },
+    body: body
+  });
+
+  const responseBody = await response.json();
+  responseBody.status = response.status;
+  return responseBody;
+}
+
 export {
   getData,
   postData,
-  updateData
+  updateData,
+  deleteData
 }

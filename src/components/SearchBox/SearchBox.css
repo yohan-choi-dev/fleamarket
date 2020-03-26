@@ -69,6 +69,7 @@
 
 .SearchBox-results-item-info {
   padding-left: 0.56rem;
+  text-align: left;
 }
 
 .SearchBox .SearchBox-results-item .SearchBox-results-item-info-name {

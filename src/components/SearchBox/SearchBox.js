@@ -69,6 +69,7 @@ const SearchBox = () => {
         placeholder="What are you looking for today?"
         value={searchStatus.text}
         onChange={handleSearchInputChange}
+        autoFocus={true}
       />
       <div className="SearchBox-search-button">
         <SearchIcon className="SearchBox-search-icon" />
