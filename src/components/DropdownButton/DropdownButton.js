@@ -2,14 +2,15 @@ import React from 'react';
 import './DropdownButton.css';
 
 function DropdownButton(props) {
-  const { onChangeHandler } = props;
+  const { onChangeHandler, options } = props;
   return (
     <div className="DropdownButton">
       <select className="DropdownButton-select" onChange={onChangeHandler}>
-        <option value="Category">Category&nbsp;</option>
-        <option value="Electronics">Electronics&nbsp;</option>
-        <option value="Apparels">Apparels&nbsp;</option>
-        <option value="Books">Books&nbsp;</option>
+        {
+          options.map(option => (
+            <option value={`${option.value}`}>{option.label}</option>
+          ))
+        }
       </select>
     </div>
   );

@@ -1,5 +1,4 @@
 import React from 'react';
-import '../../vars/style.css';
 import './Logo.css';
 
 function Logo(props) {

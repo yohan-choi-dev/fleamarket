@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
-import '../../vars/style.css';
-import './ChatRoom.css';
-import ChatRoomContent from '../ChatRoomContent/ChatRoomContent';
-import TextField from '../TextField/TextField';
+import './Chatroom.css';
+import ChatroomContent from './ChatroomContent/ChatroomContent';
 
 // Contexts
 import AppContext from '../../contexts/AppContext';
@@ -10,6 +8,7 @@ import AppContext from '../../contexts/AppContext';
 // Utilities
 import asyncForEach from '../../utils/async-for-each';
 import APIRoute from '../../vars/api-routes';
+import { getData } from '../../utils/fetch-data';
 
 const ChatRoom = (props) => {
   // Props
@@ -35,21 +34,13 @@ const ChatRoom = (props) => {
     let results = chatrooms;
 
     await asyncForEach(chatrooms, async (chatroom, index) => {
-      const response = await fetch(`${APIRoute}/api/users/${chatroom.userId}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': true
-        }
-      });
-
-      const otherUserInfo = await response.json();
+      const response = await getData(`${APIRoute}/api/users/${chatroom.userId}`);
 
       results[index] = {
         ...results[index],
         otherUser: {
-          name: otherUserInfo.name,
-          image: otherUserInfo.image
+          name: response.name,
+          image: response.image
         }
       }
     });
@@ -97,7 +88,7 @@ const ChatRoom = (props) => {
       <div className="ChatRoom-wrapper">
         <ul className="ChatRoom-Nav">{list}</ul>
         <div className="ChatRoom-Context">
-          <ChatRoomContent
+          <ChatroomContent
             chatroomId={currentChatroom.id}
             loggedInUserId={appState.user.id}
             otherUserId={currentChatroom.otherUser.id}

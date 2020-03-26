@@ -1,16 +1,14 @@
 import React from 'react';
-import TextField from '../TextField/TextField';
-import Button from '../Button/Button';
-import './ChatRoomContent.css';
+import './ChatroomContent.css';
 
-function ChatRoomContent(props) {
+function ChatroomContent(props) {
   const { loggedInUserId, otherUserId } = props;
 
   const messages = [];
 
   return (
-    <div className="ChatRoomContent">
-      <div className="ChatRoomContent-Message">
+    <div className="ChatroomContent">
+      <div className="ChatroomContent-Message">
         {/* <div className="ChatRoomContent-MessageBox">
           <div className="ChatRoomContent-MessageBox-user">
             <div className="ChatRoomContent-MessageBox-user-profile-photo"></div>
@@ -20,11 +18,10 @@ function ChatRoomContent(props) {
         </div> */}
       </div>
       {/* <div className="ChatRoom-Reply">
-        <TextField text="Type your message..." size="80" />
         <Button>Reply</Button>
       </div> */}
     </div>
   );
 }
 
-export default ChatRoomContent;
+export default ChatroomContent;

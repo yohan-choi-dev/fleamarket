@@ -1,7 +1,6 @@
 import React from 'react';
 import './TransactionHistory.css';
-import '../../vars/style.css';
-import TransactionStatus from '../TransactionStatus/TransactionStatus';
+import TransactionStatus from './TransactionStatus/TransactionStatus';
 
 function TransactionHistory(props) {
   const { items, otherClassNames } = props;

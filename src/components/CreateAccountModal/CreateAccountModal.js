@@ -8,7 +8,9 @@ import Button from '../Button/Button';
 import LabeledInputField from '../LabeledInputField/LabeledInputField';
 import LabeledTextField from '../LabeledTextField/LabeledTextField';
 
+// Utilities
 import APIRoute from '../../vars/api-routes';
+import { postData } from '../../utils/fetch-data';
 
 function CreateAccountModal(props) {
 
@@ -66,19 +68,10 @@ function CreateAccountModal(props) {
     fd.append('description', userDescription);
     fd.append('image', userImage);
 
-    const response = await fetch(`${APIRoute}/api/auth/signup`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        'Access-Control-Allow-Origin': true
-      },
-      body: fd
-    });
+    const response = postData(`${APIRoute}/api/auth/signup`, fd, 'multipart/form-data');
 
     if (response.status !== 201) {
-      const body = await response.json();
-
-      window.alert(`Failed to sign up. ${body.data[0].msg}`);
+      window.alert(`Failed to sign up. ${response.data[0].msg}`);
     } else {
       history.push('/verify-your-email');
     }

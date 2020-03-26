@@ -1,7 +1,7 @@
 import React from 'react';
 import './UpdateContact.css';
 
-import LabeledInputField from '../LabeledInputField/LabeledInputField';
+import LabeledInputField from '../../LabeledInputField/LabeledInputField';
 
 function UpdateContact(props) {
   return (
