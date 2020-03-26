@@ -19,8 +19,7 @@ function RecoverAccountPage(props) {
       `${APIRoute}/api/auth/recover-account`,
       JSON.stringify({
         email: userEmail
-      }),
-      'application/json'
+      })
     );
 
     if (response.status >= 200 && response.status < 300) {

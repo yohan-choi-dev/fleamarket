@@ -49,8 +49,7 @@ function LoginModal(props) {
       JSON.stringify({
         email: userEmail.content,
         password: userPassword
-      }),
-      'application/json'
+      })
     );
 
     if (response.status !== 200) {

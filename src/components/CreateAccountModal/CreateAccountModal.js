@@ -68,7 +68,7 @@ function CreateAccountModal(props) {
     fd.append('description', userDescription);
     fd.append('image', userImage);
 
-    const response = postData(`${APIRoute}/api/auth/signup`, fd, 'multipart/form-data');
+    const response = await postData(`${APIRoute}/api/auth/signup`, fd);
 
     if (response.status !== 201) {
       window.alert(`Failed to sign up. ${response.data[0].msg}`);
@@ -187,7 +187,7 @@ function CreateAccountModal(props) {
             label="Description"
             id="CreateAccount-description"
             onChangeHandler={event => {
-              const userInput = event.target.value.trim();
+              const userInput = event.target.value;
               setUserDescription(userInput);
             }}
             textFieldValue={userDescription}

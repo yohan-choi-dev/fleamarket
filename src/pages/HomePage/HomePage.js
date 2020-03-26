@@ -16,7 +16,6 @@ import AppContext from '../../contexts/AppContext';
 // Utilities
 import APIRoute from '../../vars/api-routes';
 import { getData, postData, deleteData } from '../../utils/fetch-data';
-import asyncForEach from '../../utils/async-for-each';
 
 function HomePage(props) {
   // State
@@ -58,8 +57,7 @@ function HomePage(props) {
         JSON.stringify({
           userId: appState.user.id,
           itemId: itemId
-        }),
-        'application/json'
+        })
       );
 
     } else {
