@@ -10,7 +10,7 @@ const ImageLink = require("../models/image-link");
 
 exports.getItems = async (req, res, next) => {
   let search_query = `SELECT i.id, i.name as "name", i.description, u.id as "userId", u.name as "userName" FROM Items i, Users u, UserItemBridges ui 
-                      WHERE ui.UserId = u.id AND ui.ItemId = i.id`;
+                      WHERE ui.UserId = u.id AND ui.ItemId = i.id AND i.hidden=0`;
   try {
     let items = await sequelize.query(search_query, {
       type: sequelize.QueryTypes.SELECT
@@ -46,7 +46,7 @@ exports.getItemById = async (req, res, next) => {
     SELECT  i.id, i.name as "name", i.description, 
             u.id as "userId", u.name as "userName" 
     FROM Items i, Users u, UserItemBridges ui, ImageLinks il 
-    WHERE ui.UserId = u.id AND ui.ItemId = i.id AND il.itemId = i.id AND i.id=${itemId} LIMIT 1;
+    WHERE ui.UserId = u.id AND ui.ItemId = i.id AND il.itemId = i.id AND i.hidden=0 AND i.id=${itemId} LIMIT 1;
   `;
   try {
     let item = await sequelize.query(search_query, {
@@ -87,6 +87,7 @@ exports.getItemsByName = async (req, res, next) => {
     FROM Items i, Users u, UserItemBridges ui
     WHERE ui.UserId = u.id AND ui.ItemId = i.id
     AND (i.name LIKE '%${name}%'
+    AND i.hidden=0
     OR i.description LIKE '%${name}%');
   `;
   try {
@@ -127,7 +128,7 @@ exports.getItemsByUser = async (req, res, next) => {
   let owned = req.query.owned;
 
   let search_query = `SELECT i.id, i.name as "name", i.description, u.id as "userId", u.name as "userName" FROM Items i, Users u, UserItemBridges ui 
-                      WHERE ui.UserId = u.id AND ui.ItemId = i.id AND u.id=${userId} `;
+                      WHERE ui.UserId = u.id AND ui.ItemId = i.id AND i.hidden=0 AND u.id=${userId} `;
 
   if (favorited) {
     search_query += ` AND ui.favorited=${favorited}`;
