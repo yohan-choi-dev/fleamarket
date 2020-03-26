@@ -28,8 +28,6 @@ function ItemInfo(props) {
     );
   });
 
-  console.log(item);
-
   return (
     <div className="ItemInfo">
       <div className="ItemInfo-images">

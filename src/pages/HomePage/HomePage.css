@@ -1,20 +1,54 @@
 .HomePage-header {
+  position: relative;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 33.3rem;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5)),
-    url('https://images.unsplash.com/photo-1554401922-60a30e9a4b0a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80');
+  padding-top: 4.5rem;
+  text-align: center;
+  background-color: #5dbbff;
   background-position: center;
   background-attachment: fixed;
   background-size: cover;
   background-repeat: no-repeat;
+  z-index: 1;
 }
 
 .HomePage-header-title {
-  font-size: 4rem;
+  font-size: 2.5rem;
   color: #fff;
+}
+
+.HomePage-steps {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  padding-top: 4rem;
+  padding-bottom: 5.5rem;
+}
+
+.HomePage-step {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.HomePage-step span {
+  display: block;
+  padding-bottom: 0.67rem;
+}
+
+.HomePage-step span svg {
+  fill: #fff;
+  height: 3.8rem;
+}
+
+.HomePage-header .SearchBox {
+  position: absolute;
+  bottom: -1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .HomePage-header .SearchBox .SearchBox-input {

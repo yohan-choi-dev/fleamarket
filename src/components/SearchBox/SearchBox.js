@@ -59,7 +59,7 @@ const SearchBox = () => {
       controller.abort();
     }
 
-  }, [searchStatus]);
+  }, [searchStatus.text]);
 
   return (
     <div className="SearchBox">
@@ -69,6 +69,7 @@ const SearchBox = () => {
         placeholder="What are you looking for today?"
         value={searchStatus.text}
         onChange={handleSearchInputChange}
+        autoFocus={true}
       />
       <div className="SearchBox-search-button">
         <SearchIcon className="SearchBox-search-icon" />
@@ -77,7 +78,7 @@ const SearchBox = () => {
         <ul className="SearchBox-search-results-items">
           {
             searchItems.map((item, index) => {
-              const itemImageUrl = `${APIRoute}/${item.url}`;
+              const itemImageUrl = `${APIRoute}/${item.imageUrl}`;
               return (
                 <li className="SearchBox-results-item" key={`SearchBox-results-item-${index}`}>
                   <img className="SearchBox-results-item-image" src={itemImageUrl} alt="item" />
