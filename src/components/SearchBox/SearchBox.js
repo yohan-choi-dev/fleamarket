@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ReactComponent as SearchIcon } from '@fortawesome/fontawesome-free/svgs/solid/search.svg';
 
-import '../../vars/style.css';
 import './SearchBox.css';
 
+// Utilities
 import APIRoute from '../../vars/api-routes';
 
 const SearchBox = () => {
-
   const [searchStatus, setSearchStatus] = useState({
     text: '',
     loading: false
@@ -27,7 +26,7 @@ const SearchBox = () => {
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
-    if (searchStatus.text.trim() == '') {
+    if (searchStatus.text.trim() === '') {
       setSearchStatus({
         ...searchStatus,
         loading: false
@@ -35,7 +34,7 @@ const SearchBox = () => {
       setSearchItems([]);
     } else {
       if (searchStatus.loading) {
-        fetch(`/api/items?name=${searchStatus.text}`, {
+        fetch(`${APIRoute}/api/items?name=${searchStatus.text}`, {
           method: 'GET',
           signal: signal
         }).then((response) => {
@@ -60,7 +59,7 @@ const SearchBox = () => {
       controller.abort();
     }
 
-  }, [searchStatus.text]);
+  }, [searchStatus]);
 
   return (
     <div className="SearchBox">

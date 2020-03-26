@@ -9,7 +9,9 @@ import Footer from '../../components/Footer/Footer';
 import LabeledInputField from '../../components/LabeledInputField/LabeledInputField';
 import Button from '../../components/Button/Button';
 
+// Utilities
 import APIRoute from '../../vars/api-routes';
+import { updateData } from '../../utils/fetch-data';
 
 const RecoverPasswordPage = (props) => {
   const [userPassword, setUserPassword] = useState({
@@ -49,21 +51,16 @@ const RecoverPasswordPage = (props) => {
 
   // Handlers
   const sendPasswordUpdate = async (userId) => {
-    const response = await fetch(`${APIRoute}/api/users/${userId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': true
-      },
-      body: JSON.stringify({
+    const response = updateData(
+      `${APIRoute}/api/users/${userId}`,
+      JSON.stringify({
         newPassword: userPassword.content,
         token: token
-      })
-    });
+      }),
+      'application/json'
+    );
 
     if (response.status >= 200 && response.status < 300) {
-      const body = await response.json();
-
       window.alert(`Password reset successfully!`);
     }
   }

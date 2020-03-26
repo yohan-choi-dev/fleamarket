@@ -3,16 +3,15 @@ import './LikeButton.css';
 import { ReactComponent as HeartIcon } from '@fortawesome/fontawesome-free/svgs/solid/heart.svg';
 
 class LikeButton extends React.Component {
-  handleClick = () => {
-    this.setState({ liked: !this.state.liked });
-    console.log('clicked!');
-  };
-
   constructor(props) {
     super(props);
     this.state = { liked: false };
     this.handleClick = this.handleClick.bind(this);
   }
+
+  handleClick = () => {
+    this.setState({ liked: !this.state.liked });
+  };
 
   render() {
     let iconContainerStyle,

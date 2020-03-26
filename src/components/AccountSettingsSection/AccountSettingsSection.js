@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import './AccountSettingsSection.css';
-import '../../vars/style.css';
 
-import AccountSettingsSidebar from '../AccountSettingsSidebar/AccountSettingsSidebar';
-
-import Overview from '../Overview/Overview';
-import ChangeEmail from '../ChangeEmail/ChangeEmail';
-import UpdateContact from '../UpdateContact/UpdateContact';
-import UpdatePayment from '../UpdatePayment/UpdatePayment';
-import DeleteAccount from '../DeleteAccount/DeleteAccount';
-import ChangePassword from '../ChangePassword/ChangePassword';
+import AccountSettingsSidebar from './AccountSettingsSidebar/AccountSettingsSidebar';
+import Overview from './Overview/Overview';
+import ChangeEmail from './ChangeEmail/ChangeEmail';
+import UpdateContact from './UpdateContact/UpdateContact';
+import UpdatePayment from './UpdatePayment/UpdatePayment';
+import DeleteAccount from './DeleteAccount/DeleteAccount';
+import ChangePassword from './ChangePassword/ChangePassword';
 
 function AccountSettingsSection(props) {
   const { profile } = props;
@@ -36,6 +34,9 @@ function AccountSettingsSection(props) {
         break;
       case 5:
         setAccountSettingsView(<DeleteAccount />);
+        break;
+      default:
+        setAccountSettingsView(<Overview profile={profile} />);
         break;
     }
   };

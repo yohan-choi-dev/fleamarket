@@ -1,6 +1,5 @@
 import React from 'react';
-import TextField from '../TextField/TextField';
-import Button from '../Button/Button';
+import Button from '../../Button/Button';
 
 function ChangePassword() {
   return (
@@ -10,19 +9,19 @@ function ChangePassword() {
           <strong>Current Password </strong>
         </li>
         <li>
-          <TextField text="•••••••••••••••" size="25" />
+          <input placeholder="•••••••••••••••" size="25" />
         </li>
         <li>
           <strong>New Password </strong>
         </li>
         <li>
-          <TextField text="•••••••••••••••" size="25" />
+          <input placeholder="•••••••••••••••" size="25" />
         </li>
         <li>
           <strong>Confirm New Password</strong>
         </li>
         <li>
-          <TextField text="•••••••••••••••" size="25" />
+          <input placeholder="•••••••••••••••" size="25" />
         </li>
         <li>
           <Button>Update password</Button>

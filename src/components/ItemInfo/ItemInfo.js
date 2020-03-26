@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import '../../vars/style.css';
 import './ItemInfo.css';
 
 // Components
@@ -18,7 +17,7 @@ function ItemInfo(props) {
   const imageList = item.imageUrls.map((currentImageUrl, index) => {
     return (
       <li
-        className={`ItemInfo-images-thumbnail-small ${index == currentImage ? 'active' : ''}`}
+        className={`ItemInfo-images-thumbnail-small ${index === currentImage ? 'active' : ''}`}
         onClick={() => selectCurrentImage(index)}
         style={{
           backgroundImage: `url(${currentImageUrl})`

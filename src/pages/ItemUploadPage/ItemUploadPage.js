@@ -13,8 +13,9 @@ import DropdownButton from '../../components/DropdownButton/DropdownButton';
 import LabeledTextField from '../../components/LabeledTextField/LabeledTextField';
 import Button from '../../components/Button/Button';
 
+// Utilities
 import APIRoute from '../../vars/api-routes';
-import axios from 'axios';
+import { postData } from '../../utils/fetch-data';
 
 function ItemUploadPage(props) {
   // States
@@ -34,9 +35,9 @@ function ItemUploadPage(props) {
 
   useEffect(() => {
     setIsValid(
-      itemState.itemName != '' &&
-      itemState.itemCategory != 0 &&
-      itemState.itemDescription != '' &&
+      itemState.itemName !== '' &&
+      itemState.itemCategory !== 0 &&
+      itemState.itemDescription !== '' &&
       Object.keys(itemState.itemImages).length > 0
     );
   }, [itemState]);
@@ -45,28 +46,19 @@ function ItemUploadPage(props) {
     // 1. Verify all information is valid
     if (isValid) {
       // 2. Upload item to server
-      let response;
-
       try {
         const fd = new FormData();
         fd.append('userId', appState.user.id);
         fd.append('name', itemState.itemName);
         fd.append('category', itemState.itemCategory);
         fd.append('description', itemState.itemDescription);
-
         for (const key of Object.keys(itemState.itemImages)) {
           fd.append('image', itemState.itemImages[key]);
         }
 
-        response = await axios.post(`${APIRoute}/api/items`, fd, {
-          onUploadProgress: progressEvent => {
-            console.log(
-              'Upload Progress: ' + Math.round(progressEvent.loaded / progressEvent.total) * 100
-            );
-          }
-        });
+        await postData(`${APIRoute}/api/items`, fd, 'multipart/form-data');
+
         history.push('/profile');
-        return response;
       } catch (err) {
         console.error(err);
       }
@@ -76,13 +68,13 @@ function ItemUploadPage(props) {
       // until the item page is completed.
     } else {
       // For now, let's just put up an alert message
-      if (itemState.itemName == '') {
+      if (itemState.itemName === '') {
         alert("Item's name is missing. Please complete the form.");
-      } else if (itemState.itemCategory == 0) {
+      } else if (itemState.itemCategory === 0) {
         alert("Item's category is invalid. Please complete the form.");
-      } else if (itemState.itemDescription == '') {
+      } else if (itemState.itemDescription === '') {
         alert("Item's description is missing. Please complete the form.");
-      } else if (itemState.itemImages.length == 0) {
+      } else if (itemState.itemImages.length === 0) {
         alert('There must be at least 1 image of the item. Please try again.');
       }
     }
@@ -116,6 +108,24 @@ function ItemUploadPage(props) {
               <div className="ItemUploadPage-upload-form-category-select">
                 <p>Category</p>
                 <DropdownButton
+                  options={[
+                    {
+                      value: 'Category',
+                      label: 'Category&nbsp;'
+                    },
+                    {
+                      value: 'Electronics',
+                      label: 'Electronics&nbsp;'
+                    },
+                    {
+                      value: 'Apparels',
+                      label: 'Apparels&nbsp;'
+                    },
+                    {
+                      value: 'Books',
+                      label: 'Books&nbsp;'
+                    }
+                  ]}
                   onChangeHandler={event => {
                     setItemState({
                       ...itemState,

@@ -13,24 +13,23 @@ import ItemCard from '../../components/ItemCard/ItemCard';
 import Footer from '../../components/Footer/Footer';
 import Button from '../../components/Button/Button';
 
+// Utilities
+import { getData } from '../../utils/fetch-data';
+
 function ProfilePage(props) {
+  // Context
   const { appState } = useContext(AppContext);
 
-  const [userItems, setUserItems] = useState([]);
+  // State
+  const [items, setItems] = useState([]);
+
+  // Actions
+  const fetchItemsByUser = async (userId) => {
+    const response = await getData(`${APIRoute}/api/items?user=${userId}`);
+    setItems(response);
+  }
 
   useEffect(() => {
-    async function fetchItemsByUser(userId) {
-      const response = await fetch(`${APIRoute}/api/items?user=${userId}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': true
-        }
-      });
-
-      const body = await response.json();
-      setUserItems(body);
-    }
     fetchItemsByUser(appState.user.id);
   }, [appState.user.id]);
 
@@ -49,7 +48,7 @@ function ProfilePage(props) {
         <h2>My items</h2>
         <div className="ProfilePage-user-items-content">
           {
-            userItems.map((item, index) => (
+            items.map((item, index) => (
               <ItemCard item={item} key={`ItemCard-${index}`} />
             ))
           }

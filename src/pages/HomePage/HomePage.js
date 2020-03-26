@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import '../../vars/style.css';
 import './HomePage.css';
 
 // Components
@@ -8,24 +7,19 @@ import SearchBox from '../../components/SearchBox/SearchBox';
 import ItemCard from '../../components/ItemCard/ItemCard';
 import Footer from '../../components/Footer/Footer';
 
+// Utilities
 import APIRoute from '../../vars/api-routes';
+import { getData } from '../../utils/fetch-data';
 
 function HomePage(props) {
+  // State
   const [items, setItems] = useState([]);
 
   useEffect(() => {
     const fetchItems = async () => {
-      const response = await fetch(`${APIRoute}/api/items`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': true
-        }
-      });
+      const response = await getData(`${APIRoute}/api/items`);
 
-      const body = await response.json();
-
-      setItems(body);
+      setItems(response);
     }
 
     fetchItems();
@@ -53,11 +47,6 @@ function HomePage(props) {
             ))
           }
         </div>
-        {/* {
-          items.length > 6 ? <div className="HomePage-main-section-show-more">
-            <Button>Show more</Button>
-          </div> : ''
-        } */}
       </main>
       <Footer />
     </div>

@@ -31,5 +31,14 @@
 }
 
 .Button.purple:hover {
-  background-color: var(--dark-purple)
+  background-color: var(--dark-purple);
+}
+
+.Button.red {
+  background-color: var(--lightcoral);
+  color: #fff;
+}
+
+.Button.red:hover {
+  background-color: var(--lightcoral-dark);
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import '../../vars/style.css';
 import './ProfileCard.css';
 
 // API Route

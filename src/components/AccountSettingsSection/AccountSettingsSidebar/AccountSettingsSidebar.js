@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import '../../vars/style.css';
 import './AccountSettingsSidebar.css';
 
 function AccountSettingsSidebar(props) {
@@ -18,7 +17,7 @@ function AccountSettingsSidebar(props) {
 
   const menuItemComponents = menuItems.map((item, index) => {
     const menuActiveClassName =
-      index == currentSelection ? 'AccountSettingsSidebar-list-item--active' : '';
+      index === currentSelection ? 'AccountSettingsSidebar-list-item--active' : '';
     return (
       <li
         className={`AccountSettingsSidebar-list-item ${menuActiveClassName}`}

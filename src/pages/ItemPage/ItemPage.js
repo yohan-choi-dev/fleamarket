@@ -10,70 +10,37 @@ import ItemInfo from '../../components/ItemInfo/ItemInfo';
 // Contexts
 import AppContext from '../../contexts/AppContext';
 
-// API Route
+// Utilities
 import APIRoute from '../../vars/api-routes';
+import { getData } from '../../utils/fetch-data';
 
 function ItemPage(props) {
   const { itemId } = useParams();
   const { appState, setAppState } = useContext(AppContext);
 
-  const fetchItemById = async (id) => {
-    const response = await fetch(`${APIRoute}/api/items/${id}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': true
+  const fetchItem = async (id) => {
+    const item = await getData(`${APIRoute}/api/items/${id}`);
+    const itemImages = await getData(`${APIRoute}/api/images?itemId=${item.id}`);
+
+    setAppState({
+      ...appState,
+      currentItem: {
+        ...appState.currentItem,
+        id: item.id,
+        name: item.name,
+        description: item.description,
+        imageUrls: itemImages.map(itemImage => `${APIRoute}/${itemImage.url}`),
+        owner: {
+          id: item.userId,
+          name: item.userName
+        },
       }
     });
-
-    const body = await response.json();
-    return body;
-  }
-
-  const fetchItemImages = async (id) => {
-    const response = await fetch(`${APIRoute}/api/images?itemId=${id}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': true
-      }
-    });
-
-    const body = await response.json();
-    return body;
   }
 
   useEffect(() => {
-    fetchItemById(itemId)
-      .then(data => {
-        const fetchedItem = data[0];
-        // console.log(data);
-
-        fetchItemImages(fetchedItem.id)
-          .then(data => {
-            console.log(data);
-            setAppState({
-              ...appState,
-              currentItem: {
-                ...appState.currentItem,
-                id: fetchedItem.id,
-                name: fetchedItem.name,
-                description: fetchedItem.description,
-                imageUrls: data.map(itemImage => `${APIRoute}/${itemImage.url}`),
-                owner: {
-                  id: fetchedItem.userId,
-                  name: fetchedItem.userName
-                },
-              }
-            });
-          })
-          .catch(err => {
-            console.error(err);
-          });
-      }).catch(err => {
-        console.error(err);
-      });
-  }, []);
+    fetchItem(itemId);
+  }, [itemId]);
 
   return (
     <div className="ItemPage">

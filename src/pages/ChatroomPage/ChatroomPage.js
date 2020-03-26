@@ -7,10 +7,11 @@ import AppContext from '../../contexts/AppContext';
 // Components
 import Navigation from '../../components/Navigation/Navigation';
 import Footer from '../../components/Footer/Footer';
-import ChatRoom from '../../components/ChatRoom/ChatRoom';
+import Chatroom from '../../components/Chatroom/Chatroom';
 
-// APIRoute
+// Utilities
 import APIRoute from '../../vars/api-routes';
+import { getData } from '../../utils/fetch-data';
 
 function ChatroomPage(props) {
   const { appState } = useContext(AppContext);
@@ -21,26 +22,18 @@ function ChatroomPage(props) {
   // Context
   useEffect(() => {
     fetchChatrooms(appState.user.id);
-  }, []);
+  }, [appState.user]);
 
   const fetchChatrooms = async (userId) => {
-    const response = await fetch(`${APIRoute}/api/chatrooms?userId=${userId}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': true
-      }
-    });
+    const response = await getData(`${APIRoute}/api/chatrooms?userId=${userId}`);
 
-    const body = await response.json();
-
-    setChatrooms(body);
+    setChatrooms(response);
   }
 
   return (
     <div className="ChatroomPage">
       <Navigation />
-      <ChatRoom chatrooms={chatrooms} />
+      <Chatroom chatrooms={chatrooms} />
       <Footer />
     </div>
   )

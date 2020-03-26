@@ -1,6 +1,5 @@
 import React from 'react';
-import TextField from '../TextField/TextField';
-import Button from '../Button/Button';
+import Button from '../../Button/Button';
 
 function ChangeEmail(props) {
   const { profile } = props;
@@ -13,7 +12,7 @@ function ChangeEmail(props) {
         <b>New Email: </b>
       </li>
       <li>
-        <TextField text="example@gmail.com" size="25" />
+        <input placeholder="example@gmail.com" size="25" />
       </li>
       <li>
         <Button>Update Email</Button>

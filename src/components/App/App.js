@@ -76,7 +76,6 @@ function ModalSwitch() {
 
       {background && <Route path="/signup" children={<CreateAccountModal />} />}
       {background && <Route path="/login" children={<LoginModal />} />}
-      {/* {background && <Route path="/reset-password" children={<ResetPasswordModal />} />} */}
     </div>
   );
 }

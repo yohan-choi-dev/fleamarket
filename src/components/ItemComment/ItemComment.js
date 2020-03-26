@@ -1,8 +1,6 @@
 import React from 'react';
-import '../../vars/style.css';
 import './ItemComment.css';
 import { ReactComponent as StarIcon } from '@fortawesome/fontawesome-free/svgs/solid/star.svg';
-import TextField from '../TextField/TextField';
 import Button from '../Button/Button';
 
 class Item extends React.Component {
@@ -31,7 +29,8 @@ class Item extends React.Component {
       <div className="ItemComment">
         <div className="ItemComment-Detail-Container">{list}</div>
         <div className='ItemComment-Reply'>
-            <TextField text='Write your comment...' size='120'/> <Button>Comment</Button>
+          <input placeholder="Write a comment" size="120" />
+          <Button>Comment</Button>
         </div>
       </div>
     );

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import './LoginModal.css';
 
 // Context
@@ -10,7 +10,9 @@ import Modal from '../Modal/Modal';
 import Button from '../Button/Button';
 import LabeledInputField from '../LabeledInputField/LabeledInputField';
 
+// Utilities
 import APIRoute from '../../vars/api-routes';
+import { postData } from '../../utils/fetch-data';
 
 function LoginModal(props) {
   // Constants
@@ -32,7 +34,6 @@ function LoginModal(props) {
 
   // Hooks
   const history = useHistory();
-  let location = useLocation();
 
   // Effects
   useEffect(() => {
@@ -42,39 +43,36 @@ function LoginModal(props) {
   // Event handlers
   const handleOnClick = async event => {
     event.preventDefault();
-    const response = await fetch(`${APIRoute}/api/auth/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': true
-      },
-      body: JSON.stringify({
+
+    const response = await postData(
+      `${APIRoute}/api/auth/login`,
+      JSON.stringify({
         email: userEmail.content,
         password: userPassword
-      })
-    });
+      }),
+      'application/json'
+    );
 
     if (response.status !== 200) {
       history.push('/login-error');
     } else {
-      const body = await response.json();
-      history.push('/');
-
       setAppState({
         ...appState,
         user: {
           ...appState.user,
-          id: body.id,
-          name: body.name,
-          token: body.token,
+          id: response.id,
+          name: response.name,
+          token: response.token,
           isLoggedIn: true,
-          description: body.description,
-          image: body.image,
-          liked: body.liked,
-          disliked: body.disliked,
-          email: body.email
+          description: response.description,
+          image: response.image,
+          liked: response.liked,
+          disliked: response.disliked,
+          email: response.email
         }
       });
+
+      history.push('/');
     }
   };
 
