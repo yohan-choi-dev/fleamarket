@@ -43,6 +43,7 @@ if (cluster.isMaster) {
     const categoryRoutes = require("./routes/category");
     const imageRoutes = require("./routes/image");
     const userRoutes = require('./routes/users');
+    const favoriteRoutes = require('./routes/favorites');
 
     const ChatService = require("./service/chat-service");
     const app = express();
@@ -82,6 +83,7 @@ if (cluster.isMaster) {
     app.use("/api/categories", categoryRoutes);
     app.use("/api/images", imageRoutes);
     app.use("/api/users", userRoutes);
+    app.use('/api/favorites', favoriteRoutes);
 
     app.use((error, req, res, next) => {
         const status = error.statusCode || 500;

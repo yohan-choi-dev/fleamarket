@@ -210,10 +210,10 @@ exports.patchItem = async (req, res, next) => { };
 exports.deleteItem = async (req, res, next) => { };
 
 exports.updateItem = async (req, res, next) => {
-  const itemId = req.body.itemId;
+  const itemId = req.params.itemId;
   const userId = req.body.userId;
 
-  const favorited = req.body.favorited;
+  // const favorited = req.body.favorited;
   const owned = req.body.owned;
   const name = req.body.name;
   const description = req.body.description;
@@ -225,9 +225,9 @@ exports.updateItem = async (req, res, next) => {
     WHERE i.id = ui.ItemId AND u.id = ui.UserId AND ui.ItemId=${itemId} AND ui.UserId=${userId};
   `;
 
-  if (favorited)
-    update_query += `UPDATE UserItemBridges SET favorited=${favorited} WHERE ItemId=${itemId} AND UserId=${userId};`;
-  if (owned)
+  // if (favorited == 0 || favorited == 1)
+  //   update_query += `UPDATE UserItemBridges SET favorited=${favorited} WHERE ItemId=${itemId} AND UserId=${userId};`;
+  if (owned == 0 || owned == 1)
     update_query += `UPDATE UserItemBridges SET owned=${owned} WHERE ItemId=${itemId} AND UserId=${userId};`;
   if (name)
     update_query += `UPDATE Items SET name='${name}' WHERE ItemId=${itemId};`;
