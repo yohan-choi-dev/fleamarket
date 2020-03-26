@@ -86,8 +86,8 @@ exports.getItemsByName = async (req, res, next) => {
             u.id as "userId", u.name as "userName" 
     FROM Items i, Users u, UserItemBridges ui
     WHERE ui.UserId = u.id AND ui.ItemId = i.id
-    AND (i.name LIKE '%${name}%'
     AND i.hidden=0
+    AND (i.name LIKE '%${name}%'
     OR i.description LIKE '%${name}%');
   `;
   try {
