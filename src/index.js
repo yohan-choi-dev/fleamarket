@@ -4,7 +4,7 @@ import './index.css';
 import App from './components/App/App';
 import * as serviceWorker from './serviceWorker';
 
-import AppContextProvider from './providers/AppContextProvider';
+import AppContextProvider from './contexts/AppContextProvider';
 
 ReactDOM.render(
   <AppContextProvider>
