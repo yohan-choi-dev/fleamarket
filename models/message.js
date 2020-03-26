@@ -1,17 +1,17 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../utils/database');
-const MessageImage = require('./message-image');
+const { DataTypes } = require('sequelize')
+const sequelize = require('../utils/database')
+const MessageImage = require('./message-image')
 
 const Message = sequelize.define('Message', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         allowNull: false,
-        primaryKey: true
+        primaryKey: true,
     },
     message: DataTypes.STRING,
-});
+})
 
-Message.hasOne(MessageImage);
+Message.hasOne(MessageImage)
 
-module.exports = Message;
+module.exports = Message

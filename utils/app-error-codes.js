@@ -1,7 +1,7 @@
 const ERROR_CODES = {
-  USER: {
-    EMAIL_USED: 101
-  }
+    USER: {
+        EMAIL_USED: 101,
+    },
 }
 
-module.exports = ERROR_CODES;
+module.exports = ERROR_CODES

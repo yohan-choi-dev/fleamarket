@@ -1,13 +1,13 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../utils/database');
+const { DataTypes } = require('sequelize')
+const sequelize = require('../utils/database')
 
 const Chatroom = sequelize.define('Chatroom', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         allowNull: false,
-        primaryKey: true
-    }
-});
+        primaryKey: true,
+    },
+})
 
-module.exports = Chatroom;
+module.exports = Chatroom
