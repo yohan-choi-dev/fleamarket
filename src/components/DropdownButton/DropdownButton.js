@@ -7,8 +7,8 @@ function DropdownButton(props) {
     <div className="DropdownButton">
       <select className="DropdownButton-select" onChange={onChangeHandler}>
         {
-          options.map(option => (
-            <option value={`${option.value}`}>{option.label}</option>
+          options.map((option, index) => (
+            <option key={`Dropdown-${index}`} value={`${option.value}`}>{option.label}</option>
           ))
         }
       </select>

@@ -20,7 +20,6 @@ function ItemPage(props) {
 
   const fetchItem = async (id) => {
     const item = await getData(`${APIRoute}/api/items/${id}`);
-    const itemImages = await getData(`${APIRoute}/api/images?itemId=${item.id}`);
 
     setAppState({
       ...appState,
@@ -29,7 +28,7 @@ function ItemPage(props) {
         id: item.id,
         name: item.name,
         description: item.description,
-        imageUrls: itemImages.map(itemImage => `${APIRoute}/${itemImage.url}`),
+        imageUrls: item.imageUrls.map(itemImage => `${APIRoute}/${itemImage}`),
         owner: {
           id: item.userId,
           name: item.userName

@@ -56,7 +56,13 @@ function ItemUploadPage(props) {
           fd.append('image', itemState.itemImages[key]);
         }
 
-        await postData(`${APIRoute}/api/items`, fd, 'multipart/form-data');
+        await fetch(`${APIRoute}/api/items`, {
+          method: 'POST',
+          headers: {
+            'Access-Control-Allow-Origin': true
+          },
+          body: fd
+        });
 
         history.push('/profile');
       } catch (err) {
@@ -111,19 +117,19 @@ function ItemUploadPage(props) {
                   options={[
                     {
                       value: 'Category',
-                      label: 'Category&nbsp;'
+                      label: 'Category'
                     },
                     {
                       value: 'Electronics',
-                      label: 'Electronics&nbsp;'
+                      label: 'Electronics'
                     },
                     {
                       value: 'Apparels',
-                      label: 'Apparels&nbsp;'
+                      label: 'Apparels'
                     },
                     {
                       value: 'Books',
-                      label: 'Books&nbsp;'
+                      label: 'Books'
                     }
                   ]}
                   onChangeHandler={event => {
