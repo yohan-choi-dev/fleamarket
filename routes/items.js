@@ -24,7 +24,7 @@ router.get("/:itemId", (req, res, next) => {
 router.post("/", storageMiddleware, itemController.postItem);
 
 // /api/items/ => PUT
-router.put("/", itemController.updateItem);
+router.put("/:itemId", itemController.updateItem);
 
 // /api/items/ => DELETE
 // router.post("/", itemController.deleteItem);

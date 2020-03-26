@@ -28,12 +28,16 @@ exports.signup = async (req, res, next) => {
         const email = req.body.email;
         const name = req.body.name;
         const password = req.body.password;
+        const description = req.body.description;
+        const image = req.files[0].path;
 
         const hashedPw = await bcrypt.hash(password, 12);
         const result = await User.create({
             email: email,
             name: name,
-            password: hashedPw
+            password: hashedPw,
+            description: description,
+            image: image
         });
         const user = result.get();
 
