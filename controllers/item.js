@@ -176,14 +176,12 @@ exports.postItem = async (req, res, next) => {
   const images = req.files;
 
   try {
-    const result = await Item.create({
+    const item = await Item.create({
       name: name,
       description: description,
       category: category,
-      isHidden: false
+      hidden: false
     });
-
-    const item = result.get();
 
     await UserItemBridge.create({
       owned: true,

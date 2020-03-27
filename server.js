@@ -65,7 +65,7 @@ if (cluster.isMaster) {
 
         res.setHeader(
             "Access-Control-Allow-Headers",
-            "Content-Type, Authorization, mutilpart/form-data, applcation/json"
+            "Content-Type, Authorization, multipart/form-data, applcation/json"
         );
         if (req.method == "OPTIONS") {
             res.status(200).send();
@@ -74,7 +74,7 @@ if (cluster.isMaster) {
     });
 
     app.use(bodyParser.json());
-    app.use(express.urlencoded({ extended: false, limit: '50mb' }));
+    app.use(express.urlencoded({ extended: false }));
 
     app.use("/images", express.static(path.join(__dirname, "images")));
 
