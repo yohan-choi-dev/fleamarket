@@ -1,4 +1,3 @@
-/* eslint-disable promise/prefer-await-to-callbacks */
 const cluster = require('cluster')
 const numWorkers = process.env.NODE_ENV ? require('os').cpus().length : 1
 
@@ -20,6 +19,7 @@ if (cluster.isMaster) {
     })
 } else {
     const express = require('express')
+    const PORT = process.env.PORT | 12218
     const app = express()
 
     const path = require('path')
@@ -30,21 +30,6 @@ if (cluster.isMaster) {
     const redis = require('./utils/redis')
     const io = require('./socket/socket')
     const mailService = require('./service/mail-service')
-
-    const User = require('./models/user')
-    const Item = require('./models/item')
-    const ImageLink = require('./models/image-link')
-    const UserItemBridge = require('./models/user-item-bridge')
-    const Category = require('./models/category')
-    const ItemCategoryBridge = require('./models/item-category-bridge')
-    const Comment = require('./models/comment')
-    const Token = require('./models/token')
-    const Feedback = require('./models/feedback')
-    const Message = require('./models/message')
-    const Notification = require('./models/notification')
-    const Trade = require('./models/trade')
-
-    const port = process.env.PORT | 12218
 
     const authRoutes = require('./routes/auth')
     const itemRoutes = require('./routes/items')
@@ -78,11 +63,12 @@ if (cluster.isMaster) {
 
     app.use(errorHandler())
 
-    sequelize
-        .sync()
-        .then(() => {
-            const server = app.listen(port, () =>
-                console.log(`Worker ${process.pid} is running on ${port}`)
+    const runServer = async () => {
+        try {
+            await sequelize.sync()
+
+            const server = app.listen(PORT, () =>
+                console.log(`Worker ${process.pid} is running on ${PORT}`)
             )
 
             redis.init()
@@ -93,8 +79,9 @@ if (cluster.isMaster) {
             if (process.env.NODE_ENV) {
                 mailService.init()
             }
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+        } catch (err) {
+            console.error(err)
+        }
+    }
+    runServer()
 }
