@@ -12,10 +12,11 @@ const getData = async (url) => {
   return responseBody;
 }
 
-const postData = async (url, body) => {
+const postData = async (url, body, contentType) => {
   const response = await fetch(url, {
     method: 'POST',
     headers: {
+      'Content-Type': contentType,
       'Access-Control-Allow-Origin': true
     },
     body: body

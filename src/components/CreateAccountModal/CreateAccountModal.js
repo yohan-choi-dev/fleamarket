@@ -10,7 +10,6 @@ import LabeledTextField from '../LabeledTextField/LabeledTextField';
 
 // Utilities
 import APIRoute from '../../vars/api-routes';
-import { postData } from '../../utils/fetch-data';
 
 function CreateAccountModal(props) {
 
@@ -68,7 +67,16 @@ function CreateAccountModal(props) {
     fd.append('description', userDescription);
     fd.append('image', userImage);
 
-    const response = await postData(`${APIRoute}/api/auth/signup`, fd);
+    const response = await fetch(`${APIRoute}/api/auth/signup`, {
+      method: 'POST',
+      headers: {
+        'Access-Control-Allow-Origin': true
+      },
+      body: fd
+    });
+
+    const responseBody = await response.json();
+    responseBody.status = response.status;
 
     if (response.status !== 201) {
       window.alert(`Failed to sign up. ${response.data[0].msg}`);
