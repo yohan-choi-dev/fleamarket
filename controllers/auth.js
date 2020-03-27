@@ -173,7 +173,7 @@ exports.confirmEmail = async (req, res, next) => {
             }
         );
 
-        res.status(200).json(user);
+        res.status(200).redirect('http://myvmlab.senecacollege.ca:6761/');
 
     } catch (error) {
         if (!error.statusCode) {
