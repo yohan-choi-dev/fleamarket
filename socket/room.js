@@ -1,11 +1,11 @@
 class Room {
-    constructor( id, namespace) {
+    constructor(id, namespace) {
         this.id = id
         this.namespace = namespace
         this.history = []
     }
-    
-    addMessage(mesage) {
+
+    addMessage(message) {
         this.history.push(message)
     }
 

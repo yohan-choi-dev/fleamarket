@@ -1,14 +1,13 @@
 module.exports = {
-    extends: ['prettier', 'plugin:promise/recommended'],
     plugins: ['prettier', 'promise'],
     env: {
         commonjs: true,
         es6: true,
-        node: true
+        node: true,
     },
     extends: 'eslint:recommended',
     parserOptions: {
-        ecmaVersion: 2018
+        ecmaVersion: 2018,
     },
     rules: {
         'prettier/prettier': ['error'],
@@ -74,6 +73,6 @@ module.exports = {
         /**
          * Prefer async/await to the callback pattern
          */
-        'promise/prefer-await-to-callbacks': 'warn'
-    }
+        'promise/prefer-await-to-callbacks': 'warn',
+    },
 }
