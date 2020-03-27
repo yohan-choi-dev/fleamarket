@@ -27,7 +27,7 @@ if (cluster.isMaster) {
 
     const sequelize = require('./utils/database')
     const redis = require('./utils/redis')
-    const io = require('./utils/socket')
+    const io = require('./socket/socket')
 
     const User = require('./models/user')
     const Item = require('./models/item')
