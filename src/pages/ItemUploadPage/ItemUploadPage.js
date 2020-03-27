@@ -55,7 +55,7 @@ function ItemUploadPage(props) {
           fd.append('image', itemState.itemImages[key]);
         }
 
-        await fetch(`${APIRoute}/api/items`, {
+        const response = await fetch(`${APIRoute}/api/items`, {
           method: 'POST',
           headers: {
             'Access-Control-Allow-Origin': true
@@ -63,7 +63,11 @@ function ItemUploadPage(props) {
           body: fd
         });
 
-        history.push('/profile');
+        if (response.status >= 200 && response.status <= 299) {
+          history.push('/profile');
+        } else {
+          window.alert('Could not upload item. Please try again');
+        }
       } catch (err) {
         console.error(err);
       }

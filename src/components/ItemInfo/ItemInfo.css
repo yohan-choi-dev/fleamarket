@@ -21,6 +21,7 @@
   max-height: 27.78rem;
   list-style-type: none;
   overflow-y: scroll;
+  scrollbar-track-color: rgba(0, 0, 0, 0);
 }
 
 .ItemInfo-images-thumbnails .ItemInfo-images-thumbnail-small {
