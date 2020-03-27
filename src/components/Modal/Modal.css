@@ -15,12 +15,18 @@
 
 .Modal-content {
   position: absolute;
-  top: 50%;
+  top: 20%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   z-index: 300;
   max-width: 550px;
   padding: 1.2rem 1.4rem;
   background-color: #ffffff;
   border-radius: 15px;
+}
+
+@media (max-width: 640px) {
+  .Modal-content {
+    width: 80%;
+  }
 }

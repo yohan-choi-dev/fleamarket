@@ -43,9 +43,9 @@ function CreateAccountModal(props) {
 
   // Effects
   useEffect(() => {
-    setValid(userEmail.isValid && userPassword.isValid && passwordIsSame);
+    setValid(userEmail.isValid && userPassword.isValid && passwordIsSame && userDescription.length > 0 && userImage);
     // eslint-disable-next-line
-  }, [userEmail.content, passwordIsSame]);
+  }, [userEmail.content, passwordIsSame, userDescription, userImage]);
 
   useEffect(() => {
     const isSame = userPassword.content === userPasswordConfirm.content;
@@ -91,7 +91,7 @@ function CreateAccountModal(props) {
         <form className="CreateAccountModal-form">
           <div className="CreateAccount-name-input">
             <LabeledInputField
-              label="First Name"
+              label="First Name *"
               inputField={{
                 id: 'CreateAccount-fn-input',
                 name: 'CreateAccount-fn-input',
@@ -108,7 +108,7 @@ function CreateAccountModal(props) {
               }}
             />
             <LabeledInputField
-              label="Last Name"
+              label="Last Name *"
               inputField={{
                 id: 'CreateAccount-ln-input',
                 name: 'CreateAccount-ln-input',
@@ -125,7 +125,7 @@ function CreateAccountModal(props) {
             />
           </div>
           <LabeledInputField
-            label="Email"
+            label="Email *"
             inputField={{
               id: 'CreateAccount-email-input',
               name: 'CreateAccount-email-input',
@@ -148,7 +148,7 @@ function CreateAccountModal(props) {
             }}
           />
           <LabeledInputField
-            label="Password"
+            label="Password *"
             inputField={{
               id: 'CreateAccount-password-input',
               name: 'CreateAccount-password-input',
@@ -171,7 +171,7 @@ function CreateAccountModal(props) {
             }}
           />
           <LabeledInputField
-            label="Confirm Password"
+            label="Confirm Password *"
             inputField={{
               id: 'CreateAccount-password-confirm-input',
               name: 'CreateAccount-password-confirm-input',
@@ -192,7 +192,7 @@ function CreateAccountModal(props) {
             }}
           />
           <LabeledTextField
-            label="Description"
+            label="Description *"
             id="CreateAccount-description"
             onChangeHandler={event => {
               const userInput = event.target.value;
@@ -201,7 +201,7 @@ function CreateAccountModal(props) {
             textFieldValue={userDescription}
           />
           <div className="CreateAccount-user-image">
-            <label>Profile Photo (maximum 5MB)</label>
+            <label>Profile Photo (maximum 5MB) *</label>
             <input
               type="file"
               multiple={false}

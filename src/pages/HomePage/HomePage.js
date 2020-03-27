@@ -3,6 +3,7 @@ import { ReactComponent as HeartIcon } from '@fortawesome/fontawesome-free/svgs/
 import { ReactComponent as ChatIcon } from '@fortawesome/fontawesome-free/svgs/brands/weixin.svg';
 import { ReactComponent as TradeIcon } from '@fortawesome/fontawesome-free/svgs/regular/handshake.svg';
 import './HomePage.css';
+import backgroundVideo from '../../assets/aerial-shot-of-city.mp4';
 
 // Components
 import Navigation from '../../components/Navigation/Navigation';
@@ -26,7 +27,12 @@ function HomePage(props) {
 
   useEffect(() => {
     const fetchItems = async () => {
-      let itemList = await getData(`${APIRoute}/api/items`);
+      let itemList;
+      if (appState.user.isLoggedIn) {
+        itemList = await getData(`${APIRoute}/api/items?notOwned=1&userId=${appState.user.id}`);
+      } else {
+        itemList = await getData(`${APIRoute}/api/items`);
+      }
 
       if (appState.user.isLoggedIn) {
         const itemsLikedByUser = await getData(`${APIRoute}/api/favorites?userId=${appState.user.id}`);
@@ -48,7 +54,7 @@ function HomePage(props) {
       setItems(itemList);
     }
     fetchItems();
-  }, []);
+  }, [appState.user.isLoggedIn]);
 
   const handleLikedStatus = async (liked, itemId) => {
     if (liked) {

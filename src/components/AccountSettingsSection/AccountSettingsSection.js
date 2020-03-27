@@ -5,7 +5,6 @@ import AccountSettingsSidebar from './AccountSettingsSidebar/AccountSettingsSide
 import Overview from './Overview/Overview';
 import ChangeEmail from './ChangeEmail/ChangeEmail';
 import UpdateContact from './UpdateContact/UpdateContact';
-import UpdatePayment from './UpdatePayment/UpdatePayment';
 import DeleteAccount from './DeleteAccount/DeleteAccount';
 import ChangePassword from './ChangePassword/ChangePassword';
 
@@ -30,9 +29,6 @@ function AccountSettingsSection(props) {
         setAccountSettingsView(<UpdateContact />);
         break;
       case 4:
-        setAccountSettingsView(<UpdatePayment />);
-        break;
-      case 5:
         setAccountSettingsView(<DeleteAccount />);
         break;
       default:

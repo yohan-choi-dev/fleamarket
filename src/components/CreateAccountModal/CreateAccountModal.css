@@ -42,3 +42,13 @@
   font-weight: 600;
   color: var(--lighter-black);
 }
+
+@media (max-width: 640px) {
+  .CreateAccount-name-input {
+    flex-direction: column;
+  }
+
+  .CreateAccount-name-input .LabeledInputField:first-child {
+    margin-right: 0;
+  }
+}
