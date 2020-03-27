@@ -8,29 +8,29 @@ const Feedback = sequelize.define(
             type: DataTypes.INTEGER,
             autoIncrement: true,
             allowNull: false,
-            primaryKey: true,
+            primaryKey: true
         },
         message: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: false
         },
         feedbackDate: {
             type: DataTypes.DATE,
-            allowNull: false,
+            allowNull: false
         },
         writerId: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: false
         },
         transactionId: {
             type: DataTypes.INTEGER,
-            allowNull: false,
-        },
+            allowNull: false
+        }
     },
     {
         timestamps: false,
         updatedAt: false,
-        createAt: false,
+        createAt: false
     }
 )
 

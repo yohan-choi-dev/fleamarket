@@ -9,29 +9,29 @@ const Comment = sequelize.define(
             type: DataTypes.INTEGER,
             autoIncrement: true,
             allowNull: false,
-            primaryKey: true,
+            primaryKey: true
         },
         content: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: false
         },
         conmmentDate: {
             type: DataTypes.DATE,
-            allowNull: false,
+            allowNull: false
         },
         postId: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: false
         },
         userId: {
             type: DataTypes.INTEGER,
-            allowNull: false,
-        },
+            allowNull: false
+        }
     },
     {
         timestamps: false,
         updatedAt: false,
-        createAt: false,
+        createAt: false
     }
 )
 

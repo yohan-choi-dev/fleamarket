@@ -16,11 +16,11 @@ router.post(
             .normalizeEmail()
             .isEmail()
             .bail()
-            .custom((value) => {
+            .custom(value => {
                 return User.findAll({
                     attributes: ['email'],
-                    where: { email: value },
-                }).then((user) => {
+                    where: { email: value }
+                }).then(user => {
                     let lenth = user.length
                     if (lenth !== 0) {
                         let error = new Error('Email is in use already')
@@ -32,9 +32,7 @@ router.post(
             .bail(),
         body('password')
             .isLength({ min: 8 })
-            .withMessage(
-                'must be at least 8 chars long and at most 25 chars long'
-            ),
+            .withMessage('must be at least 8 chars long and at most 25 chars long')
     ],
     authController.signup
 )

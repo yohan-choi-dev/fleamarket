@@ -8,20 +8,20 @@ const Notification = sequelize.define(
             type: DataTypes.INTEGER,
             autoIncrement: true,
             allowNull: false,
-            primaryKey: true,
+            primaryKey: true
         },
         title: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: false
         },
         date: DataTypes.DATE,
         notification: DataTypes.STRING,
-        isRead: DataTypes.BOOLEAN,
+        isRead: DataTypes.BOOLEAN
     },
     {
         timestamps: false,
         updatedAt: false,
-        createAt: false,
+        createAt: false
     }
 )
 

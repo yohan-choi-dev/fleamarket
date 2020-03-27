@@ -48,12 +48,11 @@ const runServer = async () => {
         await sequelize.sync()
         redis.init()
 
-        const client = redis.getClient()
         const server = app.listen(PORT, () =>
             console.log(`Worker ${process.pid} is running on ${PORT}`)
         )
 
-        io.init(server, client)
+        io.init(server, redis)
 
         if (process.env.NODE_ENV) {
             mailService.init()

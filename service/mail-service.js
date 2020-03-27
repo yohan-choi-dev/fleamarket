@@ -7,10 +7,10 @@ const transporter = nodemailer.createTransport({
     port: 587,
     auth: {
         user: user,
-        pass: 'BNjj6#4$pk2v',
+        pass: 'BNjj6#4$pk2v'
     },
     secureConnection: false,
-    tls: { ciphers: 'SSLv3' },
+    tls: { ciphers: 'SSLv3' }
 })
 
 module.exports = {
@@ -28,7 +28,7 @@ module.exports = {
             to: to,
             subject: msg.subject,
             text: msg.text,
-            html: msg.html,
+            html: msg.html
         }
 
         try {
@@ -39,5 +39,5 @@ module.exports = {
         } catch (err) {
             console.log(err)
         }
-    },
+    }
 }

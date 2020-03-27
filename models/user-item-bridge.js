@@ -9,10 +9,10 @@ const UserItemBridge = sequelize.define('UserItemBridge', {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         allowNull: false,
-        primaryKey: true,
+        primaryKey: true
     },
     owned: DataTypes.BOOLEAN,
-    isFavorite: DataTypes.BOOLEAN,
+    isFavorite: DataTypes.BOOLEAN
 })
 
 User.belongsToMany(Item, { through: 'UserItemBridge' })

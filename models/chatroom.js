@@ -7,8 +7,8 @@ const Chatroom = sequelize.define('Chatroom', {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         allowNull: false,
-        primaryKey: true,
-    },
+        primaryKey: true
+    }
 })
 
 User.hasMany(Chatroom)

@@ -8,14 +8,14 @@ const Category = sequelize.define(
             type: DataTypes.INTEGER,
             autoIncrement: true,
             allowNull: false,
-            primaryKey: true,
+            primaryKey: true
         },
-        category: DataTypes.STRING(255),
+        category: DataTypes.STRING(255)
     },
     {
         timestamps: false,
         updatedAt: false,
-        createAt: false,
+        createAt: false
     }
 )
 

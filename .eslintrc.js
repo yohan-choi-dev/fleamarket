@@ -33,11 +33,6 @@ module.exports = {
          * https://eslint.org/docs/rules/no-async-promise-executor
          */
         'no-async-promise-executor': ['error'],
-        /**
-         * Disallow await inside of loops
-         * https://eslint.org/docs/rules/no-await-in-loop
-         */
-        'no-await-in-loop': ['error'],
 
         /**
          * Disallow assignments that can lead to race conditions due to
@@ -61,7 +56,7 @@ module.exports = {
          * Disallow enforcement of consistent linebreak style
          * https://eslint.org/docs/rules/func-names
          */
-        'linebreak-style': 'off',
+        'linebreak-style': 'off'
         /**
          * The following are eslint rules from the promise-plugin
          * https://github.com/xjamundx/eslint-plugin-promise

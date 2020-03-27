@@ -8,8 +8,8 @@ const ItemCategoryBridge = sequelize.define('ItemCategoryBridge', {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         allowNull: false,
-        primaryKey: true,
-    },
+        primaryKey: true
+    }
 })
 
 Item.belongsToMany(Category, { through: 'ItemCategoryBridge' })

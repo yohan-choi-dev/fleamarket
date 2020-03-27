@@ -7,9 +7,9 @@ const Message = sequelize.define('Message', {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         allowNull: false,
-        primaryKey: true,
+        primaryKey: true
     },
-    message: DataTypes.STRING,
+    message: DataTypes.STRING
 })
 
 Message.hasOne(MessageImage)

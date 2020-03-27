@@ -6,9 +6,9 @@ const MessageImage = sequelize.define('MessageImage', {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         allowNull: false,
-        primaryKey: true,
+        primaryKey: true
     },
-    imageUrl: DataTypes.STRING,
+    imageUrl: DataTypes.STRING
 })
 
 module.exports = MessageImage

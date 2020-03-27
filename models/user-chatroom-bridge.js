@@ -8,8 +8,8 @@ const UserChatroomBridge = sequelize.define('UserChatroomBridge', {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         allowNull: true,
-        primaryKey: true,
-    },
+        primaryKey: true
+    }
 })
 
 User.belongsToMany(Chatroom, { through: 'UserChatroomBridge' })

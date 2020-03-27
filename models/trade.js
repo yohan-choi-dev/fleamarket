@@ -6,17 +6,17 @@ const Trade = sequelize.define('trade', {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         allowNull: false,
-        primaryKey: true,
+        primaryKey: true
     },
     token: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: false
     },
     status: {
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: 'ready',
-    },
+        defaultValue: 'ready'
+    }
 })
 
 module.exports = Trade

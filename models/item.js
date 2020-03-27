@@ -6,26 +6,26 @@ const Item = sequelize.define('Item', {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         allowNull: false,
-        primaryKey: true,
+        primaryKey: true
     },
     name: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: false
     },
     description: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: false
     },
     price: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER
     },
     exchangeFor: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING
     },
     isHidden: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
-    },
+        allowNull: false
+    }
 })
 
 module.exports = Item

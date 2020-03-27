@@ -8,22 +8,22 @@ const User = sequelize.define(
             type: DataTypes.INTEGER,
             autoIncrement: true,
             allowNull: false,
-            primaryKey: true,
+            primaryKey: true
         },
         name: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: false
         },
         email: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: false
         },
         password: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: false
         },
         address: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING
         },
         description: DataTypes.STRING,
         image: DataTypes.STRING,
@@ -32,14 +32,14 @@ const User = sequelize.define(
         isActivated: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
-            defaultValue: false,
+            defaultValue: false
         },
-        paymentId: DataTypes.INTEGER,
+        paymentId: DataTypes.INTEGER
     },
     {
         timestamp: false,
         updateAt: false,
-        createAt: false,
+        createAt: false
     }
 )
 

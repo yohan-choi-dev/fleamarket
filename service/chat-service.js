@@ -60,18 +60,12 @@ Step 2. Join chatting room // Request Status Control
 
 */
 
-
-
-
-
 // then socket -> findUser()
 
 // when a client access to the socket. socket.Id, userId
 
-// When a user sends message, a user sends his 
+// When a user sends message, a user sends his
 
-// client => send message with userID. 
+// client => send message with userID.
 
-socket.on('sendMessageFromUser', (message) => {})
-
-
+socket.on('sendMessageFromUser', message => {})

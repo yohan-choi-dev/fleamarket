@@ -7,12 +7,12 @@ const Token = sequelize.define('Token', {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         allowNull: false,
-        primaryKey: true,
+        primaryKey: true
     },
     token: {
         type: DataTypes.STRING,
-        allowNull: false,
-    },
+        allowNull: false
+    }
 })
 
 User.hasMany(Token)

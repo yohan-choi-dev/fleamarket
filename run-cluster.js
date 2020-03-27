@@ -4,7 +4,6 @@ const numWorkers = process.env.NODE_ENV ? require('os').cpus().length : 1
 if (cluster.isMaster) {
     console.log(`Master ${process.pid} is running`)
 
-    // Fork workers.
     for (let i = 0; i < numWorkers; i++) {
         cluster.fork()
     }

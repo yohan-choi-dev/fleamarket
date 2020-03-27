@@ -18,7 +18,7 @@ exports.getItems = async (req, res, next) => {
 
         let results = []
 
-        await asyncForEach(items, async (item) => {
+        await asyncForEach(items, async item => {
             let search_query = `SELECT il.url FROM ImageLinks il
                       WHERE il.itemId=${item.id} LIMIT 1`
             let images = await sequelize.query(search_query, {
@@ -26,7 +26,7 @@ exports.getItems = async (req, res, next) => {
             })
             results.push({
                 ...item,
-                imageUrls: images.map((image) => image.url)
+                imageUrls: images.map(image => image.url)
             })
         })
 
@@ -97,7 +97,7 @@ exports.getItemsByName = async (req, res, next) => {
 
         let results = []
 
-        await asyncForEach(items, async (item) => {
+        await asyncForEach(items, async item => {
             let item_images_query = `
         SELECT il.url
         FROM Items i, ImageLinks il
@@ -143,7 +143,7 @@ exports.getItemsByUser = async (req, res, next) => {
 
         let results = []
 
-        await asyncForEach(items, async (item) => {
+        await asyncForEach(items, async item => {
             let search_query = `SELECT il.url FROM ImageLinks il
                       WHERE il.itemId=${item.id}`
             let images = await sequelize.query(search_query, {
@@ -152,7 +152,7 @@ exports.getItemsByUser = async (req, res, next) => {
 
             results.push({
                 ...item,
-                imageUrls: images.map((image) => image.url)
+                imageUrls: images.map(image => image.url)
             })
         })
 
@@ -191,7 +191,7 @@ exports.postItem = async (req, res, next) => {
             UserId: userId
         })
 
-        await asyncForEach(images, async (image) => {
+        await asyncForEach(images, async image => {
             await ImageLink.create({
                 url: image.path,
                 itemId: item.id
