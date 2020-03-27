@@ -36,7 +36,7 @@ exports.signup = async (req, res, next) => {
             name: name,
             password: hashedPw,
             description: description,
-            image: image,
+            image: image
         })
         const user = result.get()
 
@@ -44,7 +44,7 @@ exports.signup = async (req, res, next) => {
 
         const token = await Token.create({
             token: cryptoURL,
-            UserId: user.id,
+            UserId: user.id
         })
 
         res.status(201).json({
@@ -52,16 +52,15 @@ exports.signup = async (req, res, next) => {
             email: user.email,
             name: user.name,
             updateAt: user.updateAt,
-            createAt: user.createAt,
+            createAt: user.createAt
         })
 
-        const domain =
-            'http://myvmlab.senecacollege.ca:6765/api/auth/confirmEmail?url='
+        const domain = 'http://myvmlab.senecacollege.ca:6765/api/auth/confirmEmail?url='
 
         MailService.sendMail(user.email, {
             subject: 'Verfication Email',
             text: cryptoURL,
-            html: `<a href='${domain}${cryptoURL}'>${domain}${cryptoURL}</a>`,
+            html: `<a href='${domain}${cryptoURL}'>${domain}${cryptoURL}</a>`
         })
     } catch (error) {
         if (!error.statusCode) {
@@ -78,8 +77,8 @@ exports.login = async (req, res, next) => {
     try {
         let loadedUser = await User.findOne({
             where: {
-                email: email,
-            },
+                email: email
+            }
         })
 
         if (loadedUser === null) {
@@ -103,7 +102,7 @@ exports.login = async (req, res, next) => {
         const token = jwt.sign(
             {
                 email: loadedUser.email,
-                id: loadedUser.id.toString(),
+                id: loadedUser.id.toString()
             },
             'jsonscretoeknforfleamarket',
             { expiresIn: '1h' }
@@ -117,7 +116,7 @@ exports.login = async (req, res, next) => {
             image: loadedUser.image,
             liked: loadedUser.liked,
             disliked: loadedUser.disliked,
-            email: loadedUser.email,
+            email: loadedUser.email
         })
     } catch (error) {
         if (!error.statusCode) {
@@ -133,8 +132,8 @@ exports.confirmEmail = async (req, res, next) => {
     try {
         const tokenUser = await Token.findOne({
             where: {
-                token: url,
-            },
+                token: url
+            }
         })
 
         if (!tokenUser) {
@@ -150,8 +149,8 @@ exports.confirmEmail = async (req, res, next) => {
         if (currentDate > expiredDate) {
             await Token.destroy({
                 where: {
-                    token: url,
-                },
+                    token: url
+                }
             })
             const error = new Error('Your token expired already!')
             error.statusCode = 404
@@ -164,8 +163,8 @@ exports.confirmEmail = async (req, res, next) => {
             { isActivated: true },
             {
                 where: {
-                    id: userId,
-                },
+                    id: userId
+                }
             }
         )
 
@@ -184,8 +183,8 @@ exports.recoverAccount = async (req, res, next) => {
     try {
         let loadedUser = await User.findOne({
             where: {
-                email: email,
-            },
+                email: email
+            }
         })
 
         if (loadedUser === null) {
@@ -202,7 +201,7 @@ exports.recoverAccount = async (req, res, next) => {
 
         await Token.create({
             token: cryptoURL,
-            UserId: loadedUser.id,
+            UserId: loadedUser.id
         })
 
         const resetUrl = `http://myvmlab.senecacollege.ca:6761/reset-password?userId=${loadedUser.id}&token=${cryptoURL}`
@@ -210,11 +209,11 @@ exports.recoverAccount = async (req, res, next) => {
         MailService.sendMail(loadedUser.email, {
             subject: 'FleaMarket - Recover your account',
             text: resetUrl,
-            html: `<a href='${resetUrl}'>Reset your password here</a>`,
+            html: `<a href='${resetUrl}'>Reset your password here</a>`
         })
 
         res.status(200).json({
-            message: 'Successfully sent email to recover account!',
+            message: 'Successfully sent email to recover account!'
         })
     } catch (error) {
         if (!error.statusCode) {

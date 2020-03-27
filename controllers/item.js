@@ -13,7 +13,7 @@ exports.getItems = async (req, res, next) => {
                       WHERE ui.UserId = u.id AND ui.ItemId = i.id AND i.hidden=0`
     try {
         let items = await sequelize.query(search_query, {
-            type: sequelize.QueryTypes.SELECT,
+            type: sequelize.QueryTypes.SELECT
         })
 
         let results = []
@@ -22,11 +22,11 @@ exports.getItems = async (req, res, next) => {
             let search_query = `SELECT il.url FROM ImageLinks il
                       WHERE il.itemId=${item.id} LIMIT 1`
             let images = await sequelize.query(search_query, {
-                type: sequelize.QueryTypes.SELECT,
+                type: sequelize.QueryTypes.SELECT
             })
             results.push({
                 ...item,
-                imageUrls: images.map((image) => image.url),
+                imageUrls: images.map((image) => image.url)
             })
         })
 
@@ -50,7 +50,7 @@ exports.getItemById = async (req, res, next) => {
   `
     try {
         let item = await sequelize.query(search_query, {
-            type: sequelize.QueryTypes.SELECT,
+            type: sequelize.QueryTypes.SELECT
         })
 
         let item_images_query = `
@@ -60,7 +60,7 @@ exports.getItemById = async (req, res, next) => {
     `
 
         let itemImages = await sequelize.query(item_images_query, {
-            type: sequelize.QueryTypes.SELECT,
+            type: sequelize.QueryTypes.SELECT
         })
         item[0].imageUrls = []
 
@@ -92,7 +92,7 @@ exports.getItemsByName = async (req, res, next) => {
   `
     try {
         let items = await sequelize.query(search_query, {
-            type: sequelize.QueryTypes.SELECT,
+            type: sequelize.QueryTypes.SELECT
         })
 
         let results = []
@@ -104,12 +104,12 @@ exports.getItemsByName = async (req, res, next) => {
         WHERE i.id=il.itemId AND i.id=${item.id} LIMIT 1;
       `
             let itemImageUrls = await sequelize.query(item_images_query, {
-                type: sequelize.QueryTypes.SELECT,
+                type: sequelize.QueryTypes.SELECT
             })
 
             results.push({
                 ...item,
-                imageUrl: itemImageUrls[0].url,
+                imageUrl: itemImageUrls[0].url
             })
         })
 
@@ -138,7 +138,7 @@ exports.getItemsByUser = async (req, res, next) => {
 
     try {
         let items = await sequelize.query(search_query, {
-            type: sequelize.QueryTypes.SELECT,
+            type: sequelize.QueryTypes.SELECT
         })
 
         let results = []
@@ -147,12 +147,12 @@ exports.getItemsByUser = async (req, res, next) => {
             let search_query = `SELECT il.url FROM ImageLinks il
                       WHERE il.itemId=${item.id}`
             let images = await sequelize.query(search_query, {
-                type: sequelize.QueryTypes.SELECT,
+                type: sequelize.QueryTypes.SELECT
             })
 
             results.push({
                 ...item,
-                imageUrls: images.map((image) => image.url),
+                imageUrls: images.map((image) => image.url)
             })
         })
 
@@ -179,7 +179,7 @@ exports.postItem = async (req, res, next) => {
             name: name,
             description: description,
             category: category,
-            isHidden: false,
+            isHidden: false
         })
 
         const item = result.get()
@@ -188,13 +188,13 @@ exports.postItem = async (req, res, next) => {
             owned: true,
             favorited: false,
             ItemId: item.id,
-            UserId: userId,
+            UserId: userId
         })
 
         await asyncForEach(images, async (image) => {
             await ImageLink.create({
                 url: image.path,
-                itemId: item.id,
+                itemId: item.id
             })
         })
 
@@ -229,18 +229,17 @@ exports.updateItem = async (req, res, next) => {
     //   update_query += `UPDATE UserItemBridges SET favorited=${favorited} WHERE ItemId=${itemId} AND UserId=${userId};`;
     if (owned == 0 || owned == 1)
         update_query += `UPDATE UserItemBridges SET owned=${owned} WHERE ItemId=${itemId} AND UserId=${userId};`
-    if (name)
-        update_query += `UPDATE Items SET name='${name}' WHERE ItemId=${itemId};`
+    if (name) update_query += `UPDATE Items SET name='${name}' WHERE ItemId=${itemId};`
     if (description)
         update_query += `UPDATE Items SET description='${description}' WHERE ItemId=${itemId};`
 
     try {
         await sequelize.query(update_query, {
-            type: sequelize.QueryTypes.UPDATE,
+            type: sequelize.QueryTypes.UPDATE
         })
 
         let results = await sequelize.query(search_query, {
-            type: sequelize.QueryTypes.SELECT,
+            type: sequelize.QueryTypes.SELECT
         })
 
         res.status(200).send(JSON.stringify(results))

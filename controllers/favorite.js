@@ -10,7 +10,7 @@ exports.addFavorite = async (req, res, next) => {
 
     try {
         let results = await sequelize.query(update_query, {
-            type: sequelize.QueryTypes.UPDATE,
+            type: sequelize.QueryTypes.UPDATE
         })
         res.status(200).send(JSON.stringify(results))
     } catch (err) {
@@ -31,7 +31,7 @@ exports.removeFavorite = async (req, res, next) => {
 
     try {
         let results = await sequelize.query(remove_query, {
-            type: sequelize.QueryTypes.DELETE,
+            type: sequelize.QueryTypes.DELETE
         })
         res.status(200).send(JSON.stringify(results))
     } catch (err) {
@@ -51,11 +51,9 @@ exports.getFavoritesByUserId = async (req, res, next) => {
 
     try {
         let results = await sequelize.query(get_query, {
-            type: sequelize.QueryTypes.SELECT,
+            type: sequelize.QueryTypes.SELECT
         })
-        res.status(200).send(
-            JSON.stringify(results.map((result) => result.itemId))
-        )
+        res.status(200).send(JSON.stringify(results.map((result) => result.itemId)))
     } catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500

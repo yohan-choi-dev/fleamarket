@@ -22,10 +22,9 @@ const fileStorage = multer.diskStorage({
         console.log('images created')
         cb(
             null,
-            cryptoRandomString({ length: 20, type: 'url-safe' }) +
-                path.extname(file.originalname)
+            cryptoRandomString({ length: 20, type: 'url-safe' }) + path.extname(file.originalname)
         )
-    },
+    }
 })
 
 // Allow the user to upload multiple images for an item,
@@ -34,6 +33,6 @@ exports.storageMiddleware = multer({
     storage: fileStorage,
     fileFilter: fileTypeFilter,
     limits: {
-        fileSize: 1024 * 1024 * 1024 * 5,
-    },
+        fileSize: 1024 * 1024 * 1024 * 5
+    }
 }).array('image', 8)

@@ -12,7 +12,7 @@ const updateUserEmail = async (req, res, next) => {
     let query = `UPDATE Users SET email="${newEmail}" WHERE id=${userId};`
     try {
         let results = await sequelize.query(query, {
-            type: sequelize.QueryTypes.UPDATE,
+            type: sequelize.QueryTypes.UPDATE
         })
         if (results.length === 0) {
             const error = new Error('No Search Result')
@@ -46,7 +46,7 @@ const updateUserAddress = async (req, res, next) => {
     let query = `UPDATE Users SET address="${newAddress}" WHERE id=${userId};`
     try {
         let results = await sequelize.query(query, {
-            type: sequelize.QueryTypes.UPDATE,
+            type: sequelize.QueryTypes.UPDATE
         })
         if (results.length === 0) {
             const error = new Error('No Search Result')
@@ -72,7 +72,7 @@ const updateUserPassword = async (req, res, next) => {
 
     try {
         let results = await sequelize.query(checkUserQuery, {
-            type: sequelize.QueryTypes.SELECT,
+            type: sequelize.QueryTypes.SELECT
         })
         if (results.length === 0) {
             const error = new Error('No Search Result')
@@ -87,7 +87,7 @@ const updateUserPassword = async (req, res, next) => {
 
             try {
                 let results = await sequelize.query(query, {
-                    type: sequelize.QueryTypes.UPDATE,
+                    type: sequelize.QueryTypes.UPDATE
                 })
                 if (results.length === 0) {
                     const error = new Error('No Search Result')
@@ -104,7 +104,7 @@ const updateUserPassword = async (req, res, next) => {
         } else {
             res.status(200).send(
                 JSON.stringify({
-                    message: 'No token found for user.',
+                    message: 'No token found for user.'
                 })
             )
         }
@@ -123,7 +123,7 @@ exports.getUserById = async (req, res, next) => {
                           WHERE id=${userId}`
     try {
         let results = await sequelize.query(search_query, {
-            type: sequelize.QueryTypes.SELECT,
+            type: sequelize.QueryTypes.SELECT
         })
         if (results.length === 0) {
             const error = new Error('No Search Result')

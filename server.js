@@ -29,6 +29,7 @@ if (cluster.isMaster) {
     const sequelize = require('./utils/database')
     const redis = require('./utils/redis')
     const io = require('./socket/socket')
+    const mailService = require('./service/mail-service')
 
     const User = require('./models/user')
     const Item = require('./models/item')
@@ -52,6 +53,8 @@ if (cluster.isMaster) {
     const userRoutes = require('./routes/users')
     const favoriteRoutes = require('./routes/favorites')
 
+    const errorHandler = require('./middlewares/error-handler')
+
     //const ChatService = require('./service/chat-service')
 
     if (!process.env.NODE_ENV) {
@@ -73,29 +76,22 @@ if (cluster.isMaster) {
     app.use('/api/users', userRoutes)
     app.use('/api/favorites', favoriteRoutes)
 
-    app.use((err, req, res, next) => {
-        if (res.headersSent) {
-            return next(err)
-        }
-        const status = err.statusCode || 500
-        const message = err.message
-        const data = err.data
-        res.status(status).json({ message: message, data: data })
-    })
+    app.use(errorHandler())
 
     sequelize
         .sync()
-        .then((res) => {
+        .then(() => {
             const server = app.listen(port, () =>
                 console.log(`Worker ${process.pid} is running on ${port}`)
             )
 
-            const client = redis.init()
+            redis.init()
+            const client = redis.getClient()
+
             io.init(server, client)
-            io.listenSocketEvents()
 
             if (process.env.NODE_ENV) {
-                const mailService = require('./service/mail-service').init()
+                mailService.init()
             }
         })
         .catch((err) => {

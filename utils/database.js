@@ -11,9 +11,9 @@ const sequelize = new Sequelize(database, username, password, {
         max: 30,
         min: 0,
         acquire: 400000,
-        evict: 200000,
+        evict: 200000
     },
-    logging: false,
+    logging: false
 })
 
 module.exports = sequelize

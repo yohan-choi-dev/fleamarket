@@ -6,5 +6,5 @@ module.exports = {
     },
     getIO: () => {
         return io
-    },
+    }
 }

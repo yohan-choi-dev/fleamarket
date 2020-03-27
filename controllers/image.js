@@ -10,7 +10,7 @@ exports.getImageByItemId = async (req, res, next) => {
                         WHERE itemId=${itemId};`
     try {
         let results = await sequelize.query(search_query, {
-            type: sequelize.QueryTypes.SELECT,
+            type: sequelize.QueryTypes.SELECT
         })
         if (results.length === 0) {
             const error = new Error('No Search Result')
