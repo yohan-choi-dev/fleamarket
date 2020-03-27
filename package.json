@@ -40,5 +40,14 @@
     "production": "export NODE_ENV=production && forever server.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache",
+    "*.{js,css,md}": "prettier --write"
+  }
 }
