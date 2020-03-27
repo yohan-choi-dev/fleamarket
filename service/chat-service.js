@@ -5,7 +5,7 @@ const redis = require('../utils/redis')
 
 const User = require('../models/user')
 const Item = require('../models/item')
-const Chatroom = require('../modles/chatroom')
+const Chatroom = require('../models/chatroom')
 
 // Event Driven Programming (For Event Listener) + Functional programming (For data flows)
 
@@ -33,16 +33,6 @@ class ChatService {
     async deleteUser() {}
 }
 
-module.exports = ChatService
-
-
-//Example
-
-const message = {
-    from: 0, // userID
-    to: 0,
-    message: '',
-}
 /*
 Chatting applciation works steps
 

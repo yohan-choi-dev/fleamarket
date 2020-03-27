@@ -1,3 +1,4 @@
+/* eslint-disable promise/prefer-await-to-callbacks */
 const cluster = require('cluster')
 const numWorkers = process.env.NODE_ENV ? require('os').cpus().length : 1
 
@@ -51,12 +52,12 @@ if (cluster.isMaster) {
     const userRoutes = require('./routes/users')
     const favoriteRoutes = require('./routes/favorites')
 
-    const ChatService = require('./service/chat-service')
+    //const ChatService = require('./service/chat-service')
 
     if (!process.env.NODE_ENV) {
         const corsOptions = {
             origin: 'http://localhost:3000',
-            optionsSuccessStatus: 200,
+            optionsSuccessStatus: 200
         }
         app.use(cors(corsOptions))
     }
@@ -72,10 +73,13 @@ if (cluster.isMaster) {
     app.use('/api/users', userRoutes)
     app.use('/api/favorites', favoriteRoutes)
 
-    app.use((error, req, res, next) => {
-        const status = error.statusCode || 500
-        const message = error.message
-        const data = error.data
+    app.use((err, req, res, next) => {
+        if (res.headersSent) {
+            return next(err)
+        }
+        const status = err.statusCode || 500
+        const message = err.message
+        const data = err.data
         res.status(status).json({ message: message, data: data })
     })
 
