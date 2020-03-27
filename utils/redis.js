@@ -10,7 +10,7 @@ client.existsAsync = promisify(client.exists).bind(client)
 
 module.exports = {
     init: () => {
-        client.on('error', error => console.log(error))
+        client.on('error', (error) => console.log(error))
     },
     getClient: () => {
         return client

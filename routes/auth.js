@@ -2,7 +2,6 @@ const express = require('express')
 const { body } = require('express-validator')
 
 const User = require('../models/user')
-const Token = require('../models/token')
 const authController = require('../controllers/auth')
 const { storageMiddleware } = require('../middlewares/storage')
 
@@ -16,11 +15,11 @@ router.post(
             .normalizeEmail()
             .isEmail()
             .bail()
-            .custom(value => {
+            .custom((value) => {
                 return User.findAll({
                     attributes: ['email'],
                     where: { email: value }
-                }).then(user => {
+                }).then((user) => {
                     let lenth = user.length
                     if (lenth !== 0) {
                         let error = new Error('Email is in use already')

@@ -7,8 +7,8 @@ module.exports = {
     init: (httpServer, redis) => {
         io = require('socket.io')(httpServer)
 
-        io.on('connection', socket => {
-            let namespaceList = namespaces.map(namespace => {
+        io.on('connection', (socket) => {
+            let namespaceList = namespaces.map((namespace) => {
                 return {
                     endpoint: namespace.endpoint
                 }

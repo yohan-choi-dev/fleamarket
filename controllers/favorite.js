@@ -53,7 +53,7 @@ exports.getFavoritesByUserId = async (req, res, next) => {
         let results = await sequelize.query(get_query, {
             type: sequelize.QueryTypes.SELECT
         })
-        res.status(200).send(JSON.stringify(results.map(result => result.itemId)))
+        res.status(200).send(JSON.stringify(results.map((result) => result.itemId)))
     } catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500

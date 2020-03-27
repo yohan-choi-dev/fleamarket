@@ -68,4 +68,4 @@ Step 2. Join chatting room // Request Status Control
 
 // client => send message with userID.
 
-socket.on('sendMessageFromUser', message => {})
+socket.on('sendMessageFromUser', (message) => {})
