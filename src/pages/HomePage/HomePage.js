@@ -57,7 +57,8 @@ function HomePage(props) {
         JSON.stringify({
           userId: appState.user.id,
           itemId: itemId
-        })
+        }),
+        'application/json'
       );
 
     } else {
