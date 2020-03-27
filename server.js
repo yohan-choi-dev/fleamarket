@@ -1,26 +1,34 @@
 const cluster = require('cluster')
-const numCPUs = require('os').cpus().length
+const numWorkers = process.env.NODE_ENV ? require('os').cpus().length : 1
 
 if (cluster.isMaster) {
     console.log(`Master ${process.pid} is running`)
 
     // Fork workers.
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < numWorkers; i++) {
         cluster.fork()
     }
 
     cluster.on('exit', (worker, code, signal) => {
-        console.log(`worker ${worker.process.pid} died`)
+        const message = `
+        Worker ${worker.process.id} died
+        code: ${code}
+        signal: ${signal}
+        `
+        console.log(message)
     })
 } else {
     const express = require('express')
+    const app = express()
 
     const path = require('path')
     const bodyParser = require('body-parser')
     const cors = require('cors')
 
-    // import a database and models
     const sequelize = require('./utils/database')
+    const redis = require('./utils/redis')
+    const io = require('./utils/socket')
+
     const User = require('./models/user')
     const Item = require('./models/item')
     const ImageLink = require('./models/image-link')
@@ -34,7 +42,7 @@ if (cluster.isMaster) {
     const Notification = require('./models/notification')
     const Trade = require('./models/trade')
 
-    const port = 10034
+    const port = process.env.PORT | 12218
 
     const authRoutes = require('./routes/auth')
     const itemRoutes = require('./routes/items')
@@ -44,14 +52,14 @@ if (cluster.isMaster) {
     const favoriteRoutes = require('./routes/favorites')
 
     const ChatService = require('./service/chat-service')
-    const app = express()
 
-    const corsOptions = {
-        origin: 'http://localhost:3000',
-        optionsSuccessStatus: 200,
+    if (!process.env.NODE_ENV) {
+        const corsOptions = {
+            origin: 'http://localhost:3000',
+            optionsSuccessStatus: 200,
+        }
+        app.use(cors(corsOptions))
     }
-
-    app.use(cors(corsOptions))
     app.use(bodyParser.json())
     app.use(express.urlencoded({ extended: false, limit: '50mb' }))
 
@@ -77,7 +85,12 @@ if (cluster.isMaster) {
             const server = app.listen(port, () =>
                 console.log(`Worker ${process.pid} is running on ${port}`)
             )
-            if (process.env.NODE_ENV == 'production') {
+
+            const client = redis.init()
+            io.init(server, client)
+            io.listenSocketEvents()
+
+            if (process.env.NODE_ENV) {
                 const mailService = require('./service/mail-service').init()
             }
         })

@@ -1,4 +1,3 @@
-const crypto = require('crypto')
 const { validationResult } = require('express-validator')
 
 const bcrypt = require('bcryptjs')
@@ -159,7 +158,7 @@ exports.confirmEmail = async (req, res, next) => {
             throw error
         }
 
-        userId = tokenUser.get().UserId
+        const userId = tokenUser.get().UserId
 
         const user = await User.update(
             { isActivated: true },
@@ -201,7 +200,7 @@ exports.recoverAccount = async (req, res, next) => {
 
         const cryptoURL = cryptoRandomString({ length: 48, type: 'url-safe' })
 
-        const token = await Token.create({
+        await Token.create({
             token: cryptoURL,
             UserId: loadedUser.id,
         })
