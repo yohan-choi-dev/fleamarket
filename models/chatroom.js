@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize')
 const sequelize = require('../utils/database')
+const User = require('./user')
 
 const Chatroom = sequelize.define('Chatroom', {
     id: {
@@ -9,5 +10,7 @@ const Chatroom = sequelize.define('Chatroom', {
         primaryKey: true,
     },
 })
+
+User.hasMany(Chatroom)
 
 module.exports = Chatroom

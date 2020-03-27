@@ -1,24 +1,24 @@
 const redis = require('redis')
 const { promisify } = require('util')
 
-class Client {
+class Redis {
     constructor() {
-        this.client = redis.createClient()
-        this.client.hmsetAsync = promisify(this.client.hmset).bind(this.client)
-        this.client.hmgetAsync = promisify(this.client.hgetall).bind(
-            this.client
+        this.redis = redis.createClient()
+        this.redis.hmsetAsync = promisify(this.redis.hmset).bind(this.redis)
+        this.redis.hmgetAsync = promisify(this.redis.hgetall).bind(
+            this.redis
         )
-        this.client.hgetallAsync = promisify(this.client.hgetall).bind(
-            this.client
+        this.redis.hgetallAsync = promisify(this.redis.hgetall).bind(
+            this.redis
         )
-        this.client.existsAsync = promisify(this.client.exists).bind(
-            this.client
+        this.redis.existsAsync = promisify(this.redis.exists).bind(
+            this.redis
         )
     }
     init() {
-        this.client.on('error', (error) => console.log(error))
+        this.redis.on('error', (error) => console.log(error))
     }
 }
 
-const client = new Client()
-module.exports = client
+const myRedis = new Redis()
+module.exports = myRedis
