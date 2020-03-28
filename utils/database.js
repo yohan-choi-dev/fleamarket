@@ -17,3 +17,5 @@ const sequelize = new Sequelize(database, username, password, {
 })
 
 module.exports = sequelize
+
+//module.exports = (database, username, password)

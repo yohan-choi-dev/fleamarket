@@ -20,8 +20,6 @@ const favoriteRoutes = require('./routes/favorites')
 
 const errorHandler = require('./middlewares/error-handler')
 
-//const ChatService = require('./service/chat-service')
-
 if (!process.env.NODE_ENV) {
     const corsOptions = {
         origin: 'http://localhost:3000',

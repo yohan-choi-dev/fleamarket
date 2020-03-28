@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize')
 const sequelize = require('../utils/database')
-const MessageImage = require('./message-image')
+
+const UserChattingBridge = require('./user-chatroom-bridge')
 
 const Message = sequelize.define('Message', {
     id: {
@@ -9,9 +10,10 @@ const Message = sequelize.define('Message', {
         allowNull: false,
         primaryKey: true
     },
-    message: DataTypes.STRING
+    message: DataTypes.STRING,
+    status: DataTypes.STRING
 })
 
-Message.hasOne(MessageImage)
+Message.belongsTo(UserChattingBridge)
 
 module.exports = Message

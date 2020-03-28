@@ -1,7 +1,3 @@
-const fs = require('fs')
-const path = require('path')
-const formidable = require('formidable')
-
 const sequelize = require('../utils/database')
 const { asyncForEach } = require('../utils/async-for-each')
 const Item = require('../models/item')
@@ -62,6 +58,7 @@ exports.getItemById = async (req, res, next) => {
         let itemImages = await sequelize.query(item_images_query, {
             type: sequelize.QueryTypes.SELECT
         })
+
         item[0].imageUrls = []
 
         itemImages.forEach((image, index) => {
