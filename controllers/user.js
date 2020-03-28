@@ -102,53 +102,37 @@ const updateUserAddress = async (req, res, next) => {
 
 const updateUserPassword = async (req, res, next) => {
   const userId = req.params.userId;
-  const token = req.body.token;
+  const currentPassword = req.body.currentPassword;
   const newPassword = req.body.newPassword;
-  const encryptedNewPassword = await bcrypt.hash(newPassword, 12);
 
-  let checkUserQuery = `SELECT token FROM Tokens WHERE userId=${userId}`;
+  let search_query = `SELECT * FROM Users WHERE id=${userId};`;
+  let results = await sequelize.query(search_query, {
+    type: sequelize.QueryTypes.SELECT
+  });
+  const user = results[0];
 
-  try {
-    let results = await sequelize.query(checkUserQuery, {
-      type: sequelize.QueryTypes.SELECT
+  const isMatch = await bcrypt.compare(currentPassword, user.password);
+
+  if (!isMatch) {
+    res.status(401).json({
+      message: 'Current password is not correct!'
     });
-    if (results.length === 0) {
-      const error = new Error("No Search Result");
-      error.statusCode = 401;
-      throw error;
-    }
-
-    const latestToken = results[results.length - 1].token;
-
-    if (latestToken == token) {
+  } else {
+    const encryptedNewPassword = await bcrypt.hash(newPassword, 12);
+    try {
       let query = `UPDATE Users SET password="${encryptedNewPassword}" WHERE id=${userId};`;
 
-      try {
-        let results = await sequelize.query(query, {
-          type: sequelize.QueryTypes.UPDATE
-        });
-        if (results.length === 0) {
-          const error = new Error("No Search Result");
-          error.statusCode = 401;
-          throw error;
-        }
-        res.status(200).send(JSON.stringify(results));
-      } catch (err) {
-        if (!err.statusCode) {
-          err.statusCode = 500;
-        }
-        next(err);
+      let results = await sequelize.query(query, {
+        type: sequelize.QueryTypes.UPDATE
+      });
+
+      res.status(200).send(JSON.stringify(results));
+    } catch (err) {
+      if (!err.statusCode) {
+        err.statusCode = 500;
       }
-    } else {
-      res.status(200).send(JSON.stringify({
-        message: "No token found for user."
-      }));
+      next(err);
     }
-  } catch (err) {
-    if (!err.statusCode) {
-      err.statusCode = 500;
-    }
-    next(err);
   }
 }
 
