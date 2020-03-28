@@ -3,13 +3,13 @@ import { ReactComponent as HeartIcon } from '@fortawesome/fontawesome-free/svgs/
 import { ReactComponent as ChatIcon } from '@fortawesome/fontawesome-free/svgs/brands/weixin.svg';
 import { ReactComponent as TradeIcon } from '@fortawesome/fontawesome-free/svgs/regular/handshake.svg';
 import './HomePage.css';
-import backgroundVideo from '../../assets/aerial-shot-of-city.mp4';
 
 // Components
 import Navigation from '../../components/Navigation/Navigation';
 import SearchBox from '../../components/SearchBox/SearchBox';
 import ItemCard from '../../components/ItemCard/ItemCard';
 import Footer from '../../components/Footer/Footer';
+import ValidatedInputField from '../../components/ValidatedInputField/ValidatedInputField';
 
 // Contexts
 import AppContext from '../../contexts/AppContext';
@@ -119,7 +119,7 @@ function HomePage(props) {
         <div className="HomePage-main-section-items">
           {
             items.map((item, index) => (
-              <ItemCard item={item} key={`ItemCard-${index}`} handleLikedStatus={handleLikedStatus} />
+              <ItemCard item={item} key={`ItemCard-${index}`} showLikeButton={true} handleLikedStatus={handleLikedStatus} />
             ))
           }
         </div>

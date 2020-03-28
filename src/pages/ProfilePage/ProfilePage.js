@@ -49,7 +49,7 @@ function ProfilePage(props) {
         <div className="ProfilePage-user-items-content">
           {
             items.map((item, index) => (
-              <ItemCard item={item} key={`ItemCard-${index}`} />
+              <ItemCard item={item} key={`ItemCard-${index}`} showLikeButton={false} />
             ))
           }
         </div>

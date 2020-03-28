@@ -1,0 +1,15 @@
+.ValidatedInputField {
+  width: 18rem;
+  padding: 0.72rem 0.56rem;
+  background-color: var(--light-grey);
+  border-radius: 3px;
+  border: none;
+  outline: none;
+  font-family: var(--font-family-global);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.ValidatedInputField::placeholder {
+  color: var(--dark-grey);
+}
