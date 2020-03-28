@@ -5,6 +5,7 @@ const app = express()
 const path = require('path')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const compression = require('gzip')
 
 const sequelize = require('./utils/database')
 const redis = require('./utils/redis')
@@ -27,6 +28,7 @@ if (!process.env.NODE_ENV) {
     }
     app.use(cors(corsOptions))
 }
+app.use(compression())
 app.use(bodyParser.json())
 app.use(express.urlencoded({ extended: false, limit: '50mb' }))
 
@@ -59,4 +61,5 @@ const runServer = async () => {
         console.error(err)
     }
 }
+
 runServer()
