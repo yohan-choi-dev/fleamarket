@@ -1,15 +1,27 @@
 const io = require('socket.io')()
+//const ss = require('socket.io-stream')
+const socketAuth = require('socketio-auth')
+const adapter = require('socket.io-redis')
 const _ = require('lodash')
 
-// const ss = require('socket.io-stream')
-// const redisAdapter = require('socket.io-redis')
+module.exports = _.once((server, dbService) => {
+    const ioService = {}
 
-module.exports = {
-    init: _.once((server) => {
+    ioService.init = () => {
         io.attach(server)
-        //io.adapter(redisAdapter({ host: 'localhost', port: server.address().port }))
-    }),
-    getIO: () => {
+
+        io.on('connection', (socket) => {
+            const addUser = (socket) => {}
+        })
+
+        io.on('disconnection', (socket) => {
+            const deleteUser = () => {}
+        })
+    }
+
+    ioService.getIO = () => {
         return io
     }
-}
+
+    return ioService
+})

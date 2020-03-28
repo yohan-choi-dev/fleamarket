@@ -8,6 +8,7 @@
     "dependencies": {
         "async": "^3.2.0",
         "bcryptjs": "^2.4.3",
+        "bluebird": "^3.7.2",
         "body-parser": "^1.19.0",
         "cors": "^2.8.5",
         "crypto-random-string": "^3.1.0",
@@ -17,6 +18,7 @@
         "express-validator": "^6.3.1",
         "formidable": "^1.2.2",
         "gm": "^1.23.1",
+        "immutable": "^4.0.0-rc.12",
         "jsonwebtoken": "^8.5.1",
         "lodash": "^4.17.15",
         "multer": "^1.4.2",
@@ -28,7 +30,8 @@
         "sequelize": "^5.21.3",
         "socket.io": "^2.3.0",
         "socket.io-redis": "^5.2.0",
-        "socket.io-stream": "^0.9.1"
+        "socket.io-stream": "^0.9.1",
+        "socketio-auth": "^0.1.1"
     },
     "devDependencies": {
         "@hapi/topo": "^5.0.0",

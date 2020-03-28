@@ -1,3 +1,5 @@
-module.exports = (io) => {
+const _ = require('lodash')
+
+module.exports = _.once((io) => {
     
-}
+})
