@@ -1,27 +1,19 @@
 const io = require('socket.io')()
-//const ss = require('socket.io-stream')
-const socketAuth = require('socketio-auth')
 const adapter = require('socket.io-redis')
 const _ = require('lodash')
 
-module.exports = _.once((server, dbService) => {
-    const ioService = {}
+module.exports = (server, db) => {
+    const socketIO = {}
+    const dbAdapter = adapter(db.config)
 
-    ioService.init = () => {
+    socketIO.init = _.once(() => {
         io.attach(server)
+        io.adapter(dbAdapter)
+    })
 
-        io.on('connection', (socket) => {
-            const addUser = (socket) => {}
-        })
-
-        io.on('disconnection', (socket) => {
-            const deleteUser = () => {}
-        })
-    }
-
-    ioService.getIO = () => {
+    socketIO.getIo = () => {
         return io
     }
 
-    return ioService
-})
+    return socketIO
+}

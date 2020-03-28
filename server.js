@@ -7,6 +7,8 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const compression = require('gzip')
 
+const config = require('./utils/config')
+
 const sequelize = require('./utils/database')
 const redis = require('./utils/redis')
 const io = require('./socket/socket')

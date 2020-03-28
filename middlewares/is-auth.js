@@ -10,11 +10,12 @@ module.exports = (req, res, next) => {
         throw err
     }
 
-    if (!decodedToken) {
+    if (!docodedToken) {
         const error = new Error('Not authenticated acess!')
         error.statusCode = 401
         throw error
     }
-    req.userId = decodedToken.userId
+
+    req.userId = docodedToken.userId
     next()
 }
