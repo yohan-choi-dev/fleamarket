@@ -54,7 +54,7 @@ function LoginModal(props) {
     );
 
     if (response.status !== 200) {
-      history.push('/login-error');
+      window.alert(response.message);
     } else {
       setAppState({
         ...appState,
