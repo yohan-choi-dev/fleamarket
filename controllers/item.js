@@ -12,11 +12,11 @@ exports.getItems = async (req, res, next) => {
   let notOwned = req.query.notOwned;
   let userId = req.query.userId;
 
-  let search_query = `SELECT i.id, i.name as "name", i.description, u.id as "userId", u.name as "userName" FROM Items i, Users u, UserItemBridges ui 
+  let search_query = `SELECT i.id, i.createdAt, i.name as "name", i.description, u.id as "userId", u.name as "userName" FROM Items i, Users u, UserItemBridges ui 
                       WHERE ui.UserId = u.id AND ui.ItemId = i.id AND i.hidden=0`;
 
   if (notOwned) {
-    search_query = `SELECT i.id, i.name as "name", i.description, u.id as "userId", u.name as "userName" FROM Items i, Users u, UserItemBridges ui 
+    search_query = `SELECT i.id, i.createdAt, i.name as "name", i.description, u.id as "userId", u.name as "userName" FROM Items i, Users u, UserItemBridges ui 
     WHERE ui.UserId = u.id AND ui.ItemId = i.id AND u.id != ${userId} AND i.hidden=0`;
   }
 
@@ -52,7 +52,7 @@ exports.getItemById = async (req, res, next) => {
   let itemId = req.params.itemId;
 
   let search_query = `
-    SELECT  i.id, i.name as "name", i.description, 
+    SELECT  i.id, i.name as "name", i.description, i.createdAt, 
             u.id as "userId", u.name as "userName" 
     FROM Items i, Users u, UserItemBridges ui, ImageLinks il 
     WHERE ui.UserId = u.id AND ui.ItemId = i.id AND il.itemId = i.id AND i.hidden=0 AND i.id=${itemId} LIMIT 1;
@@ -91,7 +91,7 @@ exports.getItemById = async (req, res, next) => {
 exports.getItemsByName = async (req, res, next) => {
   let name = req.query.name;
   let search_query = `
-    SELECT  i.id, i.name as "name", i.description, 
+    SELECT  i.id, i.name as "name", i.description, i.createdAt,
             u.id as "userId", u.name as "userName" 
     FROM Items i, Users u, UserItemBridges ui
     WHERE ui.UserId = u.id AND ui.ItemId = i.id
@@ -136,7 +136,7 @@ exports.getItemsByUser = async (req, res, next) => {
   let favorited = req.query.favorited;
   let owned = req.query.owned;
 
-  let search_query = `SELECT i.id, i.name as "name", i.description, u.id as "userId", u.name as "userName" FROM Items i, Users u, UserItemBridges ui 
+  let search_query = `SELECT i.id, i.name as "name", i.createdAt, i.description, u.id as "userId", u.name as "userName" FROM Items i, Users u, UserItemBridges ui 
                       WHERE ui.UserId = u.id AND ui.ItemId = i.id AND i.hidden=0 AND u.id=${userId} `;
 
   if (favorited) {
