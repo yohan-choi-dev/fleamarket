@@ -15,13 +15,10 @@ function Overview(props) {
           <strong>Name: </strong>{profile.name}
         </li>
         <li>
-          <strong>Payment Information: </strong>user.paymentInformation
-        </li>
-        <li>
-          <strong>Address: </strong>user.address
+          <strong>Description: </strong>{profile.description}
         </li>
         <Link className="Overview-transaction-history" to="/transaction-history">
-          Transaction History
+          Trading History
         </Link>
       </ul>
     </div>

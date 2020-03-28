@@ -9,6 +9,7 @@ import Navigation from '../../components/Navigation/Navigation';
 import SearchBox from '../../components/SearchBox/SearchBox';
 import ItemCard from '../../components/ItemCard/ItemCard';
 import Footer from '../../components/Footer/Footer';
+import ValidatedInputField from '../../components/ValidatedInputField/ValidatedInputField';
 
 // Contexts
 import AppContext from '../../contexts/AppContext';
@@ -26,7 +27,12 @@ function HomePage(props) {
 
   useEffect(() => {
     const fetchItems = async () => {
-      let itemList = await getData(`${APIRoute}/api/items`);
+      let itemList;
+      if (appState.user.isLoggedIn) {
+        itemList = await getData(`${APIRoute}/api/items?notOwned=1&userId=${appState.user.id}`);
+      } else {
+        itemList = await getData(`${APIRoute}/api/items`);
+      }
 
       if (appState.user.isLoggedIn) {
         const itemsLikedByUser = await getData(`${APIRoute}/api/favorites?userId=${appState.user.id}`);
@@ -48,7 +54,7 @@ function HomePage(props) {
       setItems(itemList);
     }
     fetchItems();
-  }, []);
+  }, [appState.user.isLoggedIn]);
 
   const handleLikedStatus = async (liked, itemId) => {
     if (liked) {
@@ -113,7 +119,7 @@ function HomePage(props) {
         <div className="HomePage-main-section-items">
           {
             items.map((item, index) => (
-              <ItemCard item={item} key={`ItemCard-${index}`} handleLikedStatus={handleLikedStatus} />
+              <ItemCard item={item} key={`ItemCard-${index}`} showLikeButton={true} handleLikedStatus={handleLikedStatus} />
             ))
           }
         </div>

@@ -10,7 +10,7 @@ import AppContext from '../../contexts/AppContext';
 import APIRoute from '../../vars/api-routes';
 
 function ItemCard(props) {
-  const { item, handleLikedStatus } = props;
+  const { item, handleLikedStatus, showLikeButton } = props;
 
   // Context
   const { appState } = useContext(AppContext);
@@ -28,11 +28,11 @@ function ItemCard(props) {
         </div>
       </Link>
       {
-        appState.user.isLoggedIn ?
+        appState.user.isLoggedIn && showLikeButton ?
           (
             <div className="ItemCard-LikeButton-container">
               <LikeButton onClickHandler={() => {
-                handleLikedStatus(!item.favoritedByUser, item.id);
+                showLikeButton && handleLikedStatus(!item.favoritedByUser, item.id);
               }} likedByUser={item.favoritedByUser} />
             </div>
           ) : ''

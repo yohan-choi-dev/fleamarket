@@ -11,7 +11,6 @@ function AccountSettingsSidebar(props) {
     'Change Email',
     'Change Password',
     'Update Contact Information',
-    'Update Payment Information',
     'Delete Account'
   ];
 
