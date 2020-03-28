@@ -43,7 +43,7 @@ const updateUserEmail = async (req, res, next) => {
 
 const updateUserAddress = async (req, res, next) => {
   const userId = req.params.userId;
-  const newApartmentNumber = req.body.newAddress.newAppartmentNumber;
+  const newApartmentNumber = req.body.newAddress.newApartmentNumber;
   const newBuildingNumber = req.body.newAddress.newBuildingNumber;
   const newStreetNumber = req.body.newAddress.newStreetNumber;
   const newStreetName = req.body.newAddress.newStreetName;
@@ -86,11 +86,6 @@ const updateUserAddress = async (req, res, next) => {
       type: sequelize.QueryTypes.UPDATE
     });
 
-    if (results.length === 0) {
-      const error = new Error("No Search Result");
-      error.statusCode = 401;
-      throw error;
-    }
     res.status(200).send(JSON.stringify(results));
   } catch (err) {
     if (!err.statusCode) {
