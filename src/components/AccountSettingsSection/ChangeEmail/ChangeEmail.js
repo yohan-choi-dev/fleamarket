@@ -20,6 +20,9 @@ function ChangeEmail(props) {
       }),
       'application/json'
     );
+    setNewEmail('');
+
+    window.alert('A verification email has been sent to your new email address.');
   }
 
   return (
