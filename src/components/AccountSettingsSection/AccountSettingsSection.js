@@ -15,8 +15,8 @@ function AccountSettingsSection(props) {
   const views = [
     <Overview profile={profile} />,
     <ChangeEmail profile={profile} />,
-    <ChangePassword />,
-    <UpdateContact />,
+    <ChangePassword profile={profile} />,
+    <UpdateContact profile={profile} />,
     <DeleteAccount />
   ]
 
