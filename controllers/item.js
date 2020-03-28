@@ -9,8 +9,17 @@ const UserItemBridge = require("../models/user-item-bridge");
 const ImageLink = require("../models/image-link");
 
 exports.getItems = async (req, res, next) => {
+  let notOwned = req.query.notOwned;
+  let userId = req.query.userId;
+
   let search_query = `SELECT i.id, i.name as "name", i.description, u.id as "userId", u.name as "userName" FROM Items i, Users u, UserItemBridges ui 
                       WHERE ui.UserId = u.id AND ui.ItemId = i.id AND i.hidden=0`;
+
+  if (notOwned) {
+    search_query = `SELECT i.id, i.name as "name", i.description, u.id as "userId", u.name as "userName" FROM Items i, Users u, UserItemBridges ui 
+    WHERE ui.UserId = u.id AND ui.ItemId = i.id AND u.id != ${userId} AND i.hidden=0`;
+  }
+
   try {
     let items = await sequelize.query(search_query, {
       type: sequelize.QueryTypes.SELECT

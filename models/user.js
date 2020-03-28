@@ -20,20 +20,20 @@ const User = sequelize.define('User', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    address: {
-        type: DataTypes.STRING,
+    addressId: {
+        type: DataTypes.INTEGER,
     },
     description: DataTypes.STRING,
     image: DataTypes.STRING,
     liked: DataTypes.INTEGER,
     disliked: DataTypes.INTEGER,
-    isActivated:{
+    isActivated: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false
     },
     paymentId: DataTypes.INTEGER
-},{
+}, {
     timestamp: false,
     updateAt: false,
     createAt: false
