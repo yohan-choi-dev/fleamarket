@@ -16,7 +16,7 @@ function AccountSettingsSection(props) {
     <Overview profile={profile} />,
     <ChangeEmail profile={profile} />,
     <ChangePassword profile={profile} />,
-    <UpdateContact />,
+    <UpdateContact profile={profile} />,
     <DeleteAccount />
   ]
 

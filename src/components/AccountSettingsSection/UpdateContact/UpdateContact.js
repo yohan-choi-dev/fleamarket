@@ -1,9 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './UpdateContact.css';
 
 import LabeledInputField from '../../LabeledInputField/LabeledInputField';
+import Button from '../../Button/Button';
+
+import { updateData } from '../../../utils/fetch-data';
+import APIRoute from '../../../vars/api-routes';
 
 function UpdateContact(props) {
+  const { profile } = props;
+
+  const [userAddress, setUserAddress] = useState({
+    newApartmentNumber: profile.aptNumber == null ? 0 : profile.aptNumber,
+    newBuildingNumber: profile.buildingNumber == null ? 0 : profile.buildingNumber,
+    newStreetNumber: profile.streetNumber == null ? 0 : profile.streetNumber,
+    newStreetName: profile.streetName,
+    newCity: profile.city,
+    newProvince: profile.province,
+    newPostalCode: profile.postalCode,
+    newCountry: profile.country
+  });
+
+  const updateUserAddress = async () => {
+    const response = await updateData(
+      `${APIRoute}/api/users/${profile.id}`,
+      JSON.stringify({
+        newAddress: userAddress
+      }),
+      'application/json'
+    );
+
+    if (response.status !== 200) {
+      window.alert('Address could not be updated. Please try again.');
+    } else {
+      window.alert('Address updated successfully.');
+    }
+  }
+
   return (
     <div className="UpdateContact">
       <div className="UpdateContact-section UpdateContact-apartment">
@@ -15,8 +48,13 @@ function UpdateContact(props) {
             name: 'UpdateContact-apartment-number',
             type: 'number',
             autoFocus: true,
-            onChangeHandler: () => { },
-            value: '',
+            onChangeHandler: (event) => {
+              setUserAddress({
+                ...userAddress,
+                newApartmentNumber: event.target.value
+              })
+            },
+            value: userAddress.newApartmentNumber,
             style: {
               width: '85%'
             }
@@ -29,8 +67,13 @@ function UpdateContact(props) {
             id: 'UpdateContact-building-number',
             name: 'UpdateContact-building-number',
             type: 'number',
-            onChangeHandler: () => { },
-            value: ''
+            onChangeHandler: (event) => {
+              setUserAddress({
+                ...userAddress,
+                newBuildingNumber: event.target.value
+              })
+            },
+            value: userAddress.newBuildingNumber
           }}
         />
       </div>
@@ -42,8 +85,13 @@ function UpdateContact(props) {
             id: 'UpdateContact-street-number',
             name: 'UpdateContact-street-number',
             type: 'number',
-            onChangeHandler: () => { },
-            value: '',
+            onChangeHandler: (event) => {
+              setUserAddress({
+                ...userAddress,
+                newStreetNumber: event.target.value
+              })
+            },
+            value: userAddress.newStreetNumber,
             style: {
               width: '70%'
             }
@@ -56,8 +104,13 @@ function UpdateContact(props) {
             id: 'UpdateContact-street-name',
             name: 'UpdateContact-street-name',
             type: 'text',
-            onChangeHandler: () => { },
-            value: ''
+            onChangeHandler: (event) => {
+              setUserAddress({
+                ...userAddress,
+                newStreetName: event.target.value
+              })
+            },
+            value: userAddress.newStreetName
           }}
         />
       </div>
@@ -69,8 +122,13 @@ function UpdateContact(props) {
             id: 'UpdateContact-city-town',
             name: 'UpdateContact-city-town',
             type: 'text',
-            onChangeHandler: () => { },
-            value: '',
+            onChangeHandler: (event) => {
+              setUserAddress({
+                ...userAddress,
+                newCity: event.target.value
+              })
+            },
+            value: userAddress.newCity,
             style: {
               width: '70%'
             }
@@ -83,8 +141,13 @@ function UpdateContact(props) {
             id: 'UpdateContact-province',
             name: 'UpdateContact-province',
             type: 'text',
-            onChangeHandler: () => { },
-            value: '',
+            onChangeHandler: (event) => {
+              setUserAddress({
+                ...userAddress,
+                newProvince: event.target.value
+              })
+            },
+            value: userAddress.newProvince,
             style: {
               width: '50%'
             }
@@ -97,8 +160,13 @@ function UpdateContact(props) {
             id: 'UpdateContact-postal-code',
             name: 'UpdateContact-postal-code',
             type: 'text',
-            onChangeHandler: () => { },
-            value: ''
+            onChangeHandler: (event) => {
+              setUserAddress({
+                ...userAddress,
+                newPostalCode: event.target.value
+              })
+            },
+            value: userAddress.newPostalCode
           }}
         />
         <LabeledInputField
@@ -108,14 +176,19 @@ function UpdateContact(props) {
             id: 'UpdateContact-country',
             name: 'UpdateContact-country',
             type: 'text',
-            onChangeHandler: () => { },
-            value: ''
+            onChangeHandler: (event) => {
+              setUserAddress({
+                ...userAddress,
+                newCountry: event.target.value
+              })
+            },
+            value: userAddress.newCountry
           }}
         />
       </div>
-      <div className="UpdateContact-section UpdateContact-phone-number">
-        {/* OOUUUUIIIIIAAAASSSSSSS */}
-      </div>
+      <Button otherClassName="purple" handleOnClick={updateUserAddress}>
+        Update Email
+      </Button>
     </div>
   );
 }
