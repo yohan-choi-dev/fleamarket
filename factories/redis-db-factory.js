@@ -2,7 +2,7 @@ const redis = require('redis')
 const bluebird = require('bluebird')
 const _ = require('lodash')
 
-module.exports = _.once((config) => {
+module.exports = (config) => {
     bluebird.promisifyAll(redis)
     const client = redis.createClient()
     const database = {}
@@ -15,4 +15,4 @@ module.exports = _.once((config) => {
     database.config = config
 
     return database
-})
+}

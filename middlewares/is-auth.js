@@ -11,7 +11,7 @@ module.exports = (req, res, next) => {
     }
 
     if (!docodedToken) {
-        const error = new Error('Not authenticated acess!')
+        const error = new Error('Not authenticated access!')
         error.statusCode = 401
         throw error
     }
