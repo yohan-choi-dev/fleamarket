@@ -1,0 +1,3 @@
+const joinNamespace = (endpoint) => {
+    
+}

@@ -33,6 +33,7 @@ exports.signup = async (req, res, next) => {
         const hashedPw = await bcrypt.hash(password, 12)
         const result = await User.create({
             email: email,
+            namespace: cryptoRandomString({ length: 24, type: 'url-safe' }),
             name: name,
             password: hashedPw,
             description: description,

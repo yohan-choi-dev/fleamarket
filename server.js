@@ -11,7 +11,6 @@ const config = require('./utils/config')
 
 const sequelize = require('./utils/database')
 const redisDbFactory = require('./factories/redis-db-factory')
-const ioFactory = require('./factories/io-factory')
 
 const ioService = require('./service/io-service')
 
@@ -63,7 +62,7 @@ sequelize
 
         const redis = redisDbFactory(redisConfig)
 
-        const io = ioService(server, redis)
+        ioService(server, redis)
 
         if (process.env.NODE_ENV === 'production') {
             mailService.init()

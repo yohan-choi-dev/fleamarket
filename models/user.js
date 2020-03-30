@@ -10,6 +10,10 @@ const User = sequelize.define(
             allowNull: false,
             primaryKey: true
         },
+        namespace: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
         name: {
             type: DataTypes.STRING,
             allowNull: false

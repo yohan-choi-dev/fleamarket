@@ -1,47 +1,46 @@
 const io = require('socket.io-client')
-
 const url = 'http://localhost:12218'
 
-const user = {
+const userA = {
     id: '10',
     name: 'yohan.choi',
     email: 'ychoi63@myseneca.ca'
 }
-const userList = {}
+
+const userB = {
+    id: '11',
+    name: 'william.to',
+    email: 'william.to@myseneca.ca'
+}
 
 const socket = io(url, {
-    query: user
+    query: userA
+})
+
+const chatUrl = 'http://localhost:12218/chat'
+const chat = io(chatUrl, userA)
+
+chat.on('connect', () => {
+    console.log(chat.id)
+})
+
+chat.on('message.sent', (data) => {
+    const str = data.message.toString('utf-8') // this wili be need in some env
+    console.log(`${data.from}:${str}`)
 })
 
 const sendMessage = (data) => {
-    socket.emit('message.send', data)
+    chat.emit('message.send', data)
 }
-
-socket.on('message.sent', (data) => {
-    console.log(`${data.username}: ${data.message}`)
-})
-
-socket.on('user.list', (list) => {
-    list.forEach((user) => {
-        userList.push(user)
-        console.log(user)
-    })
-})
-
-socket.on('user.hugged', (username) => {
-    console.log(`user ${username} hugged!`)
-})
-
-socket.on('user.remove', (id) => {})
-
-socket.on('user.add', (addUser) => {})
 
 const startChat = () => {
     const userInput = process.stdin
     userInput.on('data', (message) => {
-        let data = {}
-        data.message = message
-        data.username = user.name
+        let data = {
+            message: message,
+            from: userA.id,
+            to: userB.id
+        }
         sendMessage(data)
     })
 }
