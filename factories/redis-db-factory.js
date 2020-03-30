@@ -1,6 +1,5 @@
 const redis = require('redis')
 const bluebird = require('bluebird')
-const _ = require('lodash')
 
 module.exports = (config) => {
     bluebird.promisifyAll(redis)

@@ -5,13 +5,16 @@ const app = express()
 const path = require('path')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const compression = require('gzip')
+const compression = require('compression')
 
 const config = require('./utils/config')
 
 const sequelize = require('./utils/database')
-const redis = require('./utils/redis')
-const io = require('./socket/socket')
+const redisDbFactory = require('./factories/redis-db-factory')
+const ioFactory = require('./factories/io-factory')
+
+const ioService = require('./service/io-service')
+
 const mailService = require('./service/mail-service')
 
 const authRoutes = require('./routes/auth')
@@ -30,6 +33,12 @@ if (!process.env.NODE_ENV) {
     }
     app.use(cors(corsOptions))
 }
+
+const redisConfig = {
+    host: process.env.REDIS_HOST || 'localhost',
+    port: process.env.REDIS_PORT || 6379
+}
+
 app.use(compression())
 app.use(bodyParser.json())
 app.use(express.urlencoded({ extended: false, limit: '50mb' }))
@@ -43,25 +52,23 @@ app.use('/api/images', imageRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/favorites', favoriteRoutes)
 
-app.use(errorHandler())
+app.use(errorHandler)
 
-const runServer = async () => {
-    try {
-        await sequelize.sync()
-        redis.init()
-
+sequelize
+    .sync()
+    .then(() => {
         const server = app.listen(PORT, () =>
             console.log(`Worker ${process.pid} is running on ${PORT}`)
         )
 
-        io.init(server, redis)
+        const redis = redisDbFactory(redisConfig)
 
-        if (process.env.NODE_ENV) {
+        const io = ioService(server, redis)
+
+        if (process.env.NODE_ENV === 'production') {
             mailService.init()
         }
-    } catch (err) {
+    })
+    .catch((err) => {
         console.error(err)
-    }
-}
-
-runServer()
+    })

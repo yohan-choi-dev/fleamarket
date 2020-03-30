@@ -143,9 +143,7 @@ exports.confirmEmail = async (req, res, next) => {
         }
 
         const tokenDate = tokenUser.get().createdAt
-        const expiredDate = moment(tokenDate)
-            .add(24, 'h')
-            .toDate()
+        const expiredDate = moment(tokenDate).add(24, 'h').toDate()
         const currentDate = moment().toDate()
 
         if (currentDate > expiredDate) {

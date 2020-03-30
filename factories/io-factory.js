@@ -1,19 +1,16 @@
-const io = require('socket.io')()
+const SocketIO = require('socket.io')
 const adapter = require('socket.io-redis')
-const _ = require('lodash')
+const socketEmmiter = require('socket.io-emitter')
 
 module.exports = (server, db) => {
-    const socketIO = {}
+    const io = SocketIO()
     const dbAdapter = adapter(db.config)
+    //const emmiter = socketEmmiter(db.config)
 
-    socketIO.init = _.once(() => {
-        io.attach(server)
-        io.adapter(dbAdapter)
-    })
+    io.attach(server)
+    io.adapter(dbAdapter)
+    //io.emmiter = emmiter
 
-    socketIO.getIo = () => {
-        return io
-    }
-
-    return socketIO
+    return io
 }
+// io and io's connected socket will be integrate on service file

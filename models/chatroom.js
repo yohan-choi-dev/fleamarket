@@ -8,6 +8,10 @@ const Chatroom = sequelize.define('Chatroom', {
         autoIncrement: true,
         allowNull: false,
         primaryKey: true
+    },
+    endpoint: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
 })
 
