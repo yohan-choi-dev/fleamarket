@@ -6,7 +6,7 @@ import './ItemPage.css';
 import Navigation from '../../components/Navigation/Navigation';
 import Footer from '../../components/Footer/Footer';
 import ItemInfo from '../../components/ItemInfo/ItemInfo';
-import ItemComment from '../../components/ItemComment/ItemComment';
+import ItemComments from '../../components/ItemComments/ItemComments';
 
 // Contexts
 import AppContext from '../../contexts/AppContext';
@@ -21,7 +21,7 @@ function ItemPage(props) {
 
   const fetchItem = async (id) => {
     const item = await getData(`${APIRoute}/api/items/${id}`);
-    const comments = await getData(`${APIRoute}/api/comments/${id}`);
+    const comments = await getData(`${APIRoute}/api/comments?itemId=${item.id}`);
     setAppState({
       ...appState,
       currentItem: {
@@ -34,9 +34,8 @@ function ItemPage(props) {
           id: item.userId,
           name: item.userName
         },
-        comments:comments
+        comments: comments
       }
-      
     });
   }
 
@@ -49,8 +48,10 @@ function ItemPage(props) {
       <Navigation />
       <div className="container">
         <ItemInfo item={appState.currentItem} />
-        <ItemComment comments={appState.currentItem.comments}/>
-    
+        <div className="ItemPage-comments">
+          <h2 className="ItemComments-title">Comments</h2>
+          <ItemComments itemId={itemId} comments={appState.currentItem.comments} />
+        </div>
       </div>
       <Footer />
     </div>

@@ -1,262 +1,60 @@
-.ItemComments-comments-section{
-    position: relative;
-    width: 812px;
-    height: 540px;
-    left: 175px;
-    top: 985px;
+.ItemComments {
+  width: 100%;
+  border-radius: 1.5rem;
+  box-shadow: var(--shadow-card-normal);
+  clear: both;
+  padding: 2.9rem 3.05rem 2rem 3.05rem;
 }
 
-.ItemComments-background {
-    position: relative;
-    width: 1360px;
-    height: 746px;
-    left: 120px;
-    top: 933px;
-
-    background: #FFFFFF;
-    /* Shadow - Normal Card */
-
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 15px;
+.ItemComments-Detail {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 3rem;
 }
 
-.ItemComments-title-comment {
-    position: relative;
-    width: 177px;
-    height: 42px;
-    left: 120px;
-    top: 859px;
-
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: bold;
-    font-size: 36px;
-    line-height: 42px;
-
-    color: var(--black);
+.ItemComments-Detail-User {
+  display: flex;
+  padding-bottom: 0.67rem;
 }
 
-.ItemComments-profile-picture {
-    position: relative;
-    width: 64px;
-    height: 64px;
-    left: 175px;
-    top: 985px;
-
-    background: var(--grey);
+.ItemComments-Detail-User-Info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 0.44rem;
 }
 
-.ItemComments-profile-picture1 {
-    position: relative;
-    width: 64px;
-    height: 64px;
-    left: 175px;
-    top: 1191px;
-
-    background: var(--grey);
+.ItemComments-Detail-User-Name {
+  padding-bottom: 0.15rem;
+  font-weight: 600;
 }
 
-.ItemComments-profile-picture2 {
-    position: relative;
-    width: 64px;
-    height: 64px;
-    left: 175px;
-    top: 1371px;
-
-    background: var(--grey);
+.ItemComments-Detail-User-Rating {
+  font-size: 0.78rem;
 }
 
-.ItemComments-star {
-    position: relative;
-    width: 13px;
-    height: 12.4px;
-    left: 247px;
-    top: 1021px;
-    
-    /* Lightcoral */
-    
-    background: var(--lightcoral);
+.ItemComments-Detail-User-Rating .StarIcon {
+  position: relative;
+  top: 0.056rem;
+  width: 1rem;
+  padding-right: 0.22rem;
+  fill: var(--lightcoral);
 }
 
-.ItemComments-star1 {
-    position: relative;
-    width: 13px;
-    height: 12.4px;
-    left: 247px;
-    top: 1227px;
-    
-    /* Lightcoral */
-    
-    background: var(--lightcoral);
+.ItemComments-Detail-User img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 4rem;
 }
 
-.ItemComments-star2 {
-    position: relative;
-    width: 13px;
-    height: 12.4px;
-    left: 247px;
-    top: 1407px;
-    
-    /* Lightcoral */
-    
-    background: var(--lightcoral);
+.ItemComments-Reply {
+  display: flex;
 }
 
-.ItemComments-rate {
-    position: relative;
-    width: 19px;
-    height: 16px;
-    left: 264px;
-    top: 1020px;
-
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 300;
-    font-size: 14px;
-    line-height: 16px;
-
-    color: var(--black);
+.ItemComments-Reply .LabeledInputField {
+  flex-grow: 1;
 }
 
-.ItemComments-rate1 {
-    position: relative;
-    width: 19px;
-    height: 16px;
-    left: 264px;
-    top: 1226px;
-
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 300;
-    font-size: 14px;
-    line-height: 16px;
-
-    color: var(--black);
-}
-
-.ItemComments-rate2 {
-    position: relative;
-    width: 19px;
-    height: 16px;
-    left: 264px;
-    top: 1406px;
-
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 300;
-    font-size: 14px;
-    line-height: 16px;
-
-    color: var(--black);
-}
-
-.ItemComments-user {
-    position: relative;
-    width: 92px;
-    height: 21px;
-    left: 247px;
-    top: 997px;
-
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: bold;
-    font-size: 18px;
-    line-height: 21px;
-
-    color: var(--black);
-}
-
-
-.ItemComments-user1 {
-    position: relative;
-    width: 131px;
-    height: 21px;
-    left: 247px;
-    top: 1203px;
-
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: bold;
-    font-size: 18px;
-    line-height: 21px;
-
-    color: var(--black);
-}
-
-.ItemComments-user2 {
-    position: relative;
-    width: 56px;
-    height: 21px;
-    left: 247px;
-    top: 1383px;
-
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: bold;
-    font-size: 18px;
-    line-height: 21px;
-
-    color: var(--black);
-}
-
-
-.ItemComments-comments {
-    position: relative;
-    width: 812px;
-    height: 78px;
-    left: 175px;
-    top: 1061px;
-
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: normal;
-    font-size: 18px;
-    line-height: 26px;
-
-    color: var(--black);
-}
-
-.ItemComments-comments1 {
-    position: relative;
-    width: 812px;
-    height: 52px;
-    left: 175px;
-    top: 1267px;
-
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: normal;
-    font-size: 18px;
-    line-height: 26px;
-
-    color: var(--black);
-}
-
-.ItemComments-comments2 {
-    position: relative;
-    width: 812px;
-    height: 78px;
-    left: 175px;
-    top: 1447px;
-
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: normal;
-    font-size: 18px;
-    line-height: 26px;
-
-    color: var(--black);
-}
-
-.ItemComments-write-comments {
-    position: relative;
-    width: 1114px;
-    height: 47px;
-    left: 175px;
-    top: 1580px;
-
-    /* Light Grey */
-
-    background: var(--light-grey);
-    border-radius: 3px;
+.ItemComments-Reply .LabeledInputField .LabeledInputField-input {
+  width: 96%;
 }
