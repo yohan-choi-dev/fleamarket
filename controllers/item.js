@@ -90,6 +90,9 @@ exports.getItemById = async (req, res, next) => {
 
 exports.getItemsByName = async (req, res, next) => {
   let name = req.query.name;
+  let notOwned = req.query.notOwned;
+  let userId = req.query.userId;
+
   let search_query = `
     SELECT  i.id, i.name as "name", i.description, i.createdAt,
             u.id as "userId", u.name as "userName" 
@@ -97,8 +100,11 @@ exports.getItemsByName = async (req, res, next) => {
     WHERE ui.UserId = u.id AND ui.ItemId = i.id
     AND i.hidden=0
     AND (i.name LIKE '%${name}%'
-    OR i.description LIKE '%${name}%');
+    OR i.description LIKE '%${name}%')
   `;
+  if (notOwned && userId) {
+    search_query += ` AND u.id != ${userId} `
+  }
   try {
     let items = await sequelize.query(search_query, {
       type: sequelize.QueryTypes.SELECT
