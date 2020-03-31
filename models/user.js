@@ -1,6 +1,8 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/database');
 
+const Comment = require('../models/comment');
+
 const User = sequelize.define('User', {
     id: {
         type: DataTypes.INTEGER,
