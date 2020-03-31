@@ -7,15 +7,20 @@ const userB = {
     email: 'ychoi63@myseneca.ca'
 }
 
+
 const userA = {
-    id: '11',
-    name: 'william.to',
-    email: 'william.to@myseneca.ca'
+    id: '10',
+    name: 'yohan.choi',
+    email: 'ychoi63@myseneca.ca',
+    to: userB.id
 }
 
-const socket = io(url, {
-    query: userA
-})
+const userB = {
+    id: '11',
+    name: 'william.to',
+    email: 'william.to@myseneca.ca',
+    to: userA.id
+}
 
 const chatUrl = 'http://localhost:12218/chat'
 const chat = io(chatUrl, userA)

@@ -1,16 +1,20 @@
 const io = require('socket.io-client')
+const chatInterface = require('./chat-interface')
+
 const url = 'http://localhost:12218'
 
 const userA = {
     id: '10',
     name: 'yohan.choi',
-    email: 'ychoi63@myseneca.ca'
+    email: 'ychoi63@myseneca.ca',
+    to: userB.id
 }
 
 const userB = {
     id: '11',
     name: 'william.to',
-    email: 'william.to@myseneca.ca'
+    email: 'william.to@myseneca.ca',
+    to: userA.id
 }
 
 const socket = io(url, {
