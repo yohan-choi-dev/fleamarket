@@ -81,8 +81,8 @@ const ItemComments = (props) => {
         <LabeledInputField
           labeled={false}
           inputField={{
-            id: 'CreateAccount-ln-input',
-            name: 'CreateAccount-ln-input',
+            id: 'ItemComments-Reply-input',
+            name: 'ItemComments-Reply-input',
             type: 'text',
             required: true,
             onChangeHandler: event => {
