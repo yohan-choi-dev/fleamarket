@@ -1,5 +1,8 @@
 const io = require('socket.io-client')
 const chatInterface = require('./chat-interface')
+const { PROFILES } = require('./mock-data')
+
+const user01 = PROFILES[0]
 
 const url = 'http://localhost:12218'
 
@@ -36,6 +39,8 @@ chat.on('message.sent', (data) => {
 const sendMessage = (data) => {
     chat.emit('message.send', data)
 }
+
+chatInterface()
 
 const startChat = () => {
     const userInput = process.stdin
