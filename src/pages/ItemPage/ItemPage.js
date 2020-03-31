@@ -41,6 +41,7 @@ function ItemPage(props) {
 
   useEffect(() => {
     fetchItem(itemId);
+    window.scrollTo(0, 0);
   }, [itemId]);
 
   return (
