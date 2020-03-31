@@ -14,12 +14,12 @@ const transporter = nodemailer.createTransport({
 })
 
 module.exports = {
-    init: async () => {
-        transporter.verify((err, suc) => {
+    init: () => {
+        transporter.verify((err, res) => {
             if (err) {
                 throw new Error(`failed to connect the mail server ${err}`)
             }
-            console.log('Success to connnecting the mail server!')
+            console.log(`Success to connect to mail server ${res}`)
         })
     },
     sendMail: async (to, msg) => {
