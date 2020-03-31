@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { ReactComponent as SearchIcon } from '@fortawesome/fontawesome-free/svgs/solid/search.svg';
 
 import './SearchBox.css';
+
+// Contexts
+import AppContext from '../../contexts/AppContext';
 
 // Utilities
 import APIRoute from '../../vars/api-routes';
@@ -13,6 +16,8 @@ const SearchBox = () => {
     loading: false
   });
   const [searchItems, setSearchItems] = useState([]);
+
+  const { appState } = useContext(AppContext);
 
   const handleSearchInputChange = event => {
     const userInput = event.target.value;
@@ -34,7 +39,8 @@ const SearchBox = () => {
       setSearchItems([]);
     } else {
       if (searchStatus.loading) {
-        fetch(`${APIRoute}/api/items?name=${searchStatus.text}`, {
+        const searchEndpoint = appState.user.isLoggedIn ? `${APIRoute}/api/items?name=${searchStatus.text}&notOwned=1&userId=${appState.user.id}` : `${APIRoute}/api/items?name=${searchStatus.text}`;
+        fetch(searchEndpoint, {
           method: 'GET',
           signal: signal
         })
@@ -63,7 +69,7 @@ const SearchBox = () => {
   }, [searchStatus.text]);
 
   var noMatchItem = false;
-  if (searchItems.length === 0 && searchStatus.text&&!searchStatus.loading) noMatchItem = true;
+  if (searchItems.length === 0 && searchStatus.text && !searchStatus.loading) noMatchItem = true;
 
   return (
     <div className="SearchBox">
@@ -95,9 +101,8 @@ const SearchBox = () => {
                 </div>
               </li>
             );
-
           })}
-           {noMatchItem?<li className="SearchBox-results-item">No Item Match you search</li>:""}
+          {noMatchItem ? <li className="SearchBox-results-item">No matching item is found.</li> : ""}
         </ul>
       </div>
     </div>
