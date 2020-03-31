@@ -4,13 +4,13 @@ import classnames from 'classnames';
 import './LabeledInputField.css';
 
 function LabeledInputField(props) {
-  const { className, label, inputField } = props;
+  const { className, label, inputField, labeled } = props;
   const { classNames, id, name, type, placeholder, required, autoFocus, style, onChangeHandler, value } = inputField;
   return (
     <div className={classnames('LabeledInputField', className)}>
-      <label className="LabeledInputField-label" htmlFor={id}>
+      {labeled ? <label className="LabeledInputField-label" htmlFor={id}>
         {label}
-      </label>
+      </label> : ''}
       <input
         className={classnames('LabeledInputField-input', classNames)}
         id={id} type={type} name={name} placeholder={placeholder}

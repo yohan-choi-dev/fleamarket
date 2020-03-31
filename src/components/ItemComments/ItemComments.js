@@ -1,18 +1,98 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import './ItemComments.css';
+import { ReactComponent as StarIcon } from '@fortawesome/fontawesome-free/svgs/solid/star.svg';
 
-function ItemComments(props) {
-  const { comments } = props;
+// Contexts
+import AppContext from '../../contexts/AppContext';
+
+// Components
+import Button from '../Button/Button';
+import LabeledInputField from '../LabeledInputField/LabeledInputField';
+
+// Utilities
+import APIRoute from '../../vars/api-routes';
+import { postData } from '../../utils/fetch-data';
+
+const ItemComments = (props) => {
+  const { comments, itemId } = props;
+
+  const { appState, setAppState } = useContext(AppContext);
+
+  const [userComment, setUserComment] = useState('');
+
+  const addComment = async () => {
+    const response = await postData(
+      `${APIRoute}/api/comments`,
+      JSON.stringify({
+        userId: appState.user.id,
+        itemId: itemId,
+        content: userComment
+      }),
+      'application/json'
+    );
+
+    if (response.status >= 200 && response.status <= 299) {
+      const currentComments = [...comments, {
+        userName: appState.user.name,
+        userDescription: appState.user.description,
+        userImage: appState.user.image,
+        commentContent: userComment
+      }];
+
+      setAppState({
+        ...appState,
+        currentItem: {
+          ...appState.currentItem,
+          comments: currentComments
+        }
+      });
+
+      setUserComment('');
+    } else {
+      window.alert('Cannot add comment. Please try again.');
+    }
+  }
+
   return (
-    <div>
-      <div className="ItemComments">
-        <div className="ItemComments-comments-info">
-          <img className="ItemComments-comments-picture" width="42" height="42">{comments.picture}</img>
-          <h4 className="ItemComments-comments-name">{comments.name}</h4>
-          <h2 className="ItemComments-comments-rating">{comments.rating}</h2>
-          <p className="ItemComments-comments-description">{comments.description}</p>
-        </div>
+    <div className="ItemComments">
+      <div className="ItemComments-Detail-Container">
+        {
+          comments.map((c, index) => {
+            return (
+              <div className="ItemComments-Detail" key={`Comment-${index}`}>
+                <div className="ItemComments-Detail-User">
+                  {/* <img src={`${APIRoute}/${c.userImage}`}></img> <b>{c.userName}</b> */}
+                  <img src="https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80" />
+                  <div className="ItemComments-Detail-User-Info">
+                    <p className="ItemComments-Detail-User-Name">{c.userName}</p>
+                    <p className="ItemComments-Detail-User-Rating"><span role="img"><StarIcon className="StarIcon" /></span>4.5</p>
+                  </div>
+                </div>
+                <p className="ItemComments-Detail-Content">{c.commentContent}</p>
+              </div>
+            );
+          })
+        }
       </div>
+      {appState.user.isLoggedIn ? <form onSubmit={(e) => {
+        e.preventDefault();
+        addComment();
+      }} className='ItemComments-Reply'>
+        <LabeledInputField
+          labeled={false}
+          inputField={{
+            id: 'CreateAccount-ln-input',
+            name: 'CreateAccount-ln-input',
+            type: 'text',
+            required: true,
+            onChangeHandler: event => {
+              setUserComment(event.target.value);
+            },
+            value: userComment
+          }}
+        />
+        <Button type="submit" handleOnClick={addComment} otherClassNames="purple">Comment</Button>
+      </form> : ''}
     </div>
   );
 }
