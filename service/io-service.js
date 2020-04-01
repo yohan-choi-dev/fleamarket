@@ -10,25 +10,26 @@ module.exports = (server, database) => {
         try {
             await redis.hsetAsync(`users:${userId}`, 'status', 'online')
         } catch (err) {
-            socket.on('error', err)
+            socket.emit('error', err)
             console.error(err)
         }
 
         socket.on('disconnect', async () => {
             try {
                 await redis.hsetAsync(`users:${userId}`, 'status', 'offline')
+                console.log(`${userId} disconnected`)
             } catch (err) {
-                socket.on('error', err)
+                socket.emit('error', err)
                 console.error(err)
             }
         })
 
-        socket.on('user.get.status', async (user) => {
+        socket.on('user.getStatus', async (user) => {
             try {
-                const status = await redis.hgetAync(`users:${user.id}`, 'status')
-                socket.emit('user.get.status.done', status)
+                const status = await redis.hgetAsync(`users:${user.id}`, 'status')
+                socket.emit('user.getStatus.done', user.id, status)
             } catch (err) {
-                socket.on('error', err)
+                socket.emit('error', err)
                 console.error(err)
             }
         })
