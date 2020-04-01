@@ -27,31 +27,25 @@ app.use(require('body-parser').json())
 
 app.use(express.urlencoded({ extended: false, limit: '50mb' }))
 app.use('/images', express.static(require('path').join(__dirname, 'images')))
-
 app.use('/api/auth', require('./routes/auth'))
 app.use('/api/items', require('./routes/items'))
 app.use('/api/categories', require('./routes/category'))
 app.use('/api/images', require('./routes/image'))
 app.use('/api/users', require('./routes/users'))
 app.use('/api/favorites', require('./routes/favorites'))
-
 app.use(require('./middlewares/error-handler'))
-
-sequelize
-    .sync()
-    .then(() => {
+;(async () => {
+    try {
+        await sequelize.sync()
         const server = app.listen(PORT, () =>
             console.log(`Worker ${process.pid} is running on ${PORT}`)
         )
-
         const redis = redisDbFactory(redisConfig)
-
         ioService(server, redis)
-
         if (process.env.NODE_ENV === 'production') {
             mailService.init()
         }
-    })
-    .catch((err) => {
+    } catch (err) {
         console.error(err)
-    })
+    }
+})()
