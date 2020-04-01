@@ -90,7 +90,7 @@ const ItemComments = (props) => {
             value: userComment
           }}
         />
-        <Button handleOnClick={addComment} otherClassNames="purple">Comment</Button>
+        <Button type="submit" otherClassNames="purple">Comment</Button>
       </form> : ''}
     </div>
   );
