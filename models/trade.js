@@ -1,22 +1,22 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../utils/database");
+const { DataTypes } = require('sequelize')
+const sequelize = require('../utils/database')
 
-const Trade = sequelize.define("trade", {
+const Trade = sequelize.define('trade', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true
     },
-    token: { 
+    token: {
         type: DataTypes.STRING,
         allowNull: false
     },
     status: {
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: "ready"
-    },
-});
+        defaultValue: 'ready'
+    }
+})
 
-module.exports = Trade;
+module.exports = Trade

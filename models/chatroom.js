@@ -1,5 +1,6 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../utils/database');
+const { DataTypes } = require('sequelize')
+const sequelize = require('../utils/database')
+const User = require('./user')
 
 const Chatroom = sequelize.define('Chatroom', {
     id: {
@@ -7,7 +8,13 @@ const Chatroom = sequelize.define('Chatroom', {
         autoIncrement: true,
         allowNull: false,
         primaryKey: true
+    },
+    endpoint: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
-});
+})
 
-module.exports = Chatroom;
+User.hasMany(Chatroom)
+
+module.exports = Chatroom

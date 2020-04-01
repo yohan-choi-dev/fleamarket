@@ -1,18 +1,18 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 
-const commentController = require('../controllers/comment');
+const commentController = require('../controllers/comment')
 
 router.get('/', async (req, res, next) => {
-  if (req.query.itemId) {
-    await commentController.getCommentsByItemId(req, res, next);
-  } else {
-    next();
-  }
-});
+    if (req.query.itemId) {
+        await commentController.getCommentsByItemId(req, res, next)
+    } else {
+        next()
+    }
+})
 
 router.post('/', async (req, res, next) => {
-  await commentController.createComment(req, res, next);
-});
+    await commentController.createComment(req, res, next)
+})
 
-module.exports = router;
+module.exports = router

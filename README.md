@@ -9,8 +9,13 @@
 
 ### API Endpoints (`/api`)
 
-- `/auth/signup`
-- `/auth/login`
-- `/items`
-  - `/items?name=Logitech`
-  - `/items?user=51`
+-   `/auth/signup`
+-   `/auth/login`
+-   `/items`
+    -   `/items?name=Logitech`
+    -   `/items?user=51`
+
+### Commit Code
+
+By default, eslint will check code before commit
+To disable it, run 'git commit -m '(message)' --no-verify

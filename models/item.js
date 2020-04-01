@@ -1,5 +1,5 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../utils/database');
+const { DataTypes } = require('sequelize')
+const sequelize = require('../utils/database')
 
 const Item = sequelize.define('Item', {
     id: {
@@ -26,6 +26,6 @@ const Item = sequelize.define('Item', {
         type: DataTypes.BOOLEAN,
         allowNull: false
     }
-});
+})
 
-module.exports = Item;
+module.exports = Item

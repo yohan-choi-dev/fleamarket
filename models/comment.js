@@ -1,10 +1,8 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../utils/database");
-const Item = require("./item");
-const User = require("./user");
+const { DataTypes } = require('sequelize')
+const sequelize = require('../utils/database')
 
 const Comment = sequelize.define(
-    "Comment",
+    'Comment',
     {
         id: {
             type: DataTypes.INTEGER,
@@ -30,6 +28,6 @@ const Comment = sequelize.define(
         updatedAt: false,
         createAt: false
     }
-);
+)
 
-module.exports = Comment;
+module.exports = Comment
