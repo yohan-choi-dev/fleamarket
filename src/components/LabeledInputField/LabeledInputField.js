@@ -25,6 +25,7 @@ function LabeledInputField(props) {
 LabeledInputField.propTypes = {
   className: PropTypes.string,
   label: PropTypes.string,
+  labeled: PropTypes.bool,
   inputField: PropTypes.shape({
     classNames: PropTypes.string,
     id: PropTypes.string,
@@ -38,5 +39,9 @@ LabeledInputField.propTypes = {
     value: PropTypes.string
   })
 }
+
+LabeledInputField.defaultProps = {
+  labeled: true
+};
 
 export default LabeledInputField;

@@ -62,7 +62,7 @@
 .HomePage-main-section {
   position: relative;
   padding-top: 5rem;
-  padding-bottom: 9rem;
+  padding-bottom: 5rem;
 }
 
 .HomePage-main-section-heading {
@@ -86,10 +86,11 @@
   position: relative;
 }
 
-.HomePage-main-section-show-more {
+.HomePage-actions {
   width: 100%;
   display: flex;
   justify-content: center;
+  padding-top: 2.5rem;
 }
 
 .HomePage-footer {
