@@ -1,6 +1,4 @@
 const io = require('socket.io-client')
-const chatInterface = require('./chat-interface')
-
 const url = 'http://localhost:12218'
 
 const userA = {
@@ -85,7 +83,6 @@ chat.on('connect', () => {
 })
 
 chat.on('message.sent', (data) => {
-    const user = data.message.toString('utf-8')
     const message = data.message.toString('utf-8') // this wili be need in some env
     console.log(`${data.from.name}:${message}`)
 })

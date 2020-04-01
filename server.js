@@ -2,13 +2,6 @@ const express = require('express')
 const PORT = process.env.PORT | 12218
 const app = express()
 
-const path = require('path')
-const bodyParser = require('body-parser')
-const cors = require('cors')
-const compression = require('compression')
-
-const config = require('./utils/config')
-
 const sequelize = require('./utils/database')
 const redisDbFactory = require('./factories/redis-db-factory')
 
@@ -16,21 +9,12 @@ const ioService = require('./service/io-service')
 
 const mailService = require('./service/mail-service')
 
-const authRoutes = require('./routes/auth')
-const itemRoutes = require('./routes/items')
-const categoryRoutes = require('./routes/category')
-const imageRoutes = require('./routes/image')
-const userRoutes = require('./routes/users')
-const favoriteRoutes = require('./routes/favorites')
-
-const errorHandler = require('./middlewares/error-handler')
-
 if (!process.env.NODE_ENV) {
     const corsOptions = {
         origin: 'http://localhost:3000',
         optionsSuccessStatus: 200
     }
-    app.use(cors(corsOptions))
+    app.use(require('cors')(corsOptions))
 }
 
 const redisConfig = {
@@ -38,20 +22,20 @@ const redisConfig = {
     port: process.env.REDIS_PORT || 6379
 }
 
-app.use(compression())
-app.use(bodyParser.json())
+app.use(require('compression')())
+app.use(require('body-parser').json())
+
 app.use(express.urlencoded({ extended: false, limit: '50mb' }))
+app.use('/images', express.static(require('path').join(__dirname, 'images')))
 
-app.use('/images', express.static(path.join(__dirname, 'images')))
+app.use('/api/auth', require('./routes/auth'))
+app.use('/api/items', require('./routes/items'))
+app.use('/api/categories', require('./routes/category'))
+app.use('/api/images', require('./routes/image'))
+app.use('/api/users', require('./routes/users'))
+app.use('/api/favorites', require('./routes/favorites'))
 
-app.use('/api/auth', authRoutes)
-app.use('/api/items', itemRoutes)
-app.use('/api/categories', categoryRoutes)
-app.use('/api/images', imageRoutes)
-app.use('/api/users', userRoutes)
-app.use('/api/favorites', favoriteRoutes)
-
-app.use(errorHandler)
+app.use(require('./middlewares/error-handler'))
 
 sequelize
     .sync()
