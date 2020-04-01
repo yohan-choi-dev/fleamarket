@@ -1,6 +1,6 @@
 const SocketIO = require('socket.io')
 const adapter = require('socket.io-redis')
-const socketEmmiter = require('socket.io-emitter')
+//const socketEmmiter = require('socket.io-emitter')
 
 module.exports = (server, db) => {
     const io = SocketIO()
