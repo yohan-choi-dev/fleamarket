@@ -10,6 +10,7 @@ import SearchBox from '../../components/SearchBox/SearchBox';
 import ItemCard from '../../components/ItemCard/ItemCard';
 import Footer from '../../components/Footer/Footer';
 import ValidatedInputField from '../../components/ValidatedInputField/ValidatedInputField';
+import Button from '../../components/Button/Button';
 
 // Contexts
 import AppContext from '../../contexts/AppContext';
@@ -20,41 +21,80 @@ import { getData, postData, deleteData } from '../../utils/fetch-data';
 
 function HomePage(props) {
   // State
+  const LIMIT = 6;
   const [items, setItems] = useState([]);
+  const [page, setPage] = useState({
+    start: 0,
+    end: LIMIT
+  });
+  const [totalItemsNum, setTotalItemsNum] = useState(0);
 
   // Context
   const { appState } = useContext(AppContext);
 
-  useEffect(() => {
-    const fetchItems = async () => {
-      let itemList;
-      if (appState.user.isLoggedIn) {
-        itemList = await getData(`${APIRoute}/api/items?notOwned=1&userId=${appState.user.id}`);
-      } else {
-        itemList = await getData(`${APIRoute}/api/items`);
-      }
-
-      if (appState.user.isLoggedIn) {
-        const itemsLikedByUser = await getData(`${APIRoute}/api/favorites?userId=${appState.user.id}`);
-        itemList = itemList.map(item => {
-          if (itemsLikedByUser.includes(item.id)) {
-            return {
-              ...item,
-              favoritedByUser: true
-            }
-          } else {
-            return {
-              ...item,
-              favoritedByUser: false
-            }
-          }
-        });
-      }
-
-      setItems(itemList);
+  const fetchItems = async () => {
+    let itemList = [];
+    let apiEndpoint = `${APIRoute}/api/items?notOwned=1&userId=${appState.user.id}&start=${page.start}&end=${page.end}`;
+    if (appState.user.isLoggedIn) {
+      itemList = await getData(apiEndpoint);
+    } else {
+      apiEndpoint = `${APIRoute}/api/items?start=${page.start}&end=${page.end}`;
+      itemList = await getData(apiEndpoint);
     }
-    fetchItems();
+
+    if (appState.user.isLoggedIn) {
+      const itemsLikedByUser = await getData(`${APIRoute}/api/favorites?userId=${appState.user.id}`);
+      itemList = itemList.map(item => {
+        if (itemsLikedByUser.includes(item.id)) {
+          return {
+            ...item,
+            favoritedByUser: true
+          }
+        } else {
+          return {
+            ...item,
+            favoritedByUser: false
+          }
+        }
+      });
+    }
+
+    return itemList;
+  }
+
+  useEffect(() => {
+    fetchItems()
+      .then(data => {
+        setItems(data);
+      });
+  }, [totalItemsNum]);
+
+  useEffect(() => {
+    fetchItems()
+      .then(data => {
+        setItems([
+          ...items,
+          ...data
+        ]);
+      });
+  }, [page]);
+
+  useEffect(() => {
+    const getTotalNumberOfItems = async () => {
+      let totalItemsEndpoint = `${APIRoute}/api/items/count`;
+      if (appState.user.isLoggedIn) {
+        totalItemsEndpoint = `${APIRoute}/api/items/count?notOwned=1&userId=${appState.user.id}`;
+      }
+      let total = await getData(totalItemsEndpoint);
+      setTotalItemsNum(total.numberOfItems);
+    }
+
+    getTotalNumberOfItems();
   }, [appState.user.isLoggedIn]);
+
+  // useEffect(() => {
+
+  // }, [page]);
 
   const handleLikedStatus = async (liked, itemId) => {
     if (liked) {
@@ -87,6 +127,13 @@ function HomePage(props) {
         }
     ));
     setItems(updatedItemList);
+  }
+
+  const handleShowMore = () => {
+    setPage({
+      start: page.end,
+      end: page.end * LIMIT
+    });
   }
 
   return (
@@ -123,6 +170,11 @@ function HomePage(props) {
             ))
           }
         </div>
+        {
+          page.end < totalItemsNum ? <div className="HomePage-actions">
+            <Button otherClassNames="purple" handleOnClick={handleShowMore}>Show More</Button>
+          </div> : ''
+        }
       </main>
       <Footer />
     </div>
