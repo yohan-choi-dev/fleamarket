@@ -26,6 +26,13 @@ const socket = io(url, {
     }
 })
 
+const chatUrl = 'http://localhost:12218/chat'
+const chat = io(chatUrl, {
+    query: {
+        ...userA
+    }
+})
+
 const getUserStatus = (socket, user) => {
     socket.emit('user.getStatus', user)
 
@@ -38,15 +45,39 @@ const getUserStatus = (socket, user) => {
 
 getUserStatus(socket, userB)
 
+const join = (socket, user) => {
+    socket.emit('join', user)
+}
+const loadMessage = (socket, user, rangeFrom, rangeBy) => {
+    socket.emit('message.load', user, rangeFrom, rangeBy)
+
+    socket.on('message.load.done', (data) => {
+        console.log(typeof data)
+        const message = data[0].message
+        console.log(message)
+        if (Array.isArray(data)) {
+            data.forEach((record) => {
+                console.log(`${record.user.name}: ${record.message.toString('utf-8')}`)
+            })
+        }
+    })
+}
+
+join(chat, userA)
+
+loadMessage(chat, userB, 0, 10)
+
+const sendMessage = (socket, user, message) => {
+    const data = {}
+    data.user = user
+    data.from = socket.query
+    data.time = new Date().getUTCDate()
+    data.message = message
+    socket.emit('message.update', data)
+}
+
 socket.on('user.disconnect', (id) => {
     console.log(`${id} has been disconnected`)
-})
-
-const chatUrl = 'http://localhost:12218/chat'
-const chat = io(chatUrl, {
-    query: {
-        ...userA
-    }
 })
 
 chat.on('connect', () => {
@@ -54,25 +85,21 @@ chat.on('connect', () => {
 })
 
 chat.on('message.sent', (data) => {
-    const str = data.message.toString('utf-8') // this wili be need in some env
-    console.log(`${data.from}:${str}`)
+    const user = data.message.toString('utf-8')
+    const message = data.message.toString('utf-8') // this wili be need in some env
+    console.log(`${data.from.name}:${message}`)
 })
 
-const sendMessage = (data) => {
-    chat.emit('message.send', data)
-}
-
-chatInterface()
+chat.on('message.update.done', (data) => {
+    const message = data.message.toString('utf-8')
+    console.log(`${data.from.name}: ${message}`)
+})
 
 const startChat = () => {
     const userInput = process.stdin
+    userInput.setEncoding('utf-8')
     userInput.on('data', (message) => {
-        let data = {
-            message: message,
-            from: userA.id,
-            to: userB.id
-        }
-        sendMessage(data)
+        sendMessage(chat, userB, message)
     })
 }
 
