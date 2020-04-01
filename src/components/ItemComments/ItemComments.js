@@ -21,35 +21,37 @@ const ItemComments = (props) => {
   const [userComment, setUserComment] = useState('');
 
   const addComment = async () => {
-    const response = await postData(
-      `${APIRoute}/api/comments`,
-      JSON.stringify({
-        userId: appState.user.id,
-        itemId: itemId,
-        content: userComment
-      }),
-      'application/json'
-    );
+    if (userComment.trim() != '') {
+      const response = await postData(
+        `${APIRoute}/api/comments`,
+        JSON.stringify({
+          userId: appState.user.id,
+          itemId: itemId,
+          content: userComment.trim()
+        }),
+        'application/json'
+      );
 
-    if (response.status >= 200 && response.status <= 299) {
-      const currentComments = [...comments, {
-        userName: appState.user.name,
-        userDescription: appState.user.description,
-        userImage: appState.user.image,
-        commentContent: userComment
-      }];
+      if (response.status >= 200 && response.status <= 299) {
+        const currentComments = [...comments, {
+          userName: appState.user.name,
+          userDescription: appState.user.description,
+          userImage: appState.user.image,
+          commentContent: userComment
+        }];
 
-      setAppState({
-        ...appState,
-        currentItem: {
-          ...appState.currentItem,
-          comments: currentComments
-        }
-      });
+        setAppState({
+          ...appState,
+          currentItem: {
+            ...appState.currentItem,
+            comments: currentComments
+          }
+        });
 
-      setUserComment('');
-    } else {
-      window.alert('Cannot add comment. Please try again.');
+        setUserComment('');
+      } else {
+        window.alert('Cannot add comment. Please try again.');
+      }
     }
   }
 
