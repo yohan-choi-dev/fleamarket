@@ -1,7 +1,3 @@
-const fs = require("fs");
-const path = require("path");
-const formidable = require("formidable");
-
 const sequelize = require("../utils/database");
 const { asyncForEach } = require('../utils/async-for-each');
 const Item = require("../models/item");
@@ -11,13 +7,25 @@ const ImageLink = require("../models/image-link");
 exports.getItems = async (req, res, next) => {
   let notOwned = req.query.notOwned;
   let userId = req.query.userId;
+  let start = parseInt(req.query.start);
+  let end = parseInt(req.query.end);
 
-  let search_query = `SELECT i.id, i.createdAt, i.name as "name", i.description, u.id as "userId", u.name as "userName" FROM Items i, Users u, UserItemBridges ui 
-                      WHERE ui.UserId = u.id AND ui.ItemId = i.id AND i.hidden=0`;
+  let search_query = `
+    SELECT i.id, i.createdAt, i.name as "name", i.description, u.id as "userId", u.name as "userName" 
+    FROM Items i, Users u, UserItemBridges ui 
+    WHERE ui.UserId = u.id AND ui.ItemId = i.id AND i.hidden=0 
+  `;
 
   if (notOwned) {
-    search_query = `SELECT i.id, i.createdAt, i.name as "name", i.description, u.id as "userId", u.name as "userName" FROM Items i, Users u, UserItemBridges ui 
-    WHERE ui.UserId = u.id AND ui.ItemId = i.id AND u.id != ${userId} AND i.hidden=0`;
+    search_query = `
+      SELECT i.id, i.createdAt, i.name as "name", i.description, u.id as "userId", u.name as "userName" 
+      FROM Items i, Users u, UserItemBridges ui 
+      WHERE ui.UserId = u.id AND ui.ItemId = i.id AND u.id != ${userId} AND i.hidden=0 
+    `;
+  }
+
+  if (start != 'NaN' && end != 'NaN') {
+    search_query += ` LIMIT ${start},${end} `;
   }
 
   try {
@@ -222,6 +230,34 @@ exports.postItem = async (req, res, next) => {
 
 exports.patchItem = async (req, res, next) => { };
 exports.deleteItem = async (req, res, next) => { };
+
+exports.getItemsCount = async (req, res, next) => {
+  const notOwned = req.query.notOwned;
+  const userId = req.query.userId;
+
+  let search_query = `SELECT COUNT(*) as numberOfItems FROM Items `;
+
+  if (notOwned) {
+    search_query = `
+      SELECT COUNT(*) as numberOfItems 
+      FROM Users u, Items i, UserItemBridges ui
+      WHERE ui.UserId = u.id AND ui.ItemId = i.id and u.id != ${userId}
+    `
+  }
+
+  try {
+    let results = await sequelize.query(search_query, {
+      type: sequelize.QueryTypes.SELECT
+    });
+
+    res.status(200).send(JSON.stringify(results[0]));
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+}
 
 exports.updateItem = async (req, res, next) => {
   const itemId = req.params.itemId;
