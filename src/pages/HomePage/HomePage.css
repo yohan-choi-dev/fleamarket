@@ -6,7 +6,7 @@
   width: 100%;
   padding-top: 4.5rem;
   text-align: center;
-  background-color: var(--purple);
+  background: linear-gradient(135deg, var(--purple), #914E72);
   background-position: center;
   background-attachment: fixed;
   background-size: cover;
