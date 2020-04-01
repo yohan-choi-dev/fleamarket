@@ -1,5 +1,5 @@
 const cluster = require('cluster')
-const numWorkers = process.env.NODE_ENV ? require('os').cpus().length : 1
+const numWorkers = process.env.NODE_ENV ? require('os').cpus().length : 2
 
 if (cluster.isMaster) {
     console.log(`Master ${process.pid} is running`)
@@ -17,5 +17,5 @@ if (cluster.isMaster) {
         console.log(message)
     })
 } else {
-    console.log('this function will be update later')
+    require('./server') // run server.js
 }

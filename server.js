@@ -1,40 +1,40 @@
-const express = require('express')
-const PORT = process.env.PORT | 12218
-const app = express()
+module.exports = (async () => {
+    const express = require('express')
+    const PORT = process.env.PORT | 12218
+    const app = express()
 
-const sequelize = require('./utils/database')
-const redisDbFactory = require('./factories/redis-db-factory')
+    const sequelize = require('./utils/database')
+    const redisDbFactory = require('./factories/redis-db-factory')
 
-const ioService = require('./service/io-service')
+    const ioService = require('./service/io-service')
 
-const mailService = require('./service/mail-service')
+    const mailService = require('./service/mail-service')
 
-if (!process.env.NODE_ENV) {
-    const corsOptions = {
-        origin: 'http://localhost:3000',
-        optionsSuccessStatus: 200
+    if (!process.env.NODE_ENV) {
+        const corsOptions = {
+            origin: 'http://localhost:3000',
+            optionsSuccessStatus: 200
+        }
+        app.use(require('cors')(corsOptions))
     }
-    app.use(require('cors')(corsOptions))
-}
 
-const redisConfig = {
-    host: process.env.REDIS_HOST || 'localhost',
-    port: process.env.REDIS_PORT || 6379
-}
+    const redisConfig = {
+        host: process.env.REDIS_HOST || 'localhost',
+        port: process.env.REDIS_PORT || 6379
+    }
 
-app.use(require('compression')())
-app.use(require('body-parser').json())
+    app.use(require('compression')())
+    app.use(require('body-parser').json())
 
-app.use(express.urlencoded({ extended: false, limit: '50mb' }))
-app.use('/images', express.static(require('path').join(__dirname, 'images')))
-app.use('/api/auth', require('./routes/auth'))
-app.use('/api/items', require('./routes/items'))
-app.use('/api/categories', require('./routes/category'))
-app.use('/api/images', require('./routes/image'))
-app.use('/api/users', require('./routes/users'))
-app.use('/api/favorites', require('./routes/favorites'))
-app.use(require('./middlewares/error-handler'))
-;(async () => {
+    app.use(express.urlencoded({ extended: false, limit: '50mb' }))
+    app.use('/images', express.static(require('path').join(__dirname, 'images')))
+    app.use('/api/auth', require('./routes/auth'))
+    app.use('/api/items', require('./routes/items'))
+    app.use('/api/categories', require('./routes/category'))
+    app.use('/api/images', require('./routes/image'))
+    app.use('/api/users', require('./routes/users'))
+    app.use('/api/favorites', require('./routes/favorites'))
+    app.use(require('./middlewares/error-handler'))
     try {
         await sequelize.sync()
         const server = app.listen(PORT, () =>
