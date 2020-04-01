@@ -10,10 +10,6 @@ const User = sequelize.define(
             allowNull: false,
             primaryKey: true
         },
-        namespace: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
         name: {
             type: DataTypes.STRING,
             allowNull: false
@@ -26,8 +22,8 @@ const User = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false
         },
-        address: {
-            type: DataTypes.STRING
+        addressId: {
+            type: DataTypes.INTEGER
         },
         description: DataTypes.STRING,
         image: DataTypes.STRING,

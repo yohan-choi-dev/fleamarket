@@ -15,6 +15,10 @@ router.get('/', (req, res, next) => {
     }
 })
 
+router.get('/count', (req, res, next) => {
+    itemController.getItemsCount(req, res, next)
+})
+
 router.get('/:itemId', (req, res, next) => {
     itemController.getItemById(req, res, next)
 })

@@ -34,6 +34,7 @@ module.exports = (async () => {
     app.use('/api/images', require('./routes/image'))
     app.use('/api/users', require('./routes/users'))
     app.use('/api/favorites', require('./routes/favorites'))
+    app.use('/api/comments', require('./routes/comments'))
     app.use(require('./middlewares/error-handler'))
     try {
         await sequelize.sync()

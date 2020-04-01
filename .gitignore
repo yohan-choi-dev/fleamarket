@@ -3,7 +3,7 @@ package-lock.json
 view
 .env
 build/
-*.swp
+.swp
 test/
 branches/
 .DS_Store

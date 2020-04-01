@@ -85,10 +85,16 @@ exports.login = async (req, res, next) => {
         if (loadedUser === null) {
             const error = new Error(`${email} does not exist!`)
             error.statusCode = 401
+            res.status(401).json({
+                message: 'Email does not exist'
+            })
             throw error
         } else if (!loadedUser.isActivated) {
             const error = new Error(`User account ${email} is not activated!`)
             error.statusCode = 403
+            res.status(401).json({
+                message: 'User account is not activated!'
+            })
             throw error
         }
 
@@ -97,6 +103,9 @@ exports.login = async (req, res, next) => {
         if (!isMatch) {
             const error = new Error('Invalid password!')
             error.statusCode = 401
+            res.status(401).json({
+                message: 'Invalid password!'
+            })
             throw error
         }
 
@@ -168,6 +177,8 @@ exports.confirmEmail = async (req, res, next) => {
                 }
             }
         )
+
+        res.status(200).redirect('http://myvmlab.senecacollege.ca:6761/')
 
         res.status(200).json(user)
     } catch (error) {

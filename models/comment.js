@@ -1,6 +1,5 @@
 const { DataTypes } = require('sequelize')
 const sequelize = require('../utils/database')
-const Item = require('./item')
 
 const Comment = sequelize.define(
     'Comment',
@@ -15,11 +14,7 @@ const Comment = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false
         },
-        conmmentDate: {
-            type: DataTypes.DATE,
-            allowNull: false
-        },
-        postId: {
+        itemId: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
@@ -34,8 +29,5 @@ const Comment = sequelize.define(
         createAt: false
     }
 )
-
-Item.hasMany(Comment)
-Comment.belongsTo(Item)
 
 module.exports = Comment

@@ -22,7 +22,7 @@ const Item = sequelize.define('Item', {
     exchangeFor: {
         type: DataTypes.STRING
     },
-    isHidden: {
+    hidden: {
         type: DataTypes.BOOLEAN,
         allowNull: false
     }
