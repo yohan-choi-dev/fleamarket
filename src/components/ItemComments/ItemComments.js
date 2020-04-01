@@ -61,8 +61,7 @@ const ItemComments = (props) => {
             return (
               <div className="ItemComments-Detail" key={`Comment-${index}`}>
                 <div className="ItemComments-Detail-User">
-                  {/* <img src={`${APIRoute}/${c.userImage}`}></img> <b>{c.userName}</b> */}
-                  <img src="https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80" />
+                  <img src={`${APIRoute}/${c.userImage}`} />
                   <div className="ItemComments-Detail-User-Info">
                     <p className="ItemComments-Detail-User-Name">{c.userName}</p>
                     <p className="ItemComments-Detail-User-Rating"><span role="img"><StarIcon className="StarIcon" /></span>4.5</p>
