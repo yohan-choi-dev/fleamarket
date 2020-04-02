@@ -1,16 +1,17 @@
-.ChatRoom {
+.Chatroom {
   margin-top: 4rem;
   margin-bottom: 7rem;
 }
 
-.ChatRoom-wrapper {
+.Chatroom-wrapper {
+  position: relative;
   display: flex;
+  height: 40rem;
   box-shadow: var(--shadow-card-normal);
   border-radius: 0.83rem;
-  overflow: hidden;
 }
 
-.ChatRoom-Nav {
+.Chatroom-Nav {
   width: 25%;
   background-color: #ececec;
   padding-top: 2.67rem;
@@ -20,16 +21,17 @@
   font-size: 0.9rem;
   font-family: var(--font-family-global);
   color: var(--dark-grey);
+  overflow-y: scroll;
 }
 
-.ChatRoom-Nav-User {
+.Chatroom-Nav-User {
   display: flex;
   padding-bottom: 1.2rem;
   align-items: center;
   cursor: pointer;
 }
 
-.ChatRoom-Nav-User-profile-photo {
+.Chatroom-Nav-User-profile-photo {
   display: inline-block;
   width: 3rem;
   height: 3rem;
@@ -38,17 +40,10 @@
   border-radius: 50%;
 }
 
-.ChatRoom-Nav-User span {
+.Chatroom-Nav-User span {
   font-weight: 600;
 }
 
-.ChatRoom-Context {
-  width: 75%;
-  padding-top: 2.67rem;
-  padding-left: 2.78rem;
-  background-color: pink;
-}
-
-.ChatRoom-Nav-User {
+.Chatroom-Nav-User {
   list-style-type: none;
 }

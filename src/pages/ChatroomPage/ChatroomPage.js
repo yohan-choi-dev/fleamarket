@@ -19,16 +19,16 @@ function ChatroomPage(props) {
   // States
   const [chatrooms, setChatrooms] = useState([]);
 
-  // Context
+  // Effect
+  const fetchChatrooms = async (userId) => {
+    const response = await fetch(`${APIRoute}/api/chatrooms?userId=${userId}`);
+    const body = await response.json();
+    setChatrooms(body);
+  }
+
   useEffect(() => {
     fetchChatrooms(appState.user.id);
-  }, [appState.user]);
-
-  const fetchChatrooms = async (userId) => {
-    const response = await getData(`${APIRoute}/api/chatrooms?userId=${userId}`);
-
-    setChatrooms(response);
-  }
+  }, []);
 
   return (
     <div className="ChatroomPage">
