@@ -1,25 +1,60 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './ChatroomContent.css';
 
-function ChatroomContent(props) {
-  const { loggedInUserId, otherUserId } = props;
+// Components
+import ChatMessage from '../ChatMessage/ChatMessage';
+import Button from '../../Button/Button';
+import LabeledInputField from '../../LabeledInputField/LabeledInputField';
 
-  const messages = [];
+// Utilities
+import { getData } from '../../../utils/fetch-data';
+import APIRoute from '../../../vars/api-routes';
+
+function ChatroomContent(props) {
+  const { chatroomId, loggedInUserId, loggedInUserName, otherUserId, otherUserName } = props;
+
+  const [messages, setMessages] = useState([]);
+  const [replyMessage, setReplyMessage] = useState('');
+
+  // Effects
+  useEffect(() => {
+    fetchMessages(chatroomId);
+  }, [chatroomId]);
+
+  // Actions
+  const fetchMessages = async (chatroomId) => {
+    const results = await getData(`${APIRoute}/api/messages?chatroomId=${chatroomId}`);
+    setMessages(results);
+  }
 
   return (
     <div className="ChatroomContent">
-      <div className="ChatroomContent-Message">
-        {/* <div className="ChatRoomContent-MessageBox">
-          <div className="ChatRoomContent-MessageBox-user">
-            <div className="ChatRoomContent-MessageBox-user-profile-photo"></div>
-            <span className="ChatRoomContent-MessageBox-user-name">Wing Tung Lau</span>
-          </div>
-          <p className="ChatRoomContent-MessageBox-message">hello my name is Wing Tung and I want to buy your product</p>
-        </div> */}
+      <div className="ChatroomContent-messages">
+        {
+          messages.map((message, index) => {
+            const userName = message.userId == loggedInUserId ? loggedInUserName : otherUserName;
+            return (
+              <ChatMessage key={`ChatMessage-${index}`} byUser={message.userId == loggedInUserId} userName={userName} message={message.message} />
+            );
+          })
+        }
       </div>
-      {/* <div className="ChatRoom-Reply">
-        <Button>Reply</Button>
-      </div> */}
+      <div className="ChatroomContent-reply">
+        <LabeledInputField
+          labeled={false}
+          inputField={{
+            id: 'Chatroom-reply-input',
+            name: 'Chatroom-reply-input',
+            type: 'text',
+            required: true,
+            onChangeHandler: event => {
+              setReplyMessage(event.target.value);
+            },
+            value: replyMessage
+          }}
+        />
+        <Button otherClassNames="purple">Reply</Button>
+      </div>
     </div>
   );
 }

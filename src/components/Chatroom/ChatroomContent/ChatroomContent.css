@@ -1,19 +1,35 @@
-.ChatRoom-Reply {
+.ChatroomContent {
+  width: 75%;
   position: relative;
-  top: 2.5rem;
-  left: 4rem;
 }
 
-.ChatRoomContent-Message {
-  overflow: auto;
-  padding: 4rem;
-  height: 50rem;
+.ChatroomContent-messages {
+  padding-top: 2.67rem;
+  padding-left: 2.78rem;
+  padding-right: 2.78rem;
+  height: 30rem;
+  overflow-y: scroll;
+  z-index: 6;
 }
 
-.ChatRoomContent-MessageBox {
-  padding: 0rem 2rem 3rem 1rem;
-  background-color: #ececec;
-  min-width: 5rem;
-  max-width: 30rem;
-  border-radius: 1rem;
+.ChatroomContent-reply {
+  position: absolute;
+  bottom: 0;
+  width: 98%;
+  padding-top: 2.67rem;
+  padding-left: 2.78rem;
+  padding-right: 2.78rem;
+  padding-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
+  z-index: 5;
+}
+
+.ChatroomContent-reply .LabeledInputField {
+  width: 100%;
+}
+
+.ChatroomContent-reply .LabeledInputField input {
+  width: 95%;
 }
