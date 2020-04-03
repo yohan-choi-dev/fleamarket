@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
+import io from 'socket.io-client';
 import './ChatroomPage.css';
 
 // Contexts
@@ -11,7 +12,6 @@ import Chatroom from '../../components/Chatroom/Chatroom';
 
 // Utilities
 import APIRoute from '../../vars/api-routes';
-import { getData } from '../../utils/fetch-data';
 
 function ChatroomPage(props) {
   const { appState } = useContext(AppContext);
@@ -29,6 +29,9 @@ function ChatroomPage(props) {
   useEffect(() => {
     fetchChatrooms(appState.user.id);
   }, []);
+
+  // Socket IO
+  const socket = io();
 
   return (
     <div className="ChatroomPage">

@@ -21,6 +21,9 @@ import CreateAccountModal from '../../components/CreateAccountModal/CreateAccoun
 import LoginModal from '../../components/LoginModal/LoginModal';
 import PrivateRoute from '../../components/PrivateRoute/PrivateRoute';
 
+// Contexts
+import { ChatContextProvider } from '../../contexts/ChatContext/ChatContext';
+
 function ModalSwitch() {
   let location = useLocation();
 
@@ -49,7 +52,9 @@ function ModalSwitch() {
           <ItemUploadPage />
         </PrivateRoute>
         <PrivateRoute path="/chatroom">
-          <ChatroomPage />
+          <ChatContextProvider>
+            <ChatroomPage />
+          </ChatContextProvider>
         </PrivateRoute>
         <PrivateRoute path="/transaction-history">
           <TransactionPage />
