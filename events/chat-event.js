@@ -10,10 +10,14 @@ module.exports = (io, redis) => {
             // They joinned the thier room automatically
             socket.join(socket.handshake.query.id)
             console.log(socket.handshake.query)
-            users = await redis.smembersAsync(`users=${socket.handshake.query.id}`)
-
+            // once they log in the system, chat API's lists every user who is connected to the current user
+            users = await redis.smembersAsync(`connection=${socket.handshake.query.id}`)
             if (Array.isArray(users)) {
-                users.forEach((user) => socket.join(user))
+                users.forEach((user) => {
+                    socket.join(user)
+                    console.log(`${socket.handshake.query.id} is connected to ${user}`)
+                    socket.emit('chat.list.connected.user', user)
+                })
             }
         } catch (err) {
             socket.emit('error', err)

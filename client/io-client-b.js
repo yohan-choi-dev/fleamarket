@@ -4,15 +4,19 @@ const url = 'http://localhost:12218'
 const userB = {
     id: '10',
     name: 'yohan.choi',
-    email: 'ychoi63@myseneca.ca',
-    to: ''
+    email: 'ychoi63@myseneca.ca'
 }
 
 const userA = {
     id: '11',
     name: 'william.to',
-    email: 'william.to@myseneca.ca',
-    to: ''
+    email: 'william.to@myseneca.ca'
+}
+
+const userC = {
+    id: '12',
+    name: 'april.wing',
+    email: 'april.wing@myseneca.ca'
 }
 
 userA.to = userB.id
@@ -80,6 +84,10 @@ socket.on('user.disconnect', (id) => {
 
 chat.on('connect', () => {
     console.log(chat.id.toString('utf-8'))
+})
+
+chat.on('chat.list.connectead.user', (user) => {
+    console.log(user)
 })
 
 chat.on('message.sent', (data) => {

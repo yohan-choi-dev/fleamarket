@@ -1,19 +1,19 @@
 const io = require('socket.io-client')
 const url = 'http://localhost:12218'
 
-const userA = {
+const userB = {
     id: '10',
     name: 'yohan.choi',
     email: 'ychoi63@myseneca.ca'
 }
 
-const userB = {
+const userC = {
     id: '11',
     name: 'william.to',
     email: 'william.to@myseneca.ca'
 }
 
-const userC = {
+const userA = {
     id: '12',
     name: 'april.wing',
     email: 'april.wing@myseneca.ca'
@@ -55,8 +55,12 @@ const loadMessage = (socket, user, rangeFrom, rangeBy) => {
 
     socket.on('message.load.done', (data) => {
         console.log(typeof data)
-        const message = data[0].message
-        console.log(message)
+        let message
+        if (data != null) {
+          //  message = data[0].message
+        }
+        
+        //console.log(message)
         if (Array.isArray(data)) {
             data.forEach((record) => {
                 console.log(`${record.user.name}: ${record.message.toString('utf-8')}`)
@@ -86,7 +90,7 @@ chat.on('connect', () => {
     console.log(chat.id.toString('utf-8'))
 })
 
-chat.on('chat.list.connected.user', (user) => {
+chat.on('chat.list.connectead.user', (user) => {
     console.log(user)
 })
 
