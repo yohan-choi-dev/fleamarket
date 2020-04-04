@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import './ChatroomContent.css';
 
 // Components
@@ -10,28 +10,42 @@ import LabeledInputField from '../../LabeledInputField/LabeledInputField';
 import { getData } from '../../../utils/fetch-data';
 import APIRoute from '../../../vars/api-routes';
 
+// Contexts
+import { ChatContext } from '../../../contexts/ChatContext/ChatContext';
+
 function ChatroomContent(props) {
   const { chatroomId, loggedInUserId, loggedInUserName, otherUserId, otherUserName } = props;
-
-  const [messages, setMessages] = useState([]);
+  const messagesPanel = useRef(null);
+  // States
   const [replyMessage, setReplyMessage] = useState('');
 
-  // Effects
-  useEffect(() => {
-    fetchMessages(chatroomId);
-  }, [chatroomId]);
+  // Contexts
+  const { chatState, dispatch } = useContext(ChatContext);
 
-  // Actions
-  const fetchMessages = async (chatroomId) => {
-    const results = await getData(`${APIRoute}/api/messages?chatroomId=${chatroomId}`);
-    setMessages(results);
+  const sendMessage = async () => {
+    const message = replyMessage.trim();
+    setReplyMessage('');
+    const dispatchData = {
+      userId: loggedInUserId,
+      otherUserId: otherUserId,
+      message: message,
+      chatroomId: chatroomId,
+      dateCreated: Date.now()
+    }
+    chatState.userIO.emit('message', dispatchData);
+    dispatch({
+      type: 'CHATROOM_MESSAGES_ADD',
+      chatroomId: dispatchData.chatroomId,
+      userId: dispatchData.userId,
+      message: dispatchData.message
+    });
   }
 
   return (
     <div className="ChatroomContent">
-      <div className="ChatroomContent-messages">
+      <div className="ChatroomContent-messages" ref={messagesPanel}>
         {
-          messages.map((message, index) => {
+          chatState.chatroomsInfo[chatState.currentChatroomId] && chatState.chatroomsInfo[chatState.currentChatroomId].messages.map((message, index) => {
             const userName = message.userId == loggedInUserId ? loggedInUserName : otherUserName;
             return (
               <ChatMessage key={`ChatMessage-${index}`} byUser={message.userId == loggedInUserId} userName={userName} message={message.message} />
@@ -39,7 +53,10 @@ function ChatroomContent(props) {
           })
         }
       </div>
-      <div className="ChatroomContent-reply">
+      <form className="ChatroomContent-reply" onSubmit={(e) => {
+        e.preventDefault();
+        sendMessage();
+      }}>
         <LabeledInputField
           labeled={false}
           inputField={{
@@ -53,8 +70,8 @@ function ChatroomContent(props) {
             value: replyMessage
           }}
         />
-        <Button otherClassNames="purple">Reply</Button>
-      </div>
+        <Button type="submit" otherClassNames="purple">Reply</Button>
+      </form>
     </div>
   );
 }
