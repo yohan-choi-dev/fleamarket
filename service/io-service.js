@@ -9,15 +9,18 @@ module.exports = (server, database) => {
         const userId = socket.handshake.query.id
         try {
             await redis.hsetAsync(`users:${userId}`, 'status', 'online')
+            io.emit('user-connected', userId)
         } catch (err) {
             socket.emit('error', err)
             console.error(err)
         }
 
         socket.on('disconnect', async () => {
+            const userId = socket.handshake.query.id
             try {
                 await redis.hsetAsync(`users:${userId}`, 'status', 'offline')
                 console.log(`${userId} disconnected`)
+                io.emit('user-disconnected', userId)
             } catch (err) {
                 socket.emit('error', err)
                 console.error(err)

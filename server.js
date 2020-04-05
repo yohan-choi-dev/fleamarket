@@ -10,7 +10,7 @@ module.exports = (async () => {
 
     const mailService = require('./service/mail-service')
 
-    if (!process.env.NODE_ENV) {
+    if (process.env.NODE_ENV == 'development') {
         const corsOptions = {
             origin: 'http://localhost:3000',
             optionsSuccessStatus: 200
