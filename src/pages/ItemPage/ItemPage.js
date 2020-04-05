@@ -32,7 +32,9 @@ function ItemPage(props) {
         imageUrls: item.imageUrls.map(itemImage => `${APIRoute}/${itemImage}`),
         owner: {
           id: item.userId,
-          name: item.userName
+          name: item.userName,
+          image: item.userImage,
+          email: item.userEmail
         },
         comments: comments
       }

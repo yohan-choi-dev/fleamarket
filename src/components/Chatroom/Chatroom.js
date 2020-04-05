@@ -16,28 +16,14 @@ const Chatroom = (props) => {
   const { appState } = useContext(AppContext);
   const { chatState, dispatch } = useContext(ChatContext);
 
-  let chatroomList;
-
-  // useEffect(() => {
-  //   chatroomList = Object.keys(chatState.chatroomsInfo).map(chatroom => {
-  //     let currentChatroom = chatState.chatroomsInfo[chatroom];
-  //     return (
-  //       <li className="Chatroom-Nav-User" onClick={() => handleClick(chatroom)} key={`Chatroom-Nav-User-${chatroom}`}>
-  //         <div className='Chatroom-Nav-User-profile-photo' style={{
-  //           backgroundImage: `url(${APIRoute}/${currentChatroom.otherUserImage})`
-  //         }}></div>
-  //         <span style={{
-  //           color: chatroom == chatState.currentChatroomId ? '#8771A5' : '#CCCCCC'
-  //         }}>{currentChatroom.otherUserName}</span>
-  //       </li>
-  //       <div>jajaja</div>
-  //     )
-  //   });
-  // }, [chatState.chatroomsInfo]);
-
   // Actions
   const handleClick = (chatroomId) => {
-    dispatch({ type: 'CURRENT_CHATROOM_ID_UPDATE', chatroomId });
+    dispatch({
+      type: 'CURRENT_CHATROOM_ID_UPDATE',
+      payload: {
+        chatroomId
+      }
+    });
   }
 
   return (
@@ -45,9 +31,8 @@ const Chatroom = (props) => {
       <div className="Chatroom-wrapper">
         <ul className="Chatroom-Nav">
           {
-            Object.keys(chatState.chatroomsInfo).map(chatroom => {
-              let currentChatroom = chatState.chatroomsInfo[chatroom];
-              console.log(currentChatroom);
+            chatState.chatrooms && Object.keys(chatState.chatrooms).map(chatroom => {
+              let currentChatroom = chatState.chatrooms[chatroom];
               return (
                 <li className="Chatroom-Nav-User" onClick={() => handleClick(chatroom)} key={`Chatroom-Nav-User-${chatroom}`}>
                   <div className='Chatroom-Nav-User-profile-photo' style={{
@@ -68,8 +53,8 @@ const Chatroom = (props) => {
           chatroomId={chatState.currentChatroomId}
           loggedInUserId={appState.user.id}
           loggedInUserName={appState.user.name}
-          otherUserId={chatState.chatroomsInfo[chatState.currentChatroomId] && chatState.chatroomsInfo[chatState.currentChatroomId].otherUser.id}
-          otherUserName={chatState.chatroomsInfo[chatState.currentChatroomId] && chatState.chatroomsInfo[chatState.currentChatroomId].otherUser.name || ''}
+          otherUserId={chatState.chatrooms[chatState.currentChatroomId] && chatState.chatrooms[chatState.currentChatroomId].otherUser.id}
+          otherUserName={chatState.chatrooms[chatState.currentChatroomId] && chatState.chatrooms[chatState.currentChatroomId].otherUser.name || ''}
         />
       </div>
     </div>

@@ -25,39 +25,37 @@ function ChatroomContent(props) {
   const sendMessage = async () => {
     const message = replyMessage.trim();
     setReplyMessage('');
-    const dispatchData = {
-      userId: loggedInUserId,
-      otherUserId: otherUserId,
-      message: message,
-      chatroomId: chatroomId,
-      dateCreated: Date.now()
-    }
     const data = {
       user: {
-        id: chatState.chatroomsInfo[chatState.currentChatroomId].otherUser.id,
-        name: chatState.chatroomsInfo[chatState.currentChatroomId].otherUser.name,
-        email: chatState.chatroomsInfo[chatState.currentChatroomId].otherUser.email
+        id: chatState.chatrooms[chatState.currentChatroomId].otherUser.id,
+        name: chatState.chatrooms[chatState.currentChatroomId].otherUser.name,
+        email: chatState.chatrooms[chatState.currentChatroomId].otherUser.email
       },
       from: loggedInUserId,
       time: Date.now(),
       message: message
     }
-    console.log('datatatata:');
-    console.log(loggedInUserId);
-    chatState.userIO.emit('message.update', data);
+    chatState.chatIO.emit('message.update', data);
     dispatch({
       type: 'CHATROOM_MESSAGES_ADD',
-      chatroomId: dispatchData.chatroomId,
-      userId: dispatchData.userId,
-      message: dispatchData.message
+      payload: {
+        chatroomId: data.user.id,
+        userId: data.from,
+        message: data.message
+      }
     });
   }
 
   return (
     <div className="ChatroomContent">
+      <button onClick={() => {
+        chatState.chatIO.emit('leave', {
+          id: chatState.chatrooms[chatState.currentChatroomId].otherUser.id
+        });
+      }}>Leave chat</button>
       <div className="ChatroomContent-messages" ref={messagesPanel}>
         {
-          chatState.chatroomsInfo[chatState.currentChatroomId] && chatState.chatroomsInfo[chatState.currentChatroomId].messages.slice(0).reverse().map((message, index) => {
+          chatState.chatrooms[chatState.currentChatroomId] && chatState.chatrooms[chatState.currentChatroomId].messages.slice(0).reverse().map((message, index) => {
             const userName = message.userId == loggedInUserId ? loggedInUserName : otherUserName;
             return (
               <ChatMessage key={`ChatMessage-${index}`} byUser={message.userId == loggedInUserId} userName={userName} message={message.message} />
@@ -84,6 +82,7 @@ function ChatroomContent(props) {
         />
         <Button type="submit" otherClassNames="purple">Reply</Button>
       </form>
+
     </div>
   );
 }

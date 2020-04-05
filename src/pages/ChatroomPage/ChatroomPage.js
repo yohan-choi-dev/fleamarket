@@ -24,20 +24,20 @@ function ChatroomPage(props) {
   const { chatState, dispatch } = useContext(ChatContext);
 
   useEffect(() => {
-    chatState.userIO && chatState.userIO.emit('chat.get.list');
+    chatState.chatIO && chatState.chatIO.emit('chat.get.list');
     if (otherUser) {
       // Page is visited from item's page or user's page
-
       // Fetch chatrooms/users
-      chatState.userIO.emit('join', {
-        id: otherUser.id
-      });
-      // Fetch first room's messages
-    } else {
-      // Page is visited from "Chatroom" menu option
-
+      if (chatState.chatIO) {
+        chatState.chatIO.emit('join', {
+          id: otherUser.id,
+          name: otherUser.name,
+          image: otherUser.image,
+          email: otherUser.email
+        });
+      }
     }
-  }, [chatState.userIO]);
+  }, [chatState.chatIO]);
 
   return (
     <div className="ChatroomPage">
