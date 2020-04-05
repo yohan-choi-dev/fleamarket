@@ -59,7 +59,7 @@ const loadMessage = (socket, user, rangeFrom, rangeBy) => {
         console.log(message)
         if (Array.isArray(data)) {
             data.forEach((record) => {
-                console.log(`${record.user.name}: ${record.message.toString('utf-8')}`)
+                console.log(`${record.from.name}: ${record.message.toString('utf-8')}`)
             })
         }
     })

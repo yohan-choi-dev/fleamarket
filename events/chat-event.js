@@ -13,7 +13,7 @@ module.exports = (io, redis) => {
             console.error(err)
         }
 
-        socket.on('chat.get.list', async () => {
+        socket.on('chat.get.userlist', async () => {
             try {
                 const userIds = await redis.smembersAsync(`connection=${socket.handshake.query.id}`)
                 if (Array.isArray(userIds)) {
@@ -21,11 +21,11 @@ module.exports = (io, redis) => {
                         socket.join(userId)
                         console.log(`${socket.handshake.query.id} is connected to ${userId}`)
                     })
-                    socket.emit('chat.get.list.done', userIds)
+                    socket.emit('chat.get.userlist.done', userIds)
                 } else {
                     socket.join(userIds)
                     console.log(`${socket.handshake.query.id} is connected to ${userIds}`)
-                    socket.emit('chat.get.list.done', userIds)
+                    socket.emit('chat.get.userlist.done', userIds)
                 }
             } catch (err) {
                 socket.emit('error', err)
