@@ -1,34 +1,44 @@
 const MESSAGE_STATUS_CODE = require('../variables/message-status-code')
 module.exports = (io, redis) => {
     const chat = io.of('/chat')
-    chat.on('connection', async (socket) => {
-        let users = []
-
+    chat.on('connection', (socket) => {
         try {
             // by default, every user has thier personal chatroom
             // when they log in the system
             // They joinned the thier room automatically
             socket.join(socket.handshake.query.id)
             console.log(socket.handshake.query)
-            // once they log in the system, chat API's lists every user who is connected to the current user
-            users = await redis.smembersAsync(`connection=${socket.handshake.query.id}`)
-            if (Array.isArray(users)) {
-                users.forEach((user) => {
-                    socket.join(user)
-                    console.log(`${socket.handshake.query.id} is connected to ${user}`)
-                    socket.emit('chat.list.connected.user', user)
-                })
-            }
         } catch (err) {
             socket.emit('error', err)
             console.error(err)
         }
 
+        socket.on('chat.get.list', async () => {
+            try {
+                const userIds = await redis.smembersAsync(`connection=${socket.handshake.query.id}`)
+                if (Array.isArray(userIds)) {
+                    userIds.forEach((userId) => {
+                        socket.join(userId)
+                        console.log(`${socket.handshake.query.id} is connected to ${userId}`)
+                    })
+                    socket.emit('chat.get.list.done', userIds)
+                } else {
+                    socket.join(userIds)
+                    console.log(`${socket.handshake.query.id} is connected to ${userIds}`)
+                    socket.emit('chat.get.list.done', userIds)
+                }
+            } catch (err) {
+                socket.emit('error', err)
+                console.error(err)
+            }
+        })
+
         socket.on('leave', async (user) => {
             try {
-                socket.leave(user)
+                socket.leave(user.id)
                 await redis.sremAsync(`connection=${socket.handshake.query.id}`, user.id)
                 await redis.sremAsync(`connection=${user.id}`, socket.handshake.query.id)
+                socket.on('leave.done', user)
             } catch (err) {
                 socket.emit('error', err)
                 console.error(err)
@@ -41,6 +51,7 @@ module.exports = (io, redis) => {
                 socket.join(user.id)
                 await redis.saddAsync(`connection=${socket.handshake.query.id}`, user.id)
                 await redis.saddAsync(`connection=${user.id}`, socket.handshake.query.id)
+                socket.on('join.done', user)
             } catch (err) {
                 socket.emit('error', err)
                 console.error(err)
