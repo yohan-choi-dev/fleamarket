@@ -32,7 +32,19 @@ function ChatroomContent(props) {
       chatroomId: chatroomId,
       dateCreated: Date.now()
     }
-    chatState.userIO.emit('message', dispatchData);
+    const data = {
+      user: {
+        id: chatState.chatroomsInfo[chatState.currentChatroomId].otherUser.id,
+        name: chatState.chatroomsInfo[chatState.currentChatroomId].otherUser.name,
+        email: chatState.chatroomsInfo[chatState.currentChatroomId].otherUser.email
+      },
+      from: loggedInUserId,
+      time: Date.now(),
+      message: message
+    }
+    console.log('datatatata:');
+    console.log(loggedInUserId);
+    chatState.userIO.emit('message.update', data);
     dispatch({
       type: 'CHATROOM_MESSAGES_ADD',
       chatroomId: dispatchData.chatroomId,
@@ -45,7 +57,7 @@ function ChatroomContent(props) {
     <div className="ChatroomContent">
       <div className="ChatroomContent-messages" ref={messagesPanel}>
         {
-          chatState.chatroomsInfo[chatState.currentChatroomId] && chatState.chatroomsInfo[chatState.currentChatroomId].messages.map((message, index) => {
+          chatState.chatroomsInfo[chatState.currentChatroomId] && chatState.chatroomsInfo[chatState.currentChatroomId].messages.slice(0).reverse().map((message, index) => {
             const userName = message.userId == loggedInUserId ? loggedInUserName : otherUserName;
             return (
               <ChatMessage key={`ChatMessage-${index}`} byUser={message.userId == loggedInUserId} userName={userName} message={message.message} />

@@ -33,47 +33,49 @@ function ModalSwitch() {
   return (
     <div>
       <Switch location={background || location}>
-        <Route path="/verify-your-email">
-          <VerifyYourEmailPage />
-        </Route>
-        <Route path="/about-us">
-          <AboutUsPage />
-        </Route>
-        <Route path="/privacy-policy">
-          <PrivacyPolicyPage />
-        </Route>
-        <PrivateRoute path="/profile">
-          <ProfilePage />
-        </PrivateRoute>
-        <PrivateRoute path="/account-settings">
-          <AccountSettingsPage />
-        </PrivateRoute>
-        <PrivateRoute path="/upload-item">
-          <ItemUploadPage />
-        </PrivateRoute>
-        <PrivateRoute path="/chatroom">
-          <ChatContextProvider>
+        <ChatContextProvider>
+          <Route path="/verify-your-email">
+            <VerifyYourEmailPage />
+          </Route>
+          <Route path="/about-us">
+            <AboutUsPage />
+          </Route>
+          <Route path="/privacy-policy">
+            <PrivacyPolicyPage />
+          </Route>
+          <Route path={`/item/:itemId`}>
+            <ItemPage />
+          </Route>
+          <Route exact path="/recover-account">
+            <RecoverAccountPage />
+          </Route>
+          <Route path="/reset-password">
+            <RecoverPasswordPage />
+          </Route>
+          <Route path="/" exact={true}>
+            <HomePage />
+          </Route>
+          <Route path="/item/:itemId">
+            <ItemPage />
+          </Route>
+
+          <PrivateRoute path="/profile">
+            <ProfilePage />
+          </PrivateRoute>
+          <PrivateRoute path="/account-settings">
+            <AccountSettingsPage />
+          </PrivateRoute>
+          <PrivateRoute path="/upload-item">
+            <ItemUploadPage />
+          </PrivateRoute>
+          <PrivateRoute path="/chatroom">
             <ChatroomPage />
-          </ChatContextProvider>
-        </PrivateRoute>
-        <PrivateRoute path="/transaction-history">
-          <TransactionPage />
-        </PrivateRoute>
-        <Route path={`/item/:itemId`}>
-          <ItemPage />
-        </Route>
-        <Route exact path="/recover-account">
-          <RecoverAccountPage />
-        </Route>
-        <Route path="/reset-password">
-          <RecoverPasswordPage />
-        </Route>
-        <Route path="/" exact={true}>
-          <HomePage />
-        </Route>
-        <Route path="/item/:itemId">
-          <ItemPage />
-        </Route>
+          </PrivateRoute>
+          <PrivateRoute path="/transaction-history">
+            <TransactionPage />
+          </PrivateRoute>
+        </ChatContextProvider>
+
         <Route path="*">
           <NotFoundPage />
         </Route>

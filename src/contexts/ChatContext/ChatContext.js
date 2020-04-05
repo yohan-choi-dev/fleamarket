@@ -6,6 +6,7 @@ import ChatContextReducer from './ChatContextReducer';
 
 import APIRoute from '../../vars/api-routes';
 import { getData } from '../../utils/fetch-data';
+import asyncForEach from '../../utils/async-for-each';
 
 const ChatContext = React.createContext();
 
@@ -38,6 +39,7 @@ const ChatContext = React.createContext();
  *         name: 'Yohan',
  *         image: 'images/ewfkjkewnoifj.jpg',
  *         active: [true|false],
+ *         email: 'lalala@gmail.com',
  *         tradingItem: {
  *           id: 23,
  *           name: 'Pods',
@@ -53,12 +55,79 @@ const ChatContext = React.createContext();
  */
 
 function initializeDefaultSocketListeners({ io, dispatch }) {
-  io.on('user.getStatus.done', (data) => {
-    dispatch({ type: 'USER_ACTIVE_UPDATE', userId: data.userId, active: data.status });
+  io.on('user.getStatus.done', (id, status) => {
+    console.log(id);
+    console.log(status);
+    const active = (!status || status == 'offline') ? 0 : 1;
+    dispatch({ type: 'USER_ACTIVE_UPDATE', userId: id, active: active });
   });
 }
 
 function initializeUserSocketListeners({ io, dispatch }) {
+  const fetchChatrooms = async (users, currentChatroomUserId) => {
+    if (users.length > 0) {
+      let allChatroomsInfo = {};
+      users.forEach((user, index) => {
+        if (user.id != io.query.id) {
+          allChatroomsInfo[user.id] = {
+            messages: [],
+            otherUser: {
+              id: user.id,
+              name: user.name,
+              image: user.image,
+              email: user.email,
+              active: false,
+              tradingItem: {}
+            }
+          }
+        }
+      });
+
+      dispatch({
+        type: 'INITIAL_LOAD_CHATROOMS',
+        chatroomsInfo: {
+          ...allChatroomsInfo
+        },
+        currentChatroomId: currentChatroomUserId
+      });
+    }
+  }
+
+  io.on('message.load.done', (data) => {
+    console.log(data);
+    const transformedMessages = data.messages.map(message => {
+      return {
+        userId: message.user.id,
+        message: message.message
+      }
+    });
+    console.log(transformedMessages);
+    dispatch({
+      type: 'CHATROOM_MESSAGES_UPDATE',
+      chatroomId: data.userId,
+      messages: transformedMessages
+    });
+  });
+
+  io.on('chat.get.list.done', async (data) => {
+    const userIds = data.map((userId) => parseInt(userId));
+    console.log(userIds);
+
+    // Fetch all user's information
+    let usersInfo = [];
+
+    await asyncForEach(userIds, async (userId) => {
+      const response = await fetch(`${APIRoute}/api/users/${userId}`);
+      const userInfo = await response.json();
+      usersInfo.push(userInfo);
+    })
+
+    console.log(usersInfo);
+    fetchChatrooms(usersInfo, usersInfo[0].id);
+
+    // 
+  });
+
   io.on('disconnect', () => {
     dispatch({ type: 'SOCKETIO_UPDATE', io: {} });
     dispatch({
@@ -80,10 +149,6 @@ function initializeUserSocketListeners({ io, dispatch }) {
       connectionStatus: true
     });
   });
-
-  io.on('message', (data) => {
-    console.log(data);
-  });
 }
 
 function ChatContextProvider(props) {
@@ -99,104 +164,55 @@ function ChatContextProvider(props) {
   const [chatState, dispatch] = useReducer(ChatContextReducer, defaultState);
 
   useEffect(() => {
-    // Initialize IO
-    const defaultIO = socketioclient(`${APIRoute}`, {
-      query: {
-        id: appState.user.id
-      }
-    })
-    const userIO = socketioclient(`${APIRoute}/chat`, {
-      query: {
-        id: appState.user.id,
-        name: appState.user.name,
-        email: appState.user.email
-      }
-    });
+    if (appState.user.isLoggedIn) {
+      // Initialize IO
+      const defaultIO = socketioclient(`${APIRoute}/`, {
+        query: {
+          id: appState.user.id
+        },
+        transports: ['websocket'], upgrade: false
+      });
+      const userIO = socketioclient.connect(`${APIRoute}/chat`, {
+        query: {
+          id: appState.user.id,
+          name: appState.user.name,
+          email: appState.user.email
+        }
+      });
 
-    initializeDefaultSocketListeners({ io: defaultIO, dispatch });
-    initializeUserSocketListeners({ io: userIO, dispatch });
-    dispatch({ type: 'SOCKETIO_UPDATE', userIO, defaultIO }); // Can be accessed by action.type & action.io in the reducer
-    dispatch({
-      type: 'CURRENT_USER_UPDATE',
-      currentUser: {
-        id: appState.user.id,
-        name: appState.user.name,
-        image: appState.user.image,
-        active: true
-      }
-    });
-
-    // Fetch chatrooms
-    fetchChatrooms(appState.user.id);
-  }, []);
+      initializeDefaultSocketListeners({ io: defaultIO, dispatch });
+      initializeUserSocketListeners({ io: userIO, dispatch });
+      dispatch({ type: 'SOCKETIO_UPDATE', userIO, defaultIO }); // Can be accessed by action.type & action.io in the reducer
+      dispatch({
+        type: 'CURRENT_USER_UPDATE',
+        currentUser: {
+          id: appState.user.id,
+          name: appState.user.name,
+          image: appState.user.image,
+          active: true
+        }
+      });
+    }
+  }, [appState.user.isLoggedIn]);
 
   useEffect(() => {
-    async function updateChatroomMessages(chatroomId) {
-      if (
-        chatState.chatroomsInfo[chatroomId] &&
-        chatState.chatroomsInfo[chatroomId].messages.length == 0) {
-        const chatroomMessages = await getData(`${APIRoute}/api/messages?chatroomId=${chatroomId}`);
-        const transformedMessages = chatroomMessages.map(message => {
-          return {
-            userId: message.userId,
-            message: message.message
-          }
-        });
-        dispatch({
-          type: 'CHATROOM_MESSAGES_UPDATE',
-          chatroomId: chatroomId,
-          messages: transformedMessages
-        });
-      }
-    }
-
-    updateChatroomMessages(chatState.currentChatroomId);
-
-    if (chatState.defaultIO) {
-      Object.keys(chatState.chatroomsInfo).forEach(chatroom => {
-        chatState.defaultIO && chatState.defaultIO.emit('user.getStatus', {
-          id: chatState.chatroomsInfo[chatroom].otherUserId
-        });
-      })
+    if (
+      chatState.chatroomsInfo[chatState.currentChatroomId] &&
+      chatState.chatroomsInfo[chatState.currentChatroomId].messages.length == 0
+    ) {
+      console.log('yeah');
+      chatState.userIO.emit(
+        'message.load',
+        {
+          id: chatState.currentChatroomId
+        },
+        0,
+        10
+      );
     }
   }, [chatState.currentChatroomId]);
 
-  const fetchChatrooms = async (userId) => {
-    const response = await fetch(`${APIRoute}/api/chatrooms?userId=${userId}`);
-    const results = await response.json();
 
-    if (results.length > 0) {
-      let allChatroomsInfo = {};
-      results.forEach((chatroom, index) => {
-        allChatroomsInfo[chatroom.chatroomId] = {
-          messages: [],
-          otherUser: {
-            id: chatroom.otherUserId,
-            name: chatroom.otherUserName,
-            image: chatroom.otherUserImage,
-            active: false,
-            tradingItem: {}
-          }
-        }
-      });
-
-      const firstChatroomMessages = await getData(`${APIRoute}/api/messages?chatroomId=${results[0].chatroomId}`);
-      allChatroomsInfo[results[0].chatroomId].messages = firstChatroomMessages.map(message => {
-        return {
-          userId: message.userId,
-          message: message.message
-        }
-      });
-
-      dispatch({
-        type: 'INITIAL_LOAD_CHATROOMS',
-        chatroomsInfo: {
-          ...allChatroomsInfo
-        },
-        currentChatroomId: results[0].chatroomId
-      });
-    }
-  }
   return (
     <ChatContext.Provider value={{ chatState, dispatch }}>
       {props.children}

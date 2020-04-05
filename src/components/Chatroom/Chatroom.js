@@ -56,6 +56,9 @@ const Chatroom = (props) => {
                   <span style={{
                     color: chatroom == chatState.currentChatroomId ? '#8771A5' : '#CCCCCC'
                   }}>{currentChatroom.otherUser.name}</span>
+                  <span style={{
+                    color: currentChatroom.otherUser.active ? '#6FCF97' : '#FF7E7E'
+                  }}>&nbsp;•</span>
                 </li>
               )
             })

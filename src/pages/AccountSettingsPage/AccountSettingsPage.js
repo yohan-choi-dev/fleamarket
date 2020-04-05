@@ -37,7 +37,10 @@ function AccountSettingsPage(props) {
 
   const fetchUserInformation = async (userId) => {
     const userInfo = await getData(`${APIRoute}/api/users/${userId}`);
-    setCurrentUser(userInfo[0]);
+    // TODO: Fix to add a separate route to get user's address.
+    setCurrentUser({
+      ...userInfo
+    });
   }
 
   useEffect(() => {
