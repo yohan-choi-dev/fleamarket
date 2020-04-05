@@ -47,7 +47,12 @@ function ItemInfo(props) {
           </div>
         </div>
         <div className="ItemInfo-contact-owner">
-          <Link to="/chatroom"><Button otherClassName="purple">Contact User</Button></Link>
+          <Link to={{
+            pathname: '/chatroom',
+            state: {
+              otherUser: item.owner
+            }
+          }}><Button otherClassName="purple">Contact User</Button></Link>
         </div>
       </div>
     </div>

@@ -1,39 +1,48 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
+import { useLocation } from 'react-router-dom';
 import './ChatroomPage.css';
-
-// Contexts
-import AppContext from '../../contexts/AppContext';
 
 // Components
 import Navigation from '../../components/Navigation/Navigation';
 import Footer from '../../components/Footer/Footer';
 import Chatroom from '../../components/Chatroom/Chatroom';
 
-// Utilities
-import APIRoute from '../../vars/api-routes';
-import { getData } from '../../utils/fetch-data';
+// Contexts
+import AppContext from '../../contexts/AppContext';
+import { ChatContext } from '../../contexts/ChatContext/ChatContext';
 
 function ChatroomPage(props) {
-  const { appState } = useContext(AppContext);
+  const location = useLocation();
+  let otherUser;
 
-  // States
-  const [chatrooms, setChatrooms] = useState([]);
-
-  // Effect
-  const fetchChatrooms = async (userId) => {
-    const response = await fetch(`${APIRoute}/api/chatrooms?userId=${userId}`);
-    const body = await response.json();
-    setChatrooms(body);
+  if (location.state) {
+    otherUser = location.state.otherUser;
   }
 
+  // Contexts
+  const { appState } = useContext(AppContext);
+  const { chatState, dispatch } = useContext(ChatContext);
+
   useEffect(() => {
-    fetchChatrooms(appState.user.id);
-  }, []);
+    chatState.chatIO && chatState.chatIO.emit('chat.get.list');
+    if (otherUser) {
+      // Page is visited from item's page or user's page
+      // Fetch chatrooms/users
+      if (chatState.chatIO) {
+        chatState.chatIO.emit('join', {
+          id: otherUser.id,
+          name: otherUser.name,
+          image: otherUser.image,
+          email: otherUser.email
+        });
+      }
+    }
+  }, [chatState.chatIO]);
 
   return (
     <div className="ChatroomPage">
       <Navigation />
-      <Chatroom chatrooms={chatrooms} />
+      <Chatroom />
       <Footer />
     </div>
   )

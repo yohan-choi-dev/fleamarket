@@ -4,11 +4,13 @@
 }
 
 .ChatroomContent-messages {
-  padding-top: 2.67rem;
+  margin-top: 2.67rem;
   padding-left: 2.78rem;
   padding-right: 2.78rem;
   height: 30rem;
-  overflow-y: scroll;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column-reverse;
   z-index: 6;
 }
 

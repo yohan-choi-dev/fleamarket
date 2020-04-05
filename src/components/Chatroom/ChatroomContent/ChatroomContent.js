@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import './ChatroomContent.css';
 
 // Components
@@ -10,28 +10,52 @@ import LabeledInputField from '../../LabeledInputField/LabeledInputField';
 import { getData } from '../../../utils/fetch-data';
 import APIRoute from '../../../vars/api-routes';
 
+// Contexts
+import { ChatContext } from '../../../contexts/ChatContext/ChatContext';
+
 function ChatroomContent(props) {
   const { chatroomId, loggedInUserId, loggedInUserName, otherUserId, otherUserName } = props;
-
-  const [messages, setMessages] = useState([]);
+  const messagesPanel = useRef(null);
+  // States
   const [replyMessage, setReplyMessage] = useState('');
 
-  // Effects
-  useEffect(() => {
-    fetchMessages(chatroomId);
-  }, [chatroomId]);
+  // Contexts
+  const { chatState, dispatch } = useContext(ChatContext);
 
-  // Actions
-  const fetchMessages = async (chatroomId) => {
-    const results = await getData(`${APIRoute}/api/messages?chatroomId=${chatroomId}`);
-    setMessages(results);
+  const sendMessage = async () => {
+    const message = replyMessage.trim();
+    setReplyMessage('');
+    const data = {
+      user: {
+        id: chatState.chatrooms[chatState.currentChatroomId].otherUser.id,
+        name: chatState.chatrooms[chatState.currentChatroomId].otherUser.name,
+        email: chatState.chatrooms[chatState.currentChatroomId].otherUser.email
+      },
+      from: loggedInUserId,
+      time: Date.now(),
+      message: message
+    }
+    chatState.chatIO.emit('message.update', data);
+    dispatch({
+      type: 'CHATROOM_MESSAGES_ADD',
+      payload: {
+        chatroomId: data.user.id,
+        userId: data.from,
+        message: data.message
+      }
+    });
   }
 
   return (
     <div className="ChatroomContent">
-      <div className="ChatroomContent-messages">
+      <button onClick={() => {
+        chatState.chatIO.emit('leave', {
+          id: chatState.chatrooms[chatState.currentChatroomId].otherUser.id
+        });
+      }}>Leave chat</button>
+      <div className="ChatroomContent-messages" ref={messagesPanel}>
         {
-          messages.map((message, index) => {
+          chatState.chatrooms[chatState.currentChatroomId] && chatState.chatrooms[chatState.currentChatroomId].messages.slice(0).reverse().map((message, index) => {
             const userName = message.userId == loggedInUserId ? loggedInUserName : otherUserName;
             return (
               <ChatMessage key={`ChatMessage-${index}`} byUser={message.userId == loggedInUserId} userName={userName} message={message.message} />
@@ -39,7 +63,10 @@ function ChatroomContent(props) {
           })
         }
       </div>
-      <div className="ChatroomContent-reply">
+      <form className="ChatroomContent-reply" onSubmit={(e) => {
+        e.preventDefault();
+        sendMessage();
+      }}>
         <LabeledInputField
           labeled={false}
           inputField={{
@@ -53,8 +80,9 @@ function ChatroomContent(props) {
             value: replyMessage
           }}
         />
-        <Button otherClassNames="purple">Reply</Button>
-      </div>
+        <Button type="submit" otherClassNames="purple">Reply</Button>
+      </form>
+
     </div>
   );
 }
