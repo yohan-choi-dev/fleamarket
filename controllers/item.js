@@ -61,7 +61,7 @@ exports.getItemById = async (req, res, next) => {
 
     let search_query = `
     SELECT  i.id, i.name as "name", i.description, i.createdAt, 
-            u.id as "userId", u.name as "userName" 
+            u.id as "userId", u.name as "userName", u.image as "userImage", u.email as "userEmail" 
     FROM Items i, Users u, UserItemBridges ui, ImageLinks il 
     WHERE ui.UserId = u.id AND ui.ItemId = i.id AND il.itemId = i.id AND i.hidden=0 AND i.id=${itemId} LIMIT 1;
   `
@@ -79,9 +79,10 @@ exports.getItemById = async (req, res, next) => {
         let itemImages = await sequelize.query(item_images_query, {
             type: sequelize.QueryTypes.SELECT
         })
+        //eslint-disable-next-line
         item[0].imageUrls = []
 
-        itemImages.forEach((image, index) => {
+        itemImages.forEach((image) => {
             item[0].imageUrls.push(image.url)
         })
 
@@ -188,8 +189,6 @@ exports.getItemsByUser = async (req, res, next) => {
     }
 }
 
-exports.getItemsByCategory = async (req, res, next) => {}
-
 exports.postItem = async (req, res, next) => {
     const userId = req.body.userId
     const name = req.body.name
@@ -224,11 +223,9 @@ exports.postItem = async (req, res, next) => {
         if (!err.statusCode) {
             err.statusCode = 500
         }
+        next()
     }
 }
-
-exports.patchItem = async (req, res, next) => {}
-exports.deleteItem = async (req, res, next) => {}
 
 exports.getItemsCount = async (req, res, next) => {
     const notOwned = req.query.notOwned

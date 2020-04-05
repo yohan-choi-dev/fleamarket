@@ -34,11 +34,12 @@ module.exports = (io, redis) => {
         })
 
         socket.on('leave', async (user) => {
+            console.log(`user ${user.id} left`)
             try {
                 socket.leave(user.id)
                 await redis.sremAsync(`connection=${socket.handshake.query.id}`, user.id)
                 await redis.sremAsync(`connection=${user.id}`, socket.handshake.query.id)
-                socket.on('leave.done', user)
+                socket.emit('leave.done', user)
             } catch (err) {
                 socket.emit('error', err)
                 console.error(err)
@@ -51,7 +52,7 @@ module.exports = (io, redis) => {
                 socket.join(user.id)
                 await redis.saddAsync(`connection=${socket.handshake.query.id}`, user.id)
                 await redis.saddAsync(`connection=${user.id}`, socket.handshake.query.id)
-                socket.on('join.done', user)
+                socket.emit('join.done', user)
             } catch (err) {
                 socket.emit('error', err)
                 console.error(err)
@@ -59,6 +60,8 @@ module.exports = (io, redis) => {
         })
 
         socket.on('message.update', async (data) => {
+            console.log('message.update: ', data)
+            console.log(socket.handshake.query.id)
             try {
                 await redis.lpushAsync(
                     `conversation=${socket.handshake.query.id}&${data.user.id}`,
@@ -111,10 +114,11 @@ module.exports = (io, redis) => {
                     rangeBy
                 )
                 // a user should see only their mesage lines.
-                socket.emit(
-                    'message.load.done',
-                    data.reverse().map((record) => JSON.parse(record))
-                )
+                const result = {
+                    userId: user.id,
+                    messages: data.reverse().map((record) => JSON.parse(record))
+                }
+                socket.emit('message.load.done', result)
             } catch (err) {
                 socket.emit('error', err)
                 console.error(err)
