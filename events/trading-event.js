@@ -46,7 +46,6 @@ module.exports = (io) => {
         })
 
         socket.on('trade.confirm.trading', async (itemA, itemB) => {
-            const results = []
             const result1 = await UserItemBridge.update(
                 { userId: itemA.userId },
                 {
@@ -63,10 +62,8 @@ module.exports = (io) => {
                     }
                 }
             )
-            results.push(result1)
-            results.push(result2)
 
-            io.to(itemA.userId).emit(results)
+            io.to(itemA.userId).emit([result1, result2])
         })
         socket.on('trade.request.cancel', async (tradeId) => {
             const result = await Trade.delete({
