@@ -7,11 +7,11 @@ const userB = {
     email: 'ychoi63@myseneca.ca'
 }
 
-const userC = {
-    id: '11',
-    name: 'william.to',
-    email: 'william.to@myseneca.ca'
-}
+// const userC = {
+//     id: '11',
+//     name: 'william.to',
+//     email: 'william.to@myseneca.ca'
+// }
 
 const userA = {
     id: '12',
@@ -55,11 +55,6 @@ const loadMessage = (socket, user, rangeFrom, rangeBy) => {
 
     socket.on('message.load.done', (data) => {
         console.log(typeof data)
-        let message
-        if (data != null) {
-          //  message = data[0].message
-        }
-        
         //console.log(message)
         if (Array.isArray(data)) {
             data.forEach((record) => {

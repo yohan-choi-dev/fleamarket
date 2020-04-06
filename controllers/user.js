@@ -2,20 +2,19 @@ const bcrypt = require('bcryptjs')
 const cryptoRandomString = require('crypto-random-string')
 
 const sequelize = require('../utils/database')
-const User = require('../models/user')
-const Token = require('../models/token')
+// const Token = require('../models/token')
 const MailService = require('../service/mail-service')
 
-const updateUserEmail = async (req, res, next) => {
-    const userId = req.params.userId
+const updateUserEmail = (req, res, next) => {
+    // const userId = req.params.userId
     const newEmail = req.body.newEmail
 
     try {
         const tokenString = cryptoRandomString({ length: 48, type: 'url-safe' })
-        const token = await Token.create({
-            token: tokenString,
-            UserId: userId
-        })
+        // const token = await Token.create({
+        //     token: tokenString,
+        //     UserId: userId
+        // })
 
         const domain = `http://myvmlab.senecacollege.ca:6761/api/users/confirm-email-update?newEmail=${newEmail}&token=${tokenString}`
 
@@ -145,9 +144,9 @@ const updateUserPassword = async (req, res, next) => {
 exports.getUserById = async (req, res, next) => {
     let userId = req.params.userId
     let search_query = `
-    SELECT u.id, u.name, u.description, u.email, image, liked, disliked, a.aptNumber, a.buildingNumber, a.streetNumber, a.streetName, a.city, a.province, a.postalCode, a.country
-    FROM Users u, Addresses a
-    WHERE u.id=${userId} AND u.addressId=a.id;
+    SELECT id, name, description, email, image, liked, disliked
+    FROM Users
+    WHERE id=${userId};
   `
     try {
         let results = await sequelize.query(search_query, {
