@@ -32,24 +32,43 @@ function Socket(io, url, user) {
     return this.io
 }
 
+function TradeStatus(status) {
+    this.status = status
+}
+
+const TRADE = Object.freeze({
+    DEFAULT: 0,
+    REQUEST_SENT_DONE: 1,
+    REQUEST_ACCPTED_DONE: 2,
+    REQUEST_CONFIRM_SENT: 3,
+    CONFIRM_TRADE: 4,
+    CANCEL_TRADE: 5
+})
+
+let status = new TradeStatus(TRADE.DEFAULT)
+
+function selectItem(socket, showTo, item) {
+    socket.emit('select.item', showTo, item)
+}
+
 function requestTrade(socket, user, item) {
-    socket.emit('user.request.trade', user, item)
+    if (status == TRADE.DEFAULT) socket.emit('user.request.trade.sent', user, item)
 }
 
 function acceptReqeustTrade(socket, user) {
-    socket.emit('user.request.accepted', user)
+    if (status == TRADE.REQUEST_SENT_DONE) socket.emit('user.request.trade.accepted', user)
 }
 
 function confirmRequest(socket, user) {
-    socket.emit('user.request.confirm', user)
+    if (status == TRADE.REQUEST_ACCEPT_DONE) socket.emit('user.request.confirm', user)
 }
 
-function confirmTrade(socket, user) {
-    socket.emit('user.confirm.trade', user)
+function confirmTrade(socket, itemA, itemB) {
+    if (status == TRADE.REQUEST_CONFIRM_SENT) socket.emit('user.confirm.trade', itemA, itemB)
 }
 
-function cancelTrade(socket, itemA, itemB) {
-    socket.emit('user.cancel.trade', itemA, itemB)
+function cancelTrade(socket, tradeId) {
+    if (status == TRADE.CANCEL) socket.emit('user.cancel.trade', tradeId)
 }
 
 const io = require('socket.io-client')
@@ -67,21 +86,42 @@ const itemB = new Item(200, 'Apple is best! Buy Apple!')
 const socket = new Socket(io, ROOT_URL, userA)
 const trade = new Socket(io, TRADE_URL, userA)
 
-trade.on('user.request.trade.done')
+trade.on('trade.status', (status_code) => (status = status_code))
 
-trade.on('user.request.trade.accepted.done')
+trade.on('user.request.trade.sent.done', (data) => {
+    console.log(data)
+})
 
-trade.on('user.request.confirm.sent')
+trade.on('user.request.trade.accepted.done', (data) => {
+    console.log(data)
+})
 
-trade.on('user.confirm.trade.done')
+trade.on('user.request.confirm.sent', (data) => {
+    console.log(data)
+})
 
-trade.on('user.cancel.trade.done')
+trade.on('user.confirm.trade.done', (data) => {
+    console.log(data)
+})
+
+trade.on('user.cancel.trade.done', (data) => {
+    console.log(data)
+})
+
+trade.on('error', (error) => {
+    console.error(error)
+})
+
+let tradeId = null
 
 const initTrading = (user) => {
     const input = process.stdin
     input.setEncoding('utf-8')
     input.on('data', (message) => {
         switch (message.trim()) {
+            case 'selectItem':
+                selectItem(trade, userB, itemA)
+                break
             case 'requestTrade':
                 console.log('requestTrade')
                 requestTrade(trade, userA, itemA)
@@ -96,11 +136,11 @@ const initTrading = (user) => {
                 break
             case 'confirmTrade':
                 console.log('confirmTrade')
-                confirmTrade(trade, userA)
+                confirmTrade(trade, itemA, itemB)
                 break
             case 'cancelTrade':
                 console.log('cancelTrade')
-                cancelTrade(trade, itemA, itemB)
+                cancelTrade(trade, tradeId)
                 break
             default:
                 console.log('default')
