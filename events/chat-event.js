@@ -33,6 +33,35 @@ module.exports = (io, redis) => {
             }
         })
 
+        socket.on('chat.get.list.and.join', async (user) => {
+            try {
+                socket.join(user.id)
+                await redis.saddAsync(`connection=${socket.handshake.query.id}`, user.id)
+                await redis.saddAsync(`connection=${user.id}`, socket.handshake.query.id)
+                const userIds = await redis.smembersAsync(`connection=${socket.handshake.query.id}`)
+                if (Array.isArray(userIds)) {
+                    userIds.forEach((userId) => {
+                        socket.join(userId)
+                        console.log(`${socket.handshake.query.id} is connected to ${userId}`)
+                    })
+                    socket.emit('chat.get.list.and.join.done', {
+                        userIds,
+                        newUserId: user.id
+                    })
+                } else {
+                    socket.join(userIds)
+                    console.log(`${socket.handshake.query.id} is connected to ${userIds}`)
+                    socket.emit('chat.get.list.and.join.done', {
+                        userIds,
+                        newUserId: user.id
+                    })
+                }
+            } catch (err) {
+                socket.emit('error', err)
+                console.error(err)
+            }
+        })
+
         socket.on('leave', async (user) => {
             console.log(`user ${user.id} left`)
             try {

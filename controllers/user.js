@@ -214,3 +214,35 @@ exports.confirmEmailUpdate = async (req, res, next) => {
         next(err)
     }
 }
+
+exports.updateUserProfile = async (req, res, next) => {
+    const userId = req.params.userId
+    const newName = req.body.newName
+    const newDescription = req.body.newDescription
+    const newProfileImage = req.files
+
+    const setNewName = `name='${newName}'`
+    const setNewDescription = `description='${newDescription}'`
+    let setNewProfilePhoto = ''
+    if (newProfileImage.length > 0) {
+        setNewProfilePhoto = `,image='${newProfileImage[0].path}'`
+    }
+
+    let search_query = `
+        UPDATE Users
+        SET ${setNewName}, ${setNewDescription} ${setNewProfilePhoto}
+        WHERE id=${userId}
+    `
+    try {
+        let results = await sequelize.query(search_query, {
+            type: sequelize.QueryTypes.UPDATE
+        })
+
+        res.status(200).send(results[0])
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500
+        }
+        next(err)
+    }
+}
