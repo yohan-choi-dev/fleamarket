@@ -13,12 +13,6 @@ const userB = {
     email: 'william.to@myseneca.ca'
 }
 
-const userC = {
-    id: '12',
-    name: 'april.wing',
-    email: 'april.wing@myseneca.ca'
-}
-
 userA.to = userB.id
 userB.to = userA.id
 
@@ -52,14 +46,13 @@ const join = (socket, user) => {
 }
 const loadMessage = (socket, user, rangeFrom, rangeBy) => {
     socket.emit('message.load', user, rangeFrom, rangeBy)
-
     socket.on('message.load.done', (data) => {
         console.log(typeof data)
         const message = data[0].message
         console.log(message)
         if (Array.isArray(data)) {
             data.forEach((record) => {
-                console.log(`${record.user.name}: ${record.message.toString('utf-8')}`)
+                console.log(`${record.from.name}: ${record.message.toString('utf-8')}`)
             })
         }
     })
@@ -86,7 +79,7 @@ chat.on('connect', () => {
     console.log(chat.id.toString('utf-8'))
 })
 
-chat.on('chat.list.connected.user', (user) => {
+chat.on('chat.list.connectead.user', (user) => {
     console.log(user)
 })
 

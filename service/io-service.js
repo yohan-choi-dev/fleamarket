@@ -1,5 +1,6 @@
 const ioFactory = require('../factories/io-factory')
 const chatEvent = require('../events/chat-event')
+const tradeEvent = require('../events/trading-event')
 
 module.exports = (server, database) => {
     const io = ioFactory(server, database)
@@ -39,4 +40,5 @@ module.exports = (server, database) => {
     })
 
     chatEvent(io, redis)
+    tradeEvent(io)
 }
