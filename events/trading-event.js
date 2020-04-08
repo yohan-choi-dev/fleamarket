@@ -31,6 +31,7 @@ module.exports = (io) => {
         socket.on('user.request.trade.sent', async (user, item) => {
             try {
                 console.log('user.request.trade')
+                console.log('user.request.trade')
                 console.log(user)
                 console.log(item)
 
@@ -99,7 +100,6 @@ module.exports = (io) => {
                 console.log(result2)
                 trade.to(itemA.userId).emit('status', TRADE.COMPLETE_TRADE)
                 trade.to(itemA.userId).emit('status', TRADE.COMPLETE_TRADE)
-
 
                 trade.to(itemA.userId).emit('user.confirm.trade.done', [result1, result2])
                 trade.to(itemB.userId).emit('user.confirm.trade.done', [result1, result2])
