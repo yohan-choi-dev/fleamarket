@@ -17,9 +17,10 @@ import AboutUsPage from '../../pages/AboutUsPage/AboutUsPage';
 import PrivacyPolicyPage from '../../pages/PrivacyPolicyPage/PrivacyPolicyPage';
 
 // Components
-import CreateAccountModal from '../../components/CreateAccountModal/CreateAccountModal';
-import LoginModal from '../../components/LoginModal/LoginModal';
-import PrivateRoute from '../../components/PrivateRoute/PrivateRoute';
+import CreateAccountModal from '../CreateAccountModal/CreateAccountModal';
+import LoginModal from '../LoginModal/LoginModal';
+import UpdateUserProfile from '../UpdateUserProfile/UpdateUserProfile';
+import PrivateRoute from '../PrivateRoute/PrivateRoute';
 
 // Contexts
 import { ChatContextProvider } from '../../contexts/ChatContext/ChatContext';
@@ -83,6 +84,7 @@ function ModalSwitch() {
 
       {background && <Route path="/signup" children={<CreateAccountModal />} />}
       {background && <Route path="/login" children={<LoginModal />} />}
+      {background && <Route path="/profile-edit" children={<UpdateUserProfile />} />}
     </div>
   );
 }
