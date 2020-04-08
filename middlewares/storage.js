@@ -36,3 +36,5 @@ exports.storageMiddleware = multer({
         fileSize: 1024 * 1024 * 1024 * 5
     }
 }).array('image', 8)
+
+exports.fileStorage = fileStorage
