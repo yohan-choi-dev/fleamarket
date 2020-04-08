@@ -225,8 +225,6 @@ exports.updateUserProfile = async (req, res, next) => {
     const setNewDescription = `description='${newDescription}'`
     let setNewProfilePhoto = ''
     if (newProfileImage.length > 0) {
-        console.log('oui')
-        console.log(newProfileImage[0].path)
         setNewProfilePhoto = `,image='${newProfileImage[0].path}'`
     }
 
