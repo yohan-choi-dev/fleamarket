@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './ChangeEmail.css';
 import Button from '../../Button/Button';
 
 import ValidatedInputField from '../../ValidatedInputField/ValidatedInputField';
@@ -26,7 +27,7 @@ function ChangeEmail(props) {
   }
 
   return (
-    <ul>
+    <ul className="ChangeEmail">
       <li>
         <b>Current: </b>{profile.email}
       </li>

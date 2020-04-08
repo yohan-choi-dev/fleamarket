@@ -24,16 +24,23 @@ function ChatroomPage(props) {
   const { chatState, dispatch } = useContext(ChatContext);
 
   useEffect(() => {
-    chatState.chatIO && chatState.chatIO.emit('chat.get.list');
+
     if (otherUser) {
       // Page is visited from item's page or user's page
       // Fetch chatrooms/users
       if (chatState.chatIO) {
-        chatState.chatIO.emit('join', {
-          id: otherUser.id,
-          name: otherUser.name,
-          image: otherUser.image,
-          email: otherUser.email
+        chatState.chatIO.emit('chat.get.list.and.join', {
+          id: otherUser.id
+        });
+      }
+    } else {
+      chatState.chatIO && chatState.chatIO.emit('chat.get.list');
+      if (Object.keys(chatState.chatrooms).length > 0) {
+        dispatch({
+          type: 'CURRENT_CHATROOM_ID_UPDATE',
+          payload: {
+            chatroomId: Object.keys(chatState.chatrooms)[0]
+          }
         });
       }
     }

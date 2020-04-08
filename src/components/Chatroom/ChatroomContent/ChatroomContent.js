@@ -48,11 +48,11 @@ function ChatroomContent(props) {
 
   return (
     <div className="ChatroomContent">
-      <button onClick={() => {
+      {/* <button onClick={() => {
         chatState.chatIO.emit('leave', {
           id: chatState.chatrooms[chatState.currentChatroomId].otherUser.id
         });
-      }}>Leave chat</button>
+      }}>Leave chat</button> */}
       <div className="ChatroomContent-messages" ref={messagesPanel}>
         {
           chatState.chatrooms[chatState.currentChatroomId] && chatState.chatrooms[chatState.currentChatroomId].messages.slice(0).reverse().map((message, index) => {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import './ItemInfo.css';
 
@@ -6,9 +6,14 @@ import './ItemInfo.css';
 import LikeButton from '../LikeButton/LikeButton';
 import Button from '../Button/Button';
 
+// Contexts
+import AppContext from '../../contexts/AppContext';
+
 function ItemInfo(props) {
   const { item } = props;
   const [currentImage, setCurrentImage] = useState(0);
+
+  const { appState } = useContext(AppContext);
 
   const selectCurrentImage = (index) => {
     setCurrentImage(index);
@@ -43,17 +48,19 @@ function ItemInfo(props) {
           <p className="ItemInfo-item-owner-name">by <Link to="/">{item.owner.name}</Link></p>
           <p className="ItemInfo-item-description">{item.description}</p>
           <div className="ItemInfo-ratings">
-            <LikeButton className="" /> {item.ratings}
+            <LikeButton /> {item.ratings}
           </div>
         </div>
-        <div className="ItemInfo-contact-owner">
-          <Link to={{
-            pathname: '/chatroom',
-            state: {
-              otherUser: item.owner
-            }
-          }}><Button otherClassName="purple">Contact User</Button></Link>
-        </div>
+        {
+          item.owner.id != appState.user.id && <div className="ItemInfo-contact-owner">
+            <Link to={{
+              pathname: '/chatroom',
+              state: {
+                otherUser: item.owner
+              }
+            }}><Button otherClassName="purple">Contact User</Button></Link>
+          </div>
+        }
       </div>
     </div>
   );

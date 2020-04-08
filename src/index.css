@@ -49,6 +49,7 @@ body {
 }
 
 .container {
+  max-width: 2560px;
   padding-left: 9rem;
   padding-right: 9rem;
 }
