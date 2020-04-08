@@ -9,6 +9,7 @@
   height: 40rem;
   box-shadow: var(--shadow-card-normal);
   border-radius: 0.83rem;
+  overflow: hidden;
 }
 
 .Chatroom-Nav {

@@ -92,7 +92,7 @@ function ChangePassword(props) {
         />
       </div>
       <Button otherClassNames={'purple'} handleOnClick={updatePassword}>
-        Update Email
+        Update Password
       </Button>
     </div>
   );

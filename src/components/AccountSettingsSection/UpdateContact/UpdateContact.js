@@ -51,7 +51,7 @@ function UpdateContact(props) {
             onChangeHandler: (event) => {
               setUserAddress({
                 ...userAddress,
-                newApartmentNumber: event.target.value
+                newApartmentNumber: parseInt(event.target.value)
               })
             },
             value: userAddress.newApartmentNumber,

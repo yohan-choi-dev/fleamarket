@@ -20,7 +20,6 @@
 }
 
 .AccountSettingsSection-view .Button {
-  margin-top: 1.3rem;
   background-color: var(--purple);
   color: #fff;
   transition: all 200ms ease-in-out;

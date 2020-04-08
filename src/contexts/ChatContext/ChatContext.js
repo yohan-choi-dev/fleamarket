@@ -171,6 +171,47 @@ function initializeUserSocketListeners({ io, dispatch }) {
     }
   });
 
+  io.on('chat.get.list.and.join.done', async (data) => {
+    const chatrooms = data.userIds.map(userId => parseInt(userId));
+    // Fetch all users' information
+    let usersInfo = [];
+
+    await asyncForEach(chatrooms, async (userId) => {
+      const response = await fetch(`${APIRoute}/api/users/${userId}`);
+      const userInfo = await response.json();
+      usersInfo.push(userInfo);
+    })
+
+    if (usersInfo.length > 0) {
+      let allChatroomsInfo = {};
+      usersInfo.forEach((user, index) => {
+        if (user.id != io.query.id) {
+          allChatroomsInfo[user.id] = {
+            messages: [],
+            otherUser: {
+              id: user.id,
+              name: user.name,
+              image: user.image,
+              email: user.email,
+              active: false,
+              tradingItem: {}
+            }
+          }
+        }
+      });
+
+      dispatch({
+        type: 'CHATROOMS_UPDATE',
+        payload: {
+          chatrooms: {
+            ...allChatroomsInfo
+          },
+          currentChatroomId: data.newUserId
+        }
+      });
+    }
+  });
+
   io.on('disconnect', () => {
 
   });
@@ -198,7 +239,7 @@ function ChatContextProvider(props) {
         transports: ['websocket'], upgrade: false
       });
 
-      const chatIO = socketioclient.connect(`${APIRoute}/chat`, {
+      const chatIO = socketioclient(`${APIRoute}/chat`, {
         query: {
           id: appState.user.id,
           name: appState.user.name,
@@ -235,7 +276,6 @@ function ChatContextProvider(props) {
   }, [chatState.currentChatroomId]);
 
   useEffect(() => {
-    chatState.chatIO && chatState.chatIO.emit('chat.get.list');
     if (Object.keys(chatState.chatrooms).length > 0) {
       Object.keys(chatState.chatrooms).forEach(userId => {
         chatState.defaultIO.emit('user.getStatus', { id: userId });
