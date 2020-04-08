@@ -5,6 +5,7 @@ import './ChatroomContent.css';
 import ChatMessage from '../ChatMessage/ChatMessage';
 import Button from '../../Button/Button';
 import LabeledInputField from '../../LabeledInputField/LabeledInputField';
+import DropdownButton from '../../DropdownButton/DropdownButton';
 
 // Utilities
 import { getData } from '../../../utils/fetch-data';
@@ -16,8 +17,11 @@ import { ChatContext } from '../../../contexts/ChatContext/ChatContext';
 function ChatroomContent(props) {
   const { chatroomId, loggedInUserId, loggedInUserName, otherUserId, otherUserName } = props;
   const messagesPanel = useRef(null);
+
   // States
   const [replyMessage, setReplyMessage] = useState('');
+  const [userItems, setUserItems] = useState([]);
+  const [tradingItem, setTradingItem] = useState({});
 
   // Contexts
   const { chatState, dispatch } = useContext(ChatContext);
@@ -46,6 +50,31 @@ function ChatroomContent(props) {
     });
   }
 
+  const fetchUserItems = async (userId) => {
+    const allUserItems = await getData(`${APIRoute}/api/items?user=${userId}`);
+    const filteredResults = allUserItems.map((item) => {
+      return {
+        id: item.id,
+        name: item.name,
+        image: item.imageUrls[0]
+      }
+    });
+    setUserItems(filteredResults);
+  }
+
+  useEffect(() => {
+    fetchUserItems(loggedInUserId);
+  }, []);
+
+  useEffect(() => {
+    setTradingItem(userItems[0]);
+  }, [userItems]);
+
+  const selectTradingItem = (e) => {
+    const index = e.target.value;
+    setTradingItem(userItems[index]);
+  }
+
   return (
     <div className="ChatroomContent">
       {/* <button onClick={() => {
@@ -53,6 +82,20 @@ function ChatroomContent(props) {
           id: chatState.chatrooms[chatState.currentChatroomId].otherUser.id
         });
       }}>Leave chat</button> */}
+      <div className="ChatroomContent-trade">
+        <DropdownButton
+          options={userItems.map((item, index) => {
+            return {
+              value: index,
+              label: item.name
+            }
+          })}
+          onChangeHandler={selectTradingItem}
+        />
+        <Button otherClassNames="purple">
+          Trade with {otherUserName.split(' ')[0]}
+        </Button>
+      </div>
       <div className="ChatroomContent-messages" ref={messagesPanel}>
         {
           chatState.chatrooms[chatState.currentChatroomId] && chatState.chatrooms[chatState.currentChatroomId].messages.slice(0).reverse().map((message, index) => {
@@ -82,7 +125,6 @@ function ChatroomContent(props) {
         />
         <Button type="submit" otherClassNames="purple">Reply</Button>
       </form>
-
     </div>
   );
 }

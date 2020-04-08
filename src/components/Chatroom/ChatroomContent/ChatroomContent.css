@@ -3,8 +3,19 @@
   position: relative;
 }
 
+.ChatroomContent-trade {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 2rem;
+  background-color: var(--light-grey);
+}
+
+.ChatroomContent-trade .DropdownButton {
+  margin-right: 2rem;
+}
+
 .ChatroomContent-messages {
-  margin-top: 2.67rem;
   padding-left: 2.78rem;
   padding-right: 2.78rem;
   height: 30rem;

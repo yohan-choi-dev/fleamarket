@@ -235,8 +235,7 @@ function ChatContextProvider(props) {
       const defaultIO = socketioclient(`${APIRoute}/`, {
         query: {
           id: appState.user.id
-        },
-        transports: ['websocket'], upgrade: false
+        }
       });
 
       const chatIO = socketioclient(`${APIRoute}/chat`, {
