@@ -42,7 +42,8 @@ const TRADE = Object.freeze({
     REQUEST_ACCPTED_DONE: 2,
     REQUEST_CONFIRM_SENT: 3,
     CONFIRM_TRADE: 4,
-    CANCEL_TRADE: 5
+    CANCEL_TRADE: 5,
+    COMPLETE_TRADE: 6
 })
 
 let status = new TradeStatus(TRADE.DEFAULT)
@@ -112,6 +113,10 @@ trade.on('error', (error) => {
     console.error(error)
 })
 
+trade.on('select.item.done', (id, item) => {
+    console.error(`user ${id} choose ${item.name}`)
+})
+
 let tradeId = null
 
 const initTrading = (user) => {
@@ -120,19 +125,19 @@ const initTrading = (user) => {
     input.on('data', (message) => {
         switch (message.trim()) {
             case 'selectItem':
-                selectItem(trade, userB, itemA)
+                selectItem(trade, user.id, itemA)
                 break
             case 'requestTrade':
                 console.log('requestTrade')
-                requestTrade(trade, userA, itemA)
+                requestTrade(trade, user, itemA)
                 break
             case 'acceptRequestTrade':
                 console.log('acceptRequestTrade')
-                acceptReqeustTrade(trade, userA)
+                acceptReqeustTrade(trade, user)
                 break
             case 'confirmRequest':
                 console.log('confirmRequest')
-                confirmRequest(trade, userA)
+                confirmRequest(trade, user)
                 break
             case 'confirmTrade':
                 console.log('confirmTrade')

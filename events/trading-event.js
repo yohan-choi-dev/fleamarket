@@ -25,7 +25,7 @@ module.exports = (io) => {
         }
 
         socket.on('select.item', (showTo, item) => {
-            trade.to(showTo).emit(showTo, item)
+            trade.to(showTo).emit('select.item.done', socket.handshake.query.id, item)
         })
 
         socket.on('user.request.trade.sent', async (user, item) => {
