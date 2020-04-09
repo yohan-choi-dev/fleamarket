@@ -4,6 +4,7 @@ import './Navigation.css';
 
 // Contexts
 import AppContext from '../../contexts/AppContext';
+import { ChatContext } from '../../contexts/ChatContext/ChatContext';
 
 // Components
 import Logo from '../../components/Logo/Logo';
@@ -12,11 +13,22 @@ import ProfileDropdown from '../../components/ProfileDropdown/ProfileDropdown';
 function Navigation(props) {
   let location = useLocation();
   const { appState } = useContext(AppContext);
+  const { chatState } = useContext(ChatContext);
 
   const rightNavigations = appState.user.isLoggedIn ? (
-    <li>
-      <ProfileDropdown>{appState.user.name}</ProfileDropdown>
-    </li>
+    <React.Fragment>
+      <li className="Navigation-links-list-item">
+        <ProfileDropdown>{appState.user.name}</ProfileDropdown>
+      </li>
+      <li
+        className="Navigation-links-list-item Navigation-notifications"
+        style={{
+          backgroundColor: chatState.notifications.length > 0 ? '#ff7e7e' : '#dfdfdf'
+        }}
+      >
+        {chatState.notifications.length}
+      </li>
+    </React.Fragment>
   ) : (
       <React.Fragment>
         <li className="Navigation-links-list-item">

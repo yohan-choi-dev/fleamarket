@@ -5,7 +5,8 @@ const ChatContextReducer = (state, action) => {
       return {
         ...state,
         defaultIO: payload.defaultIO,
-        chatIO: payload.chatIO
+        chatIO: payload.chatIO,
+        tradeIO: payload.tradeIO
       }
     }
     case 'CURRENT_CHATROOM_ID_UPDATE': {
@@ -66,9 +67,6 @@ const ChatContextReducer = (state, action) => {
         ...updatedState
       };
     }
-    case 'CURRENT_USER_UPDATE': {
-
-    }
     case 'OTHER_USER_ACTIVE_UPDATE': {
       const active = payload.active;
       const userId = payload.userId;
@@ -83,6 +81,70 @@ const ChatContextReducer = (state, action) => {
       return {
         ...updatedState
       };
+    }
+    case 'USER_TRADING_ITEM_UPDATE': {
+      const { tradingItem } = payload;
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          tradingItem: {
+            id: tradingItem.id,
+            name: tradingItem.name,
+            image: tradingItem.image,
+            confirmed: false
+          }
+        }
+      }
+    }
+    case 'USER_TRADING_ITEM_STATUS_UPDATE': {
+      const { confirmedStatus } = payload;
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          tradingItem: {
+            ...state.user.tradingItem,
+            confirmed: confirmedStatus
+          }
+        }
+      }
+    }
+    case 'OTHER_USER_TRADING_ITEM_UPDATE': {
+      const { tradingItem, chatroomId } = payload;
+      const updatedState = {
+        ...state
+      }
+      if (state.chatrooms[chatroomId]) {
+        updatedState.chatrooms[chatroomId].otherUser.tradingItem = {
+          id: tradingItem.id,
+          name: tradingItem.name,
+          image: tradingItem.image,
+          confirmed: false
+        }
+      }
+      console.log(updatedState);
+      return {
+        ...updatedState
+      }
+    }
+    case 'OTHER_USER_TRADING_ITEM_STATUS_UPDATE': {
+      const { confirmedStatus } = payload;
+      const updatedState = {
+        ...state
+      }
+      updatedState.chatrooms[updatedState.currentChatroomId].otherUser.tradingItem.confirmed = confirmedStatus;
+      return {
+        ...updatedState
+      }
+    }
+    case 'TRADING_COMPLETION_UPDATE': {
+      const { completionStatus } = payload;
+
+      return {
+        ...state,
+        currentTradeCompleted: completionStatus
+      }
     }
     default:
       return state;

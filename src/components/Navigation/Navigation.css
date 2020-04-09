@@ -30,3 +30,15 @@
 .Navigation-links ul li a:hover {
   color: var(--purple);
 }
+
+.Navigation-links .Navigation-notifications {
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 1.5rem;
+  color: #fff;
+  background-color: var(--lightcoral);
+  cursor: pointer;
+  user-select: none;
+}
