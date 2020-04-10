@@ -286,7 +286,8 @@ function ChatContextProvider(props) {
       const defaultIO = socketioclient(`${APIRoute}/`, {
         query: {
           id: appState.user.id
-        }
+        },
+        transports: ['websocket'], upgrade: false
       });
 
       const chatIO = socketioclient(`${APIRoute}/chat`, {
@@ -294,13 +295,15 @@ function ChatContextProvider(props) {
           id: appState.user.id,
           name: appState.user.name,
           email: appState.user.email
-        }
+        },
+        transports: ['websocket'], upgrade: false
       });
 
       const tradeIO = socketioclient(`${APIRoute}/trade`, {
         query: {
           id: appState.user.id
-        }
+        },
+        transports: ['websocket'], upgrade: false
       });
 
       initializeDefaultSocketListeners({ io: defaultIO, dispatch });
