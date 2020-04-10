@@ -42,3 +42,12 @@
 .Button.red:hover {
   background-color: var(--lightcoral-dark);
 }
+
+.Button.green {
+  background-color: #86C993;
+  color: #fff;
+}
+
+.Button.green:hover {
+  background-color: #5B8D65;
+}

@@ -3,8 +3,28 @@
   position: relative;
 }
 
+.ChatroomContent-trade-bar {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 2rem;
+  position: relative;
+  z-index: 6;
+  background-color: var(--light-grey);
+}
+
+.ChatroomContent-trade .DropdownButton {
+  margin-right: 2rem;
+}
+
+.ChatroomContent-trade .DropdownButton option {
+  font-weight: 600;
+  color: var(--purple);
+  text-decoration: underline;
+}
+
 .ChatroomContent-messages {
-  margin-top: 2.67rem;
   padding-left: 2.78rem;
   padding-right: 2.78rem;
   height: 30rem;
@@ -18,7 +38,7 @@
   position: absolute;
   bottom: 0;
   width: 98%;
-  padding-top: 2.67rem;
+  padding-top: 1.67rem;
   padding-left: 2.78rem;
   padding-right: 2.78rem;
   padding-bottom: 2rem;
@@ -34,4 +54,59 @@
 
 .ChatroomContent-reply .LabeledInputField input {
   width: 95%;
+}
+
+.ChatroomContent-trade-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding-top: 5rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: var(--light-grey);
+  z-index: 5;
+}
+
+.ChatroomContent-trade-panel hr {
+  height: 6rem;
+  width: 2px;
+  background-color: var(--grey);
+  border: none;
+}
+
+.ChatroomContent-trade-panel > div {
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+}
+
+.ChatroomContent-trade-panel > div p {
+  font-family: var(--font-family-global);
+  font-weight: 600;
+}
+
+.ChatroomContent-trade-panel-status-message {
+  padding-top: 1.8rem;
+}
+
+.ChatroomContent-trade-panel-current-user
+.ChatroomContent-trade-panel-status-message {
+  color: var(--purple);
+}
+
+.ChatroomContent-trade-panel-user-item-image {
+  width: 14rem;
+  height: 14rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 15px;
+  background-color: pink;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.ChatroomContent-trade-panel-status-message-confirmed {
+  padding-top: 1.8rem;
+  color: #86C993;
 }

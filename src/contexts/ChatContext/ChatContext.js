@@ -44,6 +44,7 @@ const ChatContext = React.createContext();
  *         tradingItem: {
  *           id: 23,
  *           name: 'Pods',
+ *           image: 'image/wiehfowe',
  *           confirmed: [true|false]
  *         }
  *       }
@@ -217,13 +218,63 @@ function initializeUserSocketListeners({ io, dispatch }) {
   });
 }
 
+function initializeTradeSocketListeners({ io, dispatch }) {
+  io.on('select.item.done', (fromUserId, item) => {
+    console.log(fromUserId);
+    console.log(item);
+    dispatch({
+      type: 'OTHER_USER_TRADING_ITEM_UPDATE',
+      payload: {
+        chatroomId: fromUserId,
+        tradingItem: {
+          id: item.id,
+          name: item.name,
+          image: item.image
+        }
+      }
+    })
+  });
+
+  io.on('user.request.confirm.sent', () => {
+    dispatch({
+      type: 'USER_TRADING_ITEM_STATUS_UPDATE',
+      payload: {
+        confirmedStatus: true
+      }
+    });
+  });
+
+  io.on('status', (status) => {
+    if (status == 3) {
+      dispatch({
+        type: 'OTHER_USER_TRADING_ITEM_STATUS_UPDATE',
+        payload: {
+          confirmedStatus: true
+        }
+      })
+    }
+  })
+
+  io.on('user.confirm.trade.done', () => {
+    dispatch({
+      type: 'TRADING_COMPLETION_UPDATE',
+      payload: {
+        completionStatus: true
+      }
+    })
+  })
+}
+
 function ChatContextProvider(props) {
   const defaultState = {
     rootIO: null,
     chatIO: null,
+    tradeIO: null,
     user: {},
     chatrooms: {},
-    currentChatroomId: 0
+    currentChatroomId: 0,
+    notifications: [],
+    currentTradeCompleted: false
   };
 
   const { appState } = useContext(AppContext);
@@ -244,16 +295,27 @@ function ChatContextProvider(props) {
           id: appState.user.id,
           name: appState.user.name,
           email: appState.user.email
-        }
+        },
+        transports: ['websocket'], upgrade: false
+      });
+
+      const tradeIO = socketioclient(`${APIRoute}/trade`, {
+        query: {
+          id: appState.user.id
+        },
+        transports: ['websocket'], upgrade: false
       });
 
       initializeDefaultSocketListeners({ io: defaultIO, dispatch });
       initializeUserSocketListeners({ io: chatIO, dispatch });
+      initializeTradeSocketListeners({ io: tradeIO, dispatch });
+
       dispatch({
         type: 'SOCKET_UPDATE',
         payload: {
           chatIO,
-          defaultIO
+          defaultIO,
+          tradeIO
         }
       });
     }
@@ -272,6 +334,12 @@ function ChatContextProvider(props) {
         0,
         10
       );
+      dispatch({
+        type: 'TRADING_COMPLETION_UPDATE',
+        payload: {
+          completionStatus: false
+        }
+      });
     }
   }, [chatState.currentChatroomId]);
 
