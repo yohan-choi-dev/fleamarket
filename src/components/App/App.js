@@ -24,6 +24,7 @@ import PrivateRoute from '../PrivateRoute/PrivateRoute';
 
 // Contexts
 import { ChatContextProvider } from '../../contexts/ChatContext/ChatContext';
+import OtherProfilePage from '../../pages/OtherProfilePage/OtherProfilePage';
 
 function ModalSwitch() {
   let location = useLocation();
@@ -56,11 +57,11 @@ function ModalSwitch() {
           <Route path="/" exact={true}>
             <HomePage />
           </Route>
-          <Route path="/item/:itemId">
-            <ItemPage />
-          </Route>
 
-          <PrivateRoute path="/profile">
+          <PrivateRoute path="/profile/:userId">
+            <OtherProfilePage />
+          </PrivateRoute>
+          <PrivateRoute path="/profile" exact={true}>
             <ProfilePage />
           </PrivateRoute>
           <PrivateRoute path="/account-settings">

@@ -69,6 +69,7 @@ function initializeDefaultSocketListeners({ io, dispatch }) {
   });
 
   io.on('user-disconnected', (data) => {
+    console.log(`User ${data} disconnected.`);
     dispatch({
       type: 'OTHER_USER_ACTIVE_UPDATE',
       payload: {
@@ -283,7 +284,7 @@ function ChatContextProvider(props) {
   useEffect(() => {
     if (appState.user.isLoggedIn) {
       // Initialize IO
-      const defaultIO = socketioclient(`${APIRoute}/`, {
+      const rootIO = socketioclient(`${APIRoute}/`, {
         query: {
           id: appState.user.id
         },
@@ -306,7 +307,7 @@ function ChatContextProvider(props) {
         transports: ['websocket'], upgrade: false
       });
 
-      initializeDefaultSocketListeners({ io: defaultIO, dispatch });
+      initializeDefaultSocketListeners({ io: rootIO, dispatch });
       initializeUserSocketListeners({ io: chatIO, dispatch });
       initializeTradeSocketListeners({ io: tradeIO, dispatch });
 
@@ -314,7 +315,7 @@ function ChatContextProvider(props) {
         type: 'SOCKET_UPDATE',
         payload: {
           chatIO,
-          defaultIO,
+          rootIO,
           tradeIO
         }
       });
@@ -332,7 +333,7 @@ function ChatContextProvider(props) {
           id: chatState.currentChatroomId
         },
         0,
-        10
+        1000
       );
       dispatch({
         type: 'TRADING_COMPLETION_UPDATE',
@@ -346,7 +347,7 @@ function ChatContextProvider(props) {
   useEffect(() => {
     if (Object.keys(chatState.chatrooms).length > 0) {
       Object.keys(chatState.chatrooms).forEach(userId => {
-        chatState.defaultIO.emit('user.getStatus', { id: userId });
+        chatState.rootIO.emit('user.getStatus', { id: userId });
       })
     }
   }, [chatState.chatrooms]);
