@@ -13,9 +13,8 @@ const ChatMessage = (props) => {
     }}>
       <div className="ChatMessage-container">
         <div className="ChatMessage-user-info">
-          {/* <img className="ChatMessage-user-image" src={`${APIRoute}/${userImage}`} /> */}
           <div className="ChatMessage-user-image" style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80')`
+            backgroundImage: `url('${APIRoute}/${userImage}')`
           }}></div>
           <p className="ChatMessage-user-name">{userName}</p>
         </div>

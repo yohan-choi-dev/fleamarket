@@ -4,7 +4,7 @@ const ChatContextReducer = (state, action) => {
     case 'SOCKET_UPDATE': {
       return {
         ...state,
-        defaultIO: payload.defaultIO,
+        rootIO: payload.rootIO,
         chatIO: payload.chatIO,
         tradeIO: payload.tradeIO
       }

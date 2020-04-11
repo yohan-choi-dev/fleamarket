@@ -20,14 +20,14 @@ function Navigation(props) {
       <li className="Navigation-links-list-item">
         <ProfileDropdown>{appState.user.name}</ProfileDropdown>
       </li>
-      <li
+      {/* <li
         className="Navigation-links-list-item Navigation-notifications"
         style={{
           backgroundColor: chatState.notifications.length > 0 ? '#ff7e7e' : '#dfdfdf'
         }}
       >
         {chatState.notifications.length}
-      </li>
+      </li> */}
     </React.Fragment>
   ) : (
       <React.Fragment>

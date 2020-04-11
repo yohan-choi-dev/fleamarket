@@ -45,7 +45,7 @@ function ItemInfo(props) {
       <div className="ItemInfo-item-details">
         <div className="ItemInfo-item-details-info">
           <h2 className="ItemInfo-item-name">{item.name}</h2>
-          <p className="ItemInfo-item-owner-name">by <Link to="/">{item.owner.name}</Link></p>
+          <p className="ItemInfo-item-owner-name">by <Link to={`/profile/${item.owner.id}`}>{item.owner.name}</Link></p>
           <p className="ItemInfo-item-description">{item.description}</p>
           <div className="ItemInfo-ratings">
             <LikeButton /> {item.ratings}
