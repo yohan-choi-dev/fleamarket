@@ -187,7 +187,7 @@ function UpdateContact(props) {
         />
       </div>
       <Button otherClassName="purple" handleOnClick={updateUserAddress}>
-        Update Email
+        Update Address
       </Button>
     </div>
   );

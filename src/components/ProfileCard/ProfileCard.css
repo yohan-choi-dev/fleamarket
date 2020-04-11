@@ -52,3 +52,9 @@
     color: var(--black);
     line-height: var(--font-line-height);
 }
+
+@media (max-width: 960px) {
+    .ProfileCard-profile-info a {
+        margin-top: 2rem;
+    }
+}

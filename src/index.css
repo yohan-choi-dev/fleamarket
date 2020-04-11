@@ -82,7 +82,7 @@ body {
 
 @media (max-width: 640px) {
   :root {
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .container {
@@ -91,5 +91,8 @@ body {
   }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 320px) {
+  :root {
+    font-size: 10px;
+  }
 }
