@@ -162,7 +162,7 @@ function HomePage(props) {
         <SearchBox />
       </header>
       <main className="HomePage-main-section container">
-        <h2 className="HomePage-main-section-heading">Items close to you</h2>
+        <h2 className="HomePage-main-section-heading">All items</h2>
         <div className="HomePage-main-section-items">
           {
             items.map((item, index) => (
