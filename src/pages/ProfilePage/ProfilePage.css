@@ -56,4 +56,8 @@
   .ProfilePage-user-items-content {
     grid-template-columns: 1fr;
   }
+
+  .ProfileCard-actions {
+    padding-top: 2rem;
+  }
 }

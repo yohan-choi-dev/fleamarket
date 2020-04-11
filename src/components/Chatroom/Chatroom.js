@@ -29,7 +29,7 @@ const Chatroom = (props) => {
   return (
     <div className="Chatroom container">
       <div className="Chatroom-wrapper">
-        <ul className="Chatroom-Nav">
+        <ul id="Chatroom-chat-list" className="Chatroom-Nav">
           {
             chatState.chatrooms && Object.keys(chatState.chatrooms).map(chatroom => {
               let currentChatroom = chatState.chatrooms[chatroom];

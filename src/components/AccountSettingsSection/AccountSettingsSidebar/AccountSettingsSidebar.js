@@ -9,9 +9,7 @@ function AccountSettingsSidebar(props) {
   const menuItems = [
     'Overview',
     'Change Email',
-    'Change Password',
-    'Update Contact Information',
-    'Delete Account'
+    'Change Password'
   ];
 
   const menuItemComponents = menuItems.map((item, index) => {

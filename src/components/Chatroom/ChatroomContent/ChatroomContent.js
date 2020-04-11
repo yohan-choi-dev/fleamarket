@@ -1,4 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
+import { ReactComponent as StarIcon } from '@fortawesome/fontawesome-free/svgs/regular/star.svg';
+import { ReactComponent as StarIconSolid } from '@fortawesome/fontawesome-free/svgs/solid/star.svg';
+import { ReactComponent as BarsIcon } from '@fortawesome/fontawesome-free/svgs/solid/bars.svg';
 import './ChatroomContent.css';
 
 // Components
@@ -12,6 +15,7 @@ import { getData } from '../../../utils/fetch-data';
 import APIRoute from '../../../vars/api-routes';
 
 // Contexts
+import AppContext from '../../../contexts/AppContext';
 import { ChatContext } from '../../../contexts/ChatContext/ChatContext';
 
 function ChatroomContent(props) {
@@ -22,9 +26,11 @@ function ChatroomContent(props) {
   const [replyMessage, setReplyMessage] = useState('');
   const [userItems, setUserItems] = useState([]);
   const [openTrade, setOpenTrade] = useState(false);
+  const [currentRating, setCurrentRating] = useState(0);
 
   // Contexts
   const { chatState, dispatch } = useContext(ChatContext);
+  const { appState } = useContext(AppContext);
 
   const sendMessage = async () => {
     const message = replyMessage.trim();
@@ -100,30 +106,32 @@ function ChatroomContent(props) {
   }
 
   const confirmTrade = () => {
-    chatState.tradeIO.emit(
-      'user.request.confirm',
-      {
-        id: otherUserId
-      }
-    );
-
-    if (
-      chatState.chatrooms[chatState.currentChatroomId].otherUser.tradingItem &&
-      chatState.chatrooms[chatState.currentChatroomId].otherUser.tradingItem.confirmed
-    ) {
+    if (!chatState.user.tradingItem.confirmed) {
       chatState.tradeIO.emit(
-        'user.confirm.trade',
-        { // item 1
-          userId: loggedInUserId,
-          id: chatState.user.tradingItem.id,
-          name: chatState.user.tradingItem.name
-        },
-        { // item 2
-          userId: chatState.chatrooms[chatState.currentChatroomId].otherUser.id,
-          id: chatState.chatrooms[chatState.currentChatroomId].otherUser.tradingItem.id,
-          name: chatState.chatrooms[chatState.currentChatroomId].otherUser.tradingItem.name
+        'user.request.confirm',
+        {
+          id: otherUserId
         }
       );
+
+      if (
+        chatState.chatrooms[chatState.currentChatroomId].otherUser.tradingItem &&
+        chatState.chatrooms[chatState.currentChatroomId].otherUser.tradingItem.confirmed
+      ) {
+        chatState.tradeIO.emit(
+          'user.confirm.trade',
+          { // item 1
+            userId: loggedInUserId,
+            id: chatState.user.tradingItem.id,
+            name: chatState.user.tradingItem.name
+          },
+          { // item 2
+            userId: chatState.chatrooms[chatState.currentChatroomId].otherUser.id,
+            id: chatState.chatrooms[chatState.currentChatroomId].otherUser.tradingItem.id,
+            name: chatState.chatrooms[chatState.currentChatroomId].otherUser.tradingItem.name
+          }
+        );
+      }
     }
   }
 
@@ -143,11 +151,17 @@ function ChatroomContent(props) {
     });
   }
 
-  const completeTrade = () => {
-
+  const submitRating = () => {
+    console.log(currentRating);
   }
 
-  console.log(chatState.currentTradeCompleted)
+  const ratingMessages = [
+    <p>It was not what<br />I expected</p>,
+    <p>I wish it could be<br />better</p>,
+    <p>It went<br />okay!</p>,
+    <p>It went really<br />well!</p>,
+    <p>It was super<br />smooth!</p>
+  ]
 
   return (
     <div className="ChatroomContent">
@@ -157,41 +171,77 @@ function ChatroomContent(props) {
         });
       }}>Leave chat</button> */}
       <div className="ChatroomContent-trade">
-        <div className="ChatroomContent-trade-bar">
-          {userItems.length > 0 && <DropdownButton
-            options={userItems.map((item, index) => {
-              return {
-                value: index,
-                label: item.name
-              }
-            })}
-            onChangeHandler={selectTradingItem}
-          />}
-          {
-            (chatState.currentTradeCompleted ?
-              (
-                <Button handleOnClick={completeTrade} otherClassNames="green">
-                  Complete Trade
-                </Button>
-              ) :
-              (
-                openTrade ?
-                  (
-                    <Button handleOnClick={confirmTrade} otherClassNames="purple">
-                      Confirm Trade
-                    </Button>
-                  ) :
-                  (
-                    <Button handleOnClick={startTrade} otherClassNames="purple">
-                      Trade with {otherUserName.split(' ')[0]}
-                    </Button>
-                  )
-              )
-            )
+        {
+          chatState.currentTradeCompleted ?
+            <div className="Trading-rating-box">
+              <h2>Trade completed successfully!</h2>
+              <p>How did the trade go for you?</p>
+              <div className="Trading-rating-box-stars">
+                {
+                  ratingMessages.map((ratingMessage, index) => {
+                    return (
+                      <div className="Trading-rating-box-star" key={`Rating-${index}`}>
+                        {
+                          currentRating < index + 1 ?
+                            <StarIcon onClick={() => {
+                              setCurrentRating(index + 1);
+                            }} /> :
+                            <StarIconSolid onClick={() => {
+                              setCurrentRating(index + 1);
+                            }} />
+                        }
+                        {ratingMessage}
+                      </div>
+                    )
+                  })
+                }
+              </div>
+              <div className="Trading-rating-box-actions">
+                <Button handleOnClick={submitRating} otherClassNames="purple">Done</Button>
+              </div>
+            </div>
+            : ''
+        }
+        <div className="ChatroomContent-hamburger" onClick={() => {
+          const currentListStyle = window.getComputedStyle(document.getElementById('Chatroom-chat-list')).display;
+          if (currentListStyle == 'none') {
+            document.getElementById('Chatroom-chat-list').style.display = 'block';
+          } else {
+            document.getElementById('Chatroom-chat-list').style.display = 'none';
           }
+        }}>
+          <BarsIcon />
         </div>
         {
-          openTrade &&
+          !chatState.currentTradeCompleted &&
+          <div className="ChatroomContent-trade-bar">
+
+            {userItems.length > 0 && <DropdownButton
+              options={userItems.map((item, index) => {
+                return {
+                  value: index,
+                  label: item.name
+                }
+              })}
+              onChangeHandler={selectTradingItem}
+            />}
+            {
+              openTrade ?
+                (
+                  <Button handleOnClick={confirmTrade} otherClassNames="purple">
+                    Confirm Trade
+                  </Button>
+                ) :
+                (
+                  <Button handleOnClick={startTrade} otherClassNames="purple">
+                    Trade with {otherUserName.split(' ')[0]}
+                  </Button>
+                )
+            }
+          </div>
+        }
+        {
+          !chatState.currentTradeCompleted && openTrade &&
           <div className="ChatroomContent-trade-panel">
             <div className="ChatroomContent-trade-panel-other-user">
               <h2 className="ChatroomContent-trade-panel-heading">{otherUserName}'s Item</h2>
@@ -238,7 +288,16 @@ function ChatroomContent(props) {
           chatState.chatrooms[chatState.currentChatroomId] && chatState.chatrooms[chatState.currentChatroomId].messages.slice(0).reverse().map((message, index) => {
             const userName = message.userId == loggedInUserId ? loggedInUserName : otherUserName;
             return (
-              <ChatMessage key={`ChatMessage-${index}`} byUser={message.userId == loggedInUserId} userName={userName} message={message.message} />
+              <ChatMessage
+                key={`ChatMessage-${index}`}
+                byUser={message.userId == loggedInUserId}
+                userImage={
+                  message.userId == loggedInUserId ?
+                    appState.user.image :
+                    chatState.chatrooms[chatState.currentChatroomId].otherUser.image
+                }
+                userName={userName} message={message.message}
+              />
             );
           })
         }

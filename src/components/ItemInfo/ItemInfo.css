@@ -31,8 +31,8 @@
 .ItemInfo-images-thumbnails .ItemInfo-images-thumbnail-small {
   width: 5.33rem;
   height: 5.33rem;
-  background-size: contain;
-  
+  background-size: cover;
+  background-repeat: no-repeat;
   margin-bottom: 1.8rem;
   box-shadow: var(--shadow-card-normal);
   transition: box-shadow 200ms ease-in-out;
@@ -74,4 +74,42 @@
 
 .ItemInfo-ratings .LikeButton {
   padding-right: 0.44rem;
+}
+
+@media (max-width: 960px) {
+  .ItemInfo {
+    flex-direction: column;
+  }
+
+  .ItemInfo-images {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .ItemInfo-images-thumbnails {
+    width: auto;
+    display: flex;
+    padding-top: 2rem;
+  }
+
+  .ItemInfo-images-thumbnails li {
+    margin-right: 1.4rem;
+  }
+
+  .ItemInfo-images-big {
+    width: 100%;
+    background-size: cover;
+  }
+
+  .ItemInfo-item-details {
+    padding-left: 0;
+  }
+
+  .ItemInfo-item-details .ItemInfo-ratings {
+    padding-top: 1rem;
+  }
+
+  .ItemInfo-item-details .ItemInfo-contact-owner {
+    padding-top: 2rem;
+  }
 }
