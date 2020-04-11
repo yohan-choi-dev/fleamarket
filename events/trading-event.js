@@ -1,6 +1,7 @@
 const crytpoRandomString = require('crypto-random-string')
 const UserItemBridge = require('../models/user-item-bridge')
 const Trade = require('../models/trade')
+const Item = require('../models/item')
 
 const TRADE = Object.freeze({
     DEFAULT: 0,
@@ -87,11 +88,29 @@ module.exports = (io) => {
                     }
                 )
 
+                await Item.update(
+                    { hidden: true },
+                    {
+                        where: {
+                            id: itemB.id
+                        }
+                    }
+                )
+
                 const result2 = await UserItemBridge.update(
                     { UserId: itemB.userId },
                     {
                         where: {
                             ItemId: itemA.id
+                        }
+                    }
+                )
+
+                await Item.update(
+                    { hidden: true },
+                    {
+                        where: {
+                            id: itemA.id
                         }
                     }
                 )
