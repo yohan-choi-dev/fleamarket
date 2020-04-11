@@ -2,6 +2,7 @@ const { DataTypes } = require('sequelize')
 const sequelize = require('../utils/database')
 
 const User = require('../models/user')
+const Item = require('../models/item')
 
 const Trade = sequelize.define('trade', {
     id: {
@@ -23,5 +24,7 @@ const Trade = sequelize.define('trade', {
 
 User.hasMany(Trade, { as: 'userA' })
 User.hasMany(Trade, { as: 'userB' })
+Item.hasMany(Trade, { as: 'itemA' })
+Item.hasMany(Trade, { as: 'itemB' })
 
 module.exports = Trade
