@@ -97,6 +97,31 @@ exports.getItemById = async (req, res, next) => {
     }
 }
 
+exports.getTradedItemById = async (req, res, next) => {
+    let itemId = req.params.itemId
+
+    let search_query = `
+    SELECT  i.id, i.name as "name", i.description, i.createdAt, 
+            u.id as "userId", u.name as "userName", u.image as "userImage", u.email as "userEmail" 
+    FROM Items i, Users u, UserItemBridges ui, ImageLinks il 
+    WHERE ui.UserId = u.id AND ui.ItemId = i.id AND il.itemId = i.id AND i.hidden=1 AND i.id=${itemId} LIMIT 1;
+  `
+    try {
+        let item = await sequelize.query(search_query, {
+            type: sequelize.QueryTypes.SELECT
+        })
+
+        const result = item[0]
+
+        res.status(200).send(JSON.stringify(result))
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500
+        }
+        next(err)
+    }
+}
+
 exports.getItemsByName = async (req, res, next) => {
     let name = req.query.name
     let notOwned = req.query.notOwned

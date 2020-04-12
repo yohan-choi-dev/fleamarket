@@ -19,6 +19,10 @@ router.get('/count', (req, res, next) => {
     itemController.getItemsCount(req, res, next)
 })
 
+router.get('/traded/:itemId', (req, res, next) => {
+    itemController.getTradedItemById(req, res, next)
+})
+
 router.get('/:itemId', (req, res, next) => {
     itemController.getItemById(req, res, next)
 })
