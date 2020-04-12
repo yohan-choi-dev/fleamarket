@@ -54,7 +54,33 @@
 }
 
 @media (max-width: 960px) {
+    .ProfileCard-profile-info {
+        width: 100%;
+    }
+
     .ProfileCard-profile-info a {
         margin-top: 2rem;
+    }
+
+    .ProfileCard-content {
+    flex-direction: column;
+    align-items: center;
+    }
+
+    .ProfileCard-profile-image {
+    width: 100%;
+    }
+
+    .ProfileCard-profile-info {
+    padding-top: 2rem;
+    text-align: center;
+    }
+    
+    .ProfileCard-profile-description {
+    width: 100%;
+    }
+
+    .ProfileCard-actions {
+    padding-top: 2rem;
     }
 }

@@ -35,29 +35,7 @@
 }
 
 @media (max-width: 960px) {
-  .ProfilePage .ProfileCard-content {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .ProfilePage .ProfileCard-profile-image {
-    width: 100%;
-  }
-
-  .ProfilePage .ProfileCard-profile-info {
-    padding-top: 2rem;
-    text-align: center;
-  }
-  
-  .ProfilePage .ProfileCard-profile-description {
-    width: 100%;
-  }
-
   .ProfilePage-user-items-content {
     grid-template-columns: 1fr;
-  }
-
-  .ProfileCard-actions {
-    padding-top: 2rem;
   }
 }

@@ -262,7 +262,7 @@ function initializeTradeSocketListeners({ io, dispatch }) {
       payload: {
         completionStatus: true
       }
-    })
+    });
   })
 }
 
@@ -351,6 +351,18 @@ function ChatContextProvider(props) {
       })
     }
   }, [chatState.chatrooms]);
+
+  useEffect(() => {
+    if (chatState.currentTradeCompleted) {
+      chatState.tradeIO.emit(
+        'user.request.trade.sent',
+        {
+          id: chatState.currentChatroomId
+        },
+        chatState.chatrooms[chatState.currentChatroomId].otherUser.tradingItem.id
+      );
+    }
+  }, [chatState.currentTradeCompleted]);
 
 
   return (

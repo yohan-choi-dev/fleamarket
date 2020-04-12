@@ -214,8 +214,7 @@ function ChatroomContent(props) {
         </div>
         {
           !chatState.currentTradeCompleted &&
-          <div className="ChatroomContent-trade-bar">
-
+          userItems.length > 0 && <div className="ChatroomContent-trade-bar">
             {userItems.length > 0 && <DropdownButton
               options={userItems.map((item, index) => {
                 return {
@@ -248,7 +247,7 @@ function ChatroomContent(props) {
               <div
                 className="ChatroomContent-trade-panel-user-item-image"
                 style={{
-                  backgroundImage: `url('http://myvmlab.senecacollege.ca:6761/${chatState.chatrooms[chatState.currentChatroomId].otherUser.tradingItem.image}')`
+                  backgroundImage: `url('${APIRoute}/${chatState.chatrooms[chatState.currentChatroomId].otherUser.tradingItem.image}')`
                 }}
               >
               </div>
@@ -267,7 +266,7 @@ function ChatroomContent(props) {
               <div
                 className="ChatroomContent-trade-panel-user-item-image"
                 style={{
-                  backgroundImage: `url('http://myvmlab.senecacollege.ca:6761/${chatState.user.tradingItem.image}')`
+                  backgroundImage: `url('${APIRoute}/${chatState.user.tradingItem.image}')`
                 }}
               >
               </div>

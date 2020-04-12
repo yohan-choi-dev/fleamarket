@@ -2,9 +2,20 @@
   display: none;
 }
 
+.ChatroomPage-nothing-msg {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.ChatroomPage-nothing-msg span {
+  font-size: 3rem;
+}
+
 @media (max-width: 960px) {
   .ChatroomPage .Chatroom-Nav {
-    width: 40%;
+    width: 60%;
     height: 100%;
     padding-top: 5rem;
     position: absolute;
