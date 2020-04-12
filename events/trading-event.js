@@ -84,6 +84,27 @@ module.exports = (io) => {
             console.log(itemA)
             console.log(itemB)
             try {
+                // Added by William **
+                // This is for increasing the number of trade
+                // when trading is successful
+                const userA = await User.find({
+                    where: { id: itemA.userId }
+                })
+                const userB = await User.find({
+                    where: { id: itemB.userId }
+                })
+                let numTradeA = await userA.get().numTrade
+                let numTradeB = await userB.get().numTrade
+                numTradeA++
+                numTradeB++
+                await userA.update({
+                    numTrade: numTradeA
+                })
+                await userB.update({
+                    numTrade: numTradeB
+                })
+                // Added by William **
+
                 const result1 = await UserItemBridge.update(
                     { UserId: itemA.userId },
                     {
@@ -162,14 +183,11 @@ module.exports = (io) => {
                 })
                 const totalRate = await user.get().totalRate
                 const numTrade = await user.get().numTrade
-                if (!rate && !totalRate) {
-                    await user.update({
-                        totalRate: totalRate + rate
-                    })
-                    await user.update({
-                        numTrade: numTrade + 1
-                    })
-                }
+                // if (!rate && !totalRate) {
+                await user.update({
+                    totalRate: (totalRate + rate) / numTrade
+                })
+                // }
             } catch (err) {
                 socket.emit('error', err)
                 console.error(err)
