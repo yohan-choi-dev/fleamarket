@@ -27,7 +27,7 @@ const User = sequelize.define(
         },
         description: DataTypes.STRING,
         image: DataTypes.STRING,
-        totalRate: DataTypes.INTEGER,
+        totalRate: DataTypes.DOUBLE,
         numTrade: DataTypes.INTEGER,
         isActivated: {
             type: DataTypes.BOOLEAN,

@@ -22,9 +22,9 @@ const Trade = sequelize.define('trade', {
     }
 })
 
-User.hasMany(Trade, { as: 'userA' })
-User.hasMany(Trade, { as: 'userB' })
-Item.hasMany(Trade, { as: 'itemA' })
-Item.hasMany(Trade, { as: 'itemB' })
+Trade.belongsTo(User, { as: 'userA' })
+Trade.belongsTo(User, { as: 'userB' })
+Trade.belongsTo(Item, { as: 'itemA' })
+Trade.belongsTo(Item, { as: 'itemB' })
 
 module.exports = Trade

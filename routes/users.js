@@ -14,6 +14,6 @@ router.get('/:userId', (req, res, next) => {
 
 router.put('/:userId', userController.updateAccountSettings)
 
-router.get('/user/rate:userId', userController.getUserRate)
+router.get('/user/rate/:userId', userController.getUserRate)
 
 module.exports = router

@@ -41,10 +41,11 @@ module.exports = (io) => {
 
                 const result = await Trade.create({
                     token: crytpoRandomString({ length: 20 }),
-                    userA: userA.id,
-                    userB: userB.id,
-                    itemA: itemA.id,
-                    itemB: itemB.id
+                    userAId: userA.id,
+                    userBId: userB.id,
+                    itemAId: itemA.id,
+                    itemBId: itemB.id,
+                    createdAt: Date.now()
                 })
                 trade.to(userA.id).emit('status', TRADE.REQUEST_SENT_DONE)
                 trade.to(userA.id).emit('user.request.trade.sent.done', {
@@ -84,6 +85,27 @@ module.exports = (io) => {
             console.log(itemA)
             console.log(itemB)
             try {
+                // Added by William **
+                // This is for increasing the number of trade
+                // when trading is successful
+                const userA = await User.findOne({
+                    where: { id: itemA.userId }
+                })
+                const userB = await User.findOne({
+                    where: { id: itemB.userId }
+                })
+                let numTradeA = await userA.get().numTrade
+                let numTradeB = await userB.get().numTrade
+                numTradeA++
+                numTradeB++
+                await userA.update({
+                    numTrade: numTradeA
+                })
+                await userB.update({
+                    numTrade: numTradeB
+                })
+                // Added by William **
+
                 const result1 = await UserItemBridge.update(
                     { UserId: itemA.userId },
                     {
@@ -155,21 +177,18 @@ module.exports = (io) => {
         socket.on('rate.user', async (user, rate) => {
             console.log('rate.user')
             try {
-                const user = await User.find({
+                const foundUser = await User.findOne({
                     where: {
                         id: user.id
                     }
                 })
-                const totalRate = await user.get().totalRate
-                const numTrade = await user.get().numTrade
-                if (!rate && !totalRate) {
-                    await user.update({
-                        totalRate: totalRate + rate
-                    })
-                    await user.update({
-                        numTrade: numTrade + 1
-                    })
-                }
+                const totalRate = await foundUser.get().totalRate
+                const numTrade = await foundUser.get().numTrade
+                // if (!rate && !totalRate) {
+                await foundUser.update({
+                    totalRate: (totalRate + rate) / numTrade
+                })
+                // }
             } catch (err) {
                 socket.emit('error', err)
                 console.error(err)
