@@ -357,9 +357,17 @@ function ChatContextProvider(props) {
       chatState.tradeIO.emit(
         'user.request.trade.sent',
         {
+          id: appState.user.id
+        },
+        {
           id: chatState.currentChatroomId
         },
-        chatState.chatrooms[chatState.currentChatroomId].otherUser.tradingItem.id
+        {
+          id: chatState.user.tradingItem.id
+        },
+        {
+          id: chatState.chatrooms[chatState.currentChatroomId].otherUser.tradingItem.id
+        }
       );
     }
   }, [chatState.currentTradeCompleted]);

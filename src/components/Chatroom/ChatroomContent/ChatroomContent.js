@@ -145,7 +145,7 @@ function ChatroomContent(props) {
         tradingItem: {
           id: userItems[index].id,
           name: userItems[index].name,
-          image: userItems[index].image,
+          image: userItems[index].image
         }
       }
     });
@@ -153,6 +153,24 @@ function ChatroomContent(props) {
 
   const submitRating = () => {
     console.log(currentRating);
+    const filteredItems = userItems.filter((item, index) => {
+      return item.id != chatState.user.tradingItem.id;
+    });
+    setUserItems(filteredItems);
+    chatState.tradeIO.emit(
+      'rate.user',
+      {
+        id: chatState.currentChatroomId
+      },
+      currentRating
+    );
+    dispatch({
+      type: 'TRADING_COMPLETION_UPDATE',
+      payload: {
+        completionStatus: false
+      }
+    });
+    setOpenTrade(false);
   }
 
   const ratingMessages = [

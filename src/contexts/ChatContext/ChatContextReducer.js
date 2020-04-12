@@ -123,7 +123,6 @@ const ChatContextReducer = (state, action) => {
           confirmed: false
         }
       }
-      console.log(updatedState);
       return {
         ...updatedState
       }
