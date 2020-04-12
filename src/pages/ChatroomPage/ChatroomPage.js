@@ -49,7 +49,15 @@ function ChatroomPage(props) {
   return (
     <div className="ChatroomPage">
       <Navigation />
-      <Chatroom />
+      {
+        Object.keys(chatState.chatrooms).length > 0
+          ? <Chatroom />
+          : <div className="ChatroomPage-nothing-msg container">
+            <span>😭</span><br />
+            Oops! Seems like you have not contacted anyone yet.<br />
+              Click "Contact User" on a user's profile or an item's page to start trading!
+            </div>
+      }
       <Footer />
     </div>
   )

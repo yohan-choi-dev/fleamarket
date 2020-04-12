@@ -17,7 +17,7 @@ function Overview(props) {
         <li>
           <strong>Description: </strong>{profile.description}
         </li>
-        <Link className="Overview-transaction-history" to="/transaction-history">
+        <Link className="Overview-transaction-history" to="/trading-history">
           Trading History
         </Link>
       </ul>

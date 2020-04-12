@@ -73,7 +73,7 @@ function ModalSwitch() {
           <PrivateRoute path="/chatroom">
             <ChatroomPage />
           </PrivateRoute>
-          <PrivateRoute path="/transaction-history">
+          <PrivateRoute path="/trading-history">
             <TransactionPage />
           </PrivateRoute>
         </ChatContextProvider>

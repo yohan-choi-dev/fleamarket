@@ -9,12 +9,17 @@
 }
 
 .TransactionHistory-table {
+  padding: 2rem 1.5rem;
   width: 100%;
   font-size: 1rem;
   font-weight: normal;
   border-radius: 0.83rem;
   box-shadow: var(--shadow-card-normal);
   align-content: center;
+}
+
+.Traded-item {
+  line-height: 2.4rem;
 }
 
 .Complete {
