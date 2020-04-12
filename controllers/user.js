@@ -4,6 +4,7 @@ const cryptoRandomString = require('crypto-random-string')
 const sequelize = require('../utils/database')
 // const Token = require('../models/token')
 const MailService = require('../service/mail-service')
+const User = require('../models/user')
 
 const updateUserEmail = (req, res, next) => {
     // const userId = req.params.userId
@@ -243,6 +244,18 @@ exports.updateUserProfile = async (req, res, next) => {
         if (!err.statusCode) {
             err.statusCode = 500
         }
+        next(err)
+    }
+}
+
+exports.getUserRate = async (req, res, next) => {
+    try {
+        const userId = req.params.userId
+        const user = await User.find({ where: { id: userId } })
+        const totalRate = await user.get().totalRate
+        const numTrade = await user.get().numTrade
+        res.status(200).send(totalRate / numTrade)
+    } catch (err) {
         next(err)
     }
 }
