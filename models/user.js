@@ -27,8 +27,8 @@ const User = sequelize.define(
         },
         description: DataTypes.STRING,
         image: DataTypes.STRING,
-        liked: DataTypes.INTEGER,
-        disliked: DataTypes.INTEGER,
+        totalRate: DataTypes.INTEGER,
+        numTrade: DataTypes.INTEGER,
         isActivated: {
             type: DataTypes.BOOLEAN,
             allowNull: false,

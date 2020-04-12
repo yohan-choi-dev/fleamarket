@@ -2,6 +2,7 @@ const crytpoRandomString = require('crypto-random-string')
 const UserItemBridge = require('../models/user-item-bridge')
 const Trade = require('../models/trade')
 const Item = require('../models/item')
+const User = require('../models/user')
 
 const TRADE = Object.freeze({
     DEFAULT: 0,
@@ -29,22 +30,26 @@ module.exports = (io) => {
             trade.to(showTo).emit('select.item.done', socket.handshake.query.id, item)
         })
 
-        socket.on('user.request.trade.sent', async (user, item) => {
+        socket.on('user.request.trade.sent', async (userA, userB, itemA, itemB) => {
             try {
                 console.log('user.request.trade')
                 console.log('user.request.trade')
-                console.log(user)
-                console.log(item)
+                console.log(userA)
+                console.log(userB)
+                console.log(itemA)
+                console.log(itemB)
 
                 const result = await Trade.create({
                     token: crytpoRandomString({ length: 20 }),
-                    userA: socket.handshake.query.id,
-                    userB: user.id
+                    userA: userA.id,
+                    userB: userB.id,
+                    itemA: itemA.id,
+                    itemB: itemB.id
                 })
-                trade.to(user.id).emit('status', TRADE.REQUEST_SENT_DONE)
-                trade.to(user.id).emit('user.request.trade.sent.done', {
+                trade.to(userA.id).emit('status', TRADE.REQUEST_SENT_DONE)
+                trade.to(userA.id).emit('user.request.trade.sent.done', {
                     user: socket.handshake.query.id,
-                    item: item,
+                    item: itemA,
                     room: result.get().token
                 })
             } catch (err) {
@@ -141,6 +146,30 @@ module.exports = (io) => {
                     .emit('user.cancel.trade.done', 'cancelled request')
                 trade.to(result.get().userA.id).emit('status', TRADE.CANCEL_TRADE)
                 trade.to(result.get().userB.id).emit('status', TRADE.CANCEL_TRADE)
+            } catch (err) {
+                socket.emit('error', err)
+                console.error(err)
+            }
+        })
+
+        socket.on('rate.user', async (user, rate) => {
+            console.log('rate.user')
+            try {
+                const user = await User.find({
+                    where: {
+                        id: user.id
+                    }
+                })
+                const totalRate = await user.get().totalRate
+                const numTrade = await user.get().numTrade
+                if (!rate && !totalRate) {
+                    await user.update({
+                        totalRate: totalRate + rate
+                    })
+                    await user.update({
+                        numTrade: numTrade + 1
+                    })
+                }
             } catch (err) {
                 socket.emit('error', err)
                 console.error(err)
