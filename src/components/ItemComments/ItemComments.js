@@ -11,7 +11,7 @@ import LabeledInputField from '../LabeledInputField/LabeledInputField';
 
 // Utilities
 import APIRoute from '../../vars/api-routes';
-import { postData } from '../../utils/fetch-data';
+import { postData, getData } from '../../utils/fetch-data';
 
 const ItemComments = (props) => {
   const { comments, itemId } = props;
@@ -33,10 +33,12 @@ const ItemComments = (props) => {
       );
 
       if (response.status >= 200 && response.status <= 299) {
+        const ratings = await getData(`${APIRoute}/api/users/rate/${appState.user.id}`);
         const currentComments = [...comments, {
           userName: appState.user.name,
           userDescription: appState.user.description,
           userImage: appState.user.image,
+          userRatings: ratings.rate,
           commentContent: userComment
         }];
 
@@ -66,7 +68,7 @@ const ItemComments = (props) => {
                   <img src={`${APIRoute}/${c.userImage}`} />
                   <div className="ItemComments-Detail-User-Info">
                     <p className="ItemComments-Detail-User-Name">{c.userName}</p>
-                    <p className="ItemComments-Detail-User-Rating"><span role="img"><StarIcon className="StarIcon" /></span>4.5</p>
+                    <p className="ItemComments-Detail-User-Rating"><span role="img"><StarIcon className="StarIcon" /></span>{c.userRatings}</p>
                   </div>
                 </div>
                 <p className="ItemComments-Detail-Content">{c.commentContent}</p>
