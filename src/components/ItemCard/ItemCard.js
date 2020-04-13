@@ -27,6 +27,16 @@ function ItemCard(props) {
           <p className="ItemCard-item-description">{item.description}</p>
         </div>
       </Link>
+      {
+        appState.user.isLoggedIn && showLikeButton ?
+          (
+            <div className="ItemCard-LikeButton-container">
+              <LikeButton onClickHandler={() => {
+                showLikeButton && handleLikedStatus(!item.favoritedByUser, item.id);
+              }} likedByUser={item.favoritedByUser} />
+            </div>
+          ) : ''
+      }
     </div>
   );
 }
