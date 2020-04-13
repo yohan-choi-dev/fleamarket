@@ -251,10 +251,10 @@ exports.updateUserProfile = async (req, res, next) => {
 exports.getUserRate = async (req, res, next) => {
     try {
         const userId = req.params.userId
-        const user = await User.find({ where: { id: userId } })
+        const user = await User.findOne({ where: { id: userId } })
         const totalRate = await user.get().totalRate
         const numTrade = await user.get().numTrade
-        res.status(200).send(totalRate / numTrade)
+        res.status(200).send(JSON.stringify({ rate: totalRate / numTrade }))
     } catch (err) {
         next(err)
     }

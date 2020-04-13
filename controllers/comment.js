@@ -6,7 +6,7 @@ exports.getCommentsByItemId = async (req, res, next) => {
 
     try {
         const search_query = `
-      SELECT u.name as userName, u.description as userDescription, u.image as userImage, c.content as commentContent
+      SELECT u.name as userName, u.description as userDescription, u.image as userImage, c.content as commentContent, u.totalRate / u.numTrade as userRatings
       FROM Items i, Users u, Comments c
       WHERE i.id=${itemId} AND i.id = c.itemId AND u.id = c.userId;
     `
