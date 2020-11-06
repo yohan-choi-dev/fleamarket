@@ -1,6 +1,6 @@
 module.exports = (async () => {
     const express = require('express')
-    const PORT = process.env.PORT | 12218
+    const PORT = process.env.PORT | 10034
     const app = express()
 
     const sequelize = require('./utils/database')
@@ -9,7 +9,7 @@ module.exports = (async () => {
     const ioService = require('./service/io-service')
 
     const mailService = require('./service/mail-service')
-
+    /*
     if (process.env.NODE_ENV == 'development') {
         const corsOptions = {
             origin: 'http://localhost:3000',
@@ -17,6 +17,8 @@ module.exports = (async () => {
         }
         app.use(require('cors')(corsOptions))
     }
+    */
+    console.dir(process.env.NODE_ENV)
 
     const redisConfig = {
         host: process.env.REDIS_HOST || 'localhost',
@@ -40,12 +42,13 @@ module.exports = (async () => {
     try {
         await sequelize.sync()
         const server = app.listen(PORT, () =>
-            console.log(`Worker ${process.pid} is running on ${PORT}`)
+            console.log(`Worker ${process.pid} is running on port ${PORT}`)
         )
         const redis = redisDbFactory(redisConfig)
         ioService(server, redis)
-        if (process.env.NODE_ENV === 'production') {
+        if (process.env.NODE_ENV === 'PRODUCTION') {
             mailService.init()
+            console.log('success to connect to mai server')
         }
     } catch (err) {
         console.error(err)

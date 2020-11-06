@@ -1,12 +1,12 @@
 const Sequelize = require('sequelize')
 
-const database = 'prj666_201a05'
-const username = 'prj666_201a05'
-const password = 'hgAZ@4435'
+const database = 'fleamarket-db'
+const username = 'fleamarket1'
+const password = '4568fasj@E23'
 
 const sequelize = new Sequelize(database, username, password, {
-    host: 'mymysql.senecacollege.ca',
-    dialect: 'mysql',
+    host: 'localhost',
+    dialect: 'postgres',
     pool: {
         max: 30,
         min: 0,
@@ -17,5 +17,3 @@ const sequelize = new Sequelize(database, username, password, {
 })
 
 module.exports = sequelize
-
-//module.exports = (database, username, password)
