@@ -17,7 +17,7 @@ module.exports = {
     init: () => {
         transporter.verify((err, res) => {
             if (err) {
-                throw new Error(`failed to connect the mail server ${err}`)
+                throw new Error(`Failed to connect the mail server ${err}`)
             }
             console.log(`Success to connect to mail server ${res}`)
         })

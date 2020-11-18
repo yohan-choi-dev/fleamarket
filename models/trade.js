@@ -4,7 +4,7 @@ const sequelize = require('../utils/database')
 const User = require('../models/user')
 const Item = require('../models/item')
 
-const Trade = sequelize.define('trade', {
+const Trade = sequelize.define('Trade', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,

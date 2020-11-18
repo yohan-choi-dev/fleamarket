@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize')
 
-const database = 'fleamarket-db'
-const username = 'fleamarket1'
-const password = '4568fasj@E23'
+const database = 'test'
+const username = 'postgres'
+const password = 'helloworld'
 
 const sequelize = new Sequelize(database, username, password, {
     host: 'localhost',

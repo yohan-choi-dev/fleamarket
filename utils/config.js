@@ -19,6 +19,7 @@ class Config {
         console.log(`Deserializing from ${file}`)
         this.data = this.strategy.deserialize(fs.readFileSync(file, 'utf-8'))
     }
+
     save(file) {
         console.log(`Serializing to ${file}`)
         fs.writeFileSync(file, this.strategy.serialize(this.data))
