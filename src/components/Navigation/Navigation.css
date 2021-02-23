@@ -1,0 +1,44 @@
+.Navigation {
+  width: 100%;
+  display: flex;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Navigation .Logo {
+  color: var(--black);
+}
+
+.Navigation-links ul {
+  list-style-type: none;
+}
+
+.Navigation-links .Navigation-links-list-item {
+  display: inline-block;
+  margin-left: 1.6rem;
+  font-family: var(--font-family-global);
+}
+
+.Navigation-links ul li a {
+  color: var(--black);
+  text-decoration: underline;
+  transition: color 200ms ease-in-out;
+}
+
+.Navigation-links ul li a:hover {
+  color: var(--purple);
+}
+
+.Navigation-links .Navigation-notifications {
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 1.5rem;
+  color: #fff;
+  background-color: var(--lightcoral);
+  cursor: pointer;
+  user-select: none;
+}

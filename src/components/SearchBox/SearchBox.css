@@ -1,0 +1,78 @@
+.SearchBox {
+  position: relative;
+  display: flex;
+  width: 30rem;
+  justify-content: space-between;
+  padding: 0.8rem 1.2rem;
+  background: #ffffff;
+  box-shadow: var(--shadow-input-dropdown);
+  border-radius: 3px;
+  z-index: 5;
+}
+
+.SearchBox .SearchBox-input {
+  flex-grow: 1;
+  background: none;
+  border: none;
+  color: var(--black);
+  outline: none;
+  font-family: var(--font-family-global);
+  font-size: 1rem;
+  font-weight: 500;
+  float: left;
+  width: 20rem;
+  padding-right: 16px;
+}
+
+.SearchBox .SearchBox-input::placeholder {
+  color: var(--dark-grey);
+}
+
+.SearchBox .SearchBox-search-button {
+  float: left;
+}
+
+.SearchBox .SearchBox-search-icon {
+  height: 1rem;
+  fill: var(--dark-grey);
+}
+
+.SearchBox .SearchBox-search-results {
+  position: absolute;
+  left: 0;
+  top: 2.6rem;
+  width: 100%;
+  background-color: #fff;
+}
+
+.SearchBox-search-results-items {
+  box-shadow: var(--shadow-input-dropdown);
+}
+
+.SearchBox .SearchBox-results-item {
+  display: flex;
+  padding-bottom: 1.67rem;
+  padding-left: 1.22rem;
+  padding-right: 1.22rem;
+}
+
+.SearchBox .SearchBox-results-item:first-child {
+  padding-top: 1.67rem;
+}
+
+.SearchBox .SearchBox-results-item .SearchBox-results-item-image {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  box-shadow: 0 0 4px 0 #ccc;
+}
+
+.SearchBox-results-item-info {
+  padding-left: 0.56rem;
+  text-align: left;
+}
+
+.SearchBox .SearchBox-results-item .SearchBox-results-item-info-name {
+  font-weight: 600;
+  color: var(--black);
+}

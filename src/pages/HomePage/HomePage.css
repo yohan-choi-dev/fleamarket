@@ -1,0 +1,154 @@
+.HomePage-header {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-top: 4.5rem;
+  text-align: center;
+  background: linear-gradient(135deg, var(--purple), #914E72);
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+.HomePage-header-title {
+  font-size: 2.5rem;
+  color: #fff;
+}
+
+.HomePage-steps {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  padding-top: 4rem;
+  padding-bottom: 5.5rem;
+}
+
+.HomePage-step {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.HomePage-step span {
+  display: block;
+  padding-bottom: 0.67rem;
+}
+
+.HomePage-step span svg {
+  fill: #fff;
+  height: 3.8rem;
+}
+
+.HomePage-header .SearchBox {
+  position: absolute;
+  bottom: -1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.HomePage-header .SearchBox .SearchBox-input {
+  font-size: 1.2rem;
+}
+
+.HomePage-header .SearchBox .SearchBox-search-icon {
+  height: 1.2rem;
+}
+
+.HomePage-main-section {
+  position: relative;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+.HomePage-main-section-heading {
+  padding-bottom: 2.7rem;
+  font-family: var(--font-family-global);
+  font-size: var(--font-size-h2);
+  color: var(--black);
+  text-align: center;
+}
+
+.HomePage-main-section-items {
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
+  grid-template-rows: 1fr auto;
+  grid-column-gap: 3%;
+  grid-row-gap: 3rem;
+}
+
+.HomePage-main-section-items .ItemCard {
+  width: auto;
+  position: relative;
+}
+
+.HomePage-actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 2.5rem;
+}
+
+.HomePage-footer {
+  width: 100%;
+  height: 300px;
+  background-color: var(--purple);
+}
+
+@media (max-width: 1240px) {
+  .HomePage-header {
+    flex-direction: column;
+    justify-content: center;
+  }
+  .HomePage-header-title {
+    padding-bottom: 2rem;
+    font-size: 3rem;
+    text-align: center;
+  }
+
+  .HomePage-main-section-items {
+    grid-template-columns: 48% 48%;
+    grid-template-rows: 1.5fr auto;
+    grid-column-gap: 4%;
+    grid-row-gap: 3rem;
+  }
+
+  .HomePage-main-section-show-more {
+    padding-top: 4rem;
+  }
+}
+
+@media (max-width: 960px) {
+  .HomePage-main-section-items {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .HomePage-steps {
+    flex-direction: column;
+  }
+
+  .HomePage-step {
+    margin-bottom: 2rem;
+  }
+  
+  .HomePage-header .SearchBox .SearchBox-input {
+    font-size: 1rem;
+  }
+
+  .HomePage-header .SearchBox .SearchBox-search-icon {
+    height: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .HomePage-header .SearchBox {
+    position: relative;
+    width: 100%;
+  }
+}

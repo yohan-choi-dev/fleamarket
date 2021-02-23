@@ -1,0 +1,41 @@
+.ProfilePage-user-items {
+  padding-top: 4.4rem;
+  padding-bottom: 3.5rem;
+}
+
+.ProfilePage-user-items h2 {
+  padding-bottom: 1.78rem;
+}
+
+.ProfilePage-user-items-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr auto;
+  grid-column-gap: 3%;
+  grid-row-gap: 3rem;
+}
+
+.ProfilePage-user-items-content .ItemCard {
+  width: auto;
+}
+
+.ProfilePage-user-items-actions {
+  display: flex;
+  justify-content: center;
+  padding-top: 2.33rem;
+}
+
+@media (max-width: 1240px) {
+  .ProfilePage-user-items-content {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1.5fr auto;
+    grid-column-gap: 5%;
+    grid-row-gap: 3rem;
+  }
+}
+
+@media (max-width: 960px) {
+  .ProfilePage-user-items-content {
+    grid-template-columns: 1fr;
+  }
+}

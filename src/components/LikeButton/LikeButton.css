@@ -1,0 +1,52 @@
+.LikeButton {
+  display: inline-block;
+}
+
+.LikeButton-button {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  float: right;
+  border-color: #cccccc;
+}
+
+.LikeButton-heart {
+  text-align: right;
+}
+
+.LikeButton-heart-icon-container {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid var(--grey);
+}
+
+.LikeButton-heart-icon-container:hover {
+  cursor: pointer;
+}
+
+.LikeButton-heart-icon {
+  width: 14px;
+  fill: var(--grey);
+}
+
+@keyframes like {
+  1% {
+    width: 14px;
+  }
+  20% {
+    width: 16px;
+  }
+  50% {
+    width: 20px;
+  }
+  70% {
+    width: 16px;
+  }
+  100% {
+    width: 14px;
+  }
+}

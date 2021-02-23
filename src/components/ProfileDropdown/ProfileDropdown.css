@@ -1,0 +1,47 @@
+.ProfileDropdown {
+  position: relative;
+  font-family: var(--font-family-global);
+  z-index: 10;
+}
+
+.ProfileDropdown-button {
+  display: flex;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+}
+
+.ProfileDropdown-chevron {
+  padding-left: 0.5rem;
+  height: 1rem;
+}
+
+.ProfileDropdown-username {
+  font-size: 1rem;
+}
+
+.ProfileDropdown-content {
+  display: none;
+  width: 10rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-right: 1rem;
+  background-color: #fff;
+  position: absolute;
+  right: 0;
+  box-shadow: 0 0 15px 0px rgba(0, 0, 0, 0.25);
+  font-size: 1rem;
+  text-align: right;
+}
+
+.ProfileDropdown-content a {
+  display: block;
+  color: black;
+  line-height: 3rem;
+}
+
+.ProfileDropdown:hover .ProfileDropdown-content {
+  display: block;
+}

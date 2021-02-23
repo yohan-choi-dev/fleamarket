@@ -1,0 +1,60 @@
+.ItemComments {
+  width: 100%;
+  border-radius: 1.5rem;
+  box-shadow: var(--shadow-card-normal);
+  clear: both;
+  padding: 2.9rem 3.05rem 2rem 3.05rem;
+}
+
+.ItemComments-Detail {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 3rem;
+}
+
+.ItemComments-Detail-User {
+  display: flex;
+  padding-bottom: 0.67rem;
+}
+
+.ItemComments-Detail-User-Info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 0.44rem;
+}
+
+.ItemComments-Detail-User-Name {
+  padding-bottom: 0.15rem;
+  font-weight: 600;
+}
+
+.ItemComments-Detail-User-Rating {
+  font-size: 0.78rem;
+}
+
+.ItemComments-Detail-User-Rating .StarIcon {
+  position: relative;
+  top: 0.056rem;
+  width: 1rem;
+  padding-right: 0.22rem;
+  fill: var(--lightcoral);
+}
+
+.ItemComments-Detail-User img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 4rem;
+}
+
+.ItemComments-Reply {
+  display: flex;
+}
+
+.ItemComments-Reply .LabeledInputField {
+  flex-grow: 1;
+}
+
+.ItemComments-Reply .LabeledInputField .LabeledInputField-input {
+  width: 96%;
+}

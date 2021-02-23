@@ -1,0 +1,25 @@
+.AccountSettingsSidebar {
+  width: 30%;
+  background-color: var(--light-grey);
+  padding-top: 5rem;
+  padding-left: 3rem;
+  line-height: 3.8rem;
+  font-size: 0.9rem;
+  font-family: var(--font-family-global);
+  color: var(--dark-grey);
+  height: 42rem;
+}
+
+.AccountSettingsSidebar-list {
+  list-style-type: none;
+}
+
+.AccountSettingsSidebar-list-item {
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 150ms ease-in-out;
+}
+
+.AccountSettingsSidebar-list-item--active {
+  color: var(--purple);
+}

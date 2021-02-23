@@ -1,0 +1,53 @@
+.Button {
+  background: var(--light-grey);
+  border-radius: 3px;
+  border: none;
+  color: var(--black);
+  padding: 0.67rem 1rem;
+  text-align: center;
+  font-family: var(--font-family-global);
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 100ms ease-in-out;
+  display: inline-block;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+}
+
+.Button:hover {
+  background-color: var(--black);
+  color: var(--light-grey);
+}
+
+.Button:disabled {
+  opacity: 0.3;
+  cursor: initial;
+}
+
+.Button.purple {
+  background-color: var(--purple);
+  color: #fff;
+}
+
+.Button.purple:hover {
+  background-color: var(--dark-purple);
+}
+
+.Button.red {
+  background-color: var(--lightcoral);
+  color: #fff;
+}
+
+.Button.red:hover {
+  background-color: var(--lightcoral-dark);
+}
+
+.Button.green {
+  background-color: #86C993;
+  color: #fff;
+}
+
+.Button.green:hover {
+  background-color: #5B8D65;
+}

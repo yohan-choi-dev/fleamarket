@@ -1,0 +1,50 @@
+.Chatroom {
+  margin-top: 4rem;
+  margin-bottom: 7rem;
+}
+
+.Chatroom-wrapper {
+  position: relative;
+  display: flex;
+  height: 40rem;
+  box-shadow: var(--shadow-card-normal);
+  border-radius: 0.83rem;
+  overflow: hidden;
+}
+
+.Chatroom-Nav {
+  width: 25%;
+  background-color: #ececec;
+  padding-top: 2.67rem;
+  padding-left: 2.11rem;
+  padding-bottom: 2.67rem;
+  line-height: 3.8rem;
+  font-size: 0.9rem;
+  font-family: var(--font-family-global);
+  color: var(--dark-grey);
+  overflow-y: scroll;
+}
+
+.Chatroom-Nav-User {
+  display: flex;
+  padding-bottom: 1.2rem;
+  align-items: center;
+  cursor: pointer;
+}
+
+.Chatroom-Nav-User-profile-photo {
+  display: inline-block;
+  width: 3rem;
+  height: 3rem;
+  margin-right: 0.44rem;
+  background-size: cover;
+  border-radius: 50%;
+}
+
+.Chatroom-Nav-User span {
+  font-weight: 600;
+}
+
+.Chatroom-Nav-User {
+  list-style-type: none;
+}

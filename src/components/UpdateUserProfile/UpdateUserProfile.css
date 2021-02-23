@@ -1,0 +1,16 @@
+.UpdateUserProfile .Button{
+    margin-top: 1rem;
+}
+
+.UpdateUserProfile-name {
+    padding-bottom: 1.4rem;
+}
+
+.UpdateUserProfile-image-container p {
+    display: block;
+    padding-bottom: 6px;
+    font-family: var(--font-family-global);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--lighter-black);
+}

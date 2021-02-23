@@ -1,0 +1,98 @@
+:root {
+  font-size: 18px;
+
+  /*
+    *******
+    Colours
+  */
+  --black: #000000;
+  --lighter-black: #555555; /* Active inputs */
+  --dark-grey: #aeaeae; /* Placeholders */
+  --grey: #cccccc;
+  --light-grey: #dfdfdf;
+  --dark-purple: #42305a; /* Hovered purple buttons */
+  --purple: #8771a5;
+  --lightcoral: #ff7e7e; /* Dangerous actions */
+  --lightcoral-dark: #bc4141;
+
+  /*
+    ***********
+    Box shadows
+  */
+  --shadow-card-normal: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+  --shadow-card-hovered: 0 8px 22px 0 rgba(0, 0, 0, 0.1);
+  --shadow-input-dropdown: 0 4px 25px 0 rgba(85, 85, 85, 0.25);
+
+  /*
+    *****
+    Fonts
+  */
+  --font-family-global: 'Roboto', Helvetica, Arial, sans-serif;
+  --font-size-h1: 2.67rem; /* 48px */
+  --font-size-h2: 2rem; /* 36px */
+  --font-size-h3: 1.33rem; /* 24px */
+  --font-size-body: 1rem; /* 18px */
+  --font-line-height: 1.44rem; /* 26px */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  font-family: var(--font-family-global);
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+  max-width: 2560px;
+  padding-left: 9rem;
+  padding-right: 9rem;
+}
+
+/*
+  *****************
+  Mobile Responsive
+*/
+@media (max-width: 1366px) {
+  :root {
+    font-size: 16px;
+  }
+
+  .container {
+    padding-left: 7.2rem;
+    padding-right: 7.2rem;
+  }
+}
+
+@media (max-width: 960px) {
+  :root {
+    font-size: 15px;
+  }
+
+  .container {
+    padding-left: 6.5rem;
+    padding-right: 6.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    font-size: 13px;
+  }
+
+  .container {
+    padding-left: 3.2rem;
+    padding-right: 3.2rem;
+  }
+}
+
+@media (max-width: 320px) {
+  :root {
+    font-size: 10px;
+  }
+}

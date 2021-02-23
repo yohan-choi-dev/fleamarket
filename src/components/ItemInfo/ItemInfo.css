@@ -1,0 +1,115 @@
+.ItemInfo {
+  display: flex;
+  padding: 3.61rem 3.06rem;
+  border-radius: 15px;
+  box-shadow: var(--shadow-card-normal);
+}
+
+.ItemInfo-images {
+  width: 50%;
+  display: flex;
+}
+
+.ItemInfo-images-big {
+  width: 27.78rem;
+  height: 27.78rem;
+  background-size: contain;
+  margin-right: 1.22rem;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.ItemInfo-images-thumbnails {
+  max-height: 27.78rem;
+  width: 6.5rem;
+  list-style-type: none;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-track-color: rgba(0, 0, 0, 0);
+}
+
+.ItemInfo-images-thumbnails .ItemInfo-images-thumbnail-small {
+  width: 5.33rem;
+  height: 5.33rem;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-bottom: 1.8rem;
+  box-shadow: var(--shadow-card-normal);
+  transition: box-shadow 200ms ease-in-out;
+  cursor: pointer;
+}
+
+.ItemInfo-images-thumbnails .ItemInfo-images-thumbnail-small:hover {
+  box-shadow: var(--shadow-card-hovered);
+}
+
+.ItemInfo-images-thumbnails .ItemInfo-images-thumbnail-small.active {
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.5);
+}
+
+.ItemInfo-item-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-left: 2.89rem;
+}
+
+.ItemInfo-item-name {
+  padding-bottom: 0.44rem;
+}
+
+.ItemInfo-item-owner-name a {
+  color: var(--black);
+}
+
+.ItemInfo-item-description {
+  padding-top: 1.78rem;
+  line-height: var(--font-line-height);
+}
+
+.ItemInfo-ratings {
+  padding-top: 1.78rem;
+  -webkit-user-select: none;
+}
+
+.ItemInfo-ratings .LikeButton {
+  padding-right: 0.44rem;
+}
+
+@media (max-width: 960px) {
+  .ItemInfo {
+    flex-direction: column;
+  }
+
+  .ItemInfo-images {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .ItemInfo-images-thumbnails {
+    width: auto;
+    display: flex;
+    padding-top: 2rem;
+  }
+
+  .ItemInfo-images-thumbnails li {
+    margin-right: 1.4rem;
+  }
+
+  .ItemInfo-images-big {
+    width: 100%;
+    background-size: cover;
+  }
+
+  .ItemInfo-item-details {
+    padding-left: 0;
+  }
+
+  .ItemInfo-item-details .ItemInfo-ratings {
+    padding-top: 1rem;
+  }
+
+  .ItemInfo-item-details .ItemInfo-contact-owner {
+    padding-top: 2rem;
+  }
+}

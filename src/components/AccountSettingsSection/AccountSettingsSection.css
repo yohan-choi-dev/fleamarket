@@ -1,0 +1,31 @@
+.AccountSettingsSection {
+  display: flex;
+  box-shadow: var(--shadow-card-normal);
+  border-radius: 1.5rem;
+  overflow: hidden;
+}
+
+.AccountSettingsSection-view {
+  width: 70%;
+  padding-top: 5.5rem;
+  padding-left: 2.5rem;
+}
+
+.AccountSettingsSection-view ul {
+  list-style-type: none;
+}
+
+.AccountSettingsSection-view ul li {
+  line-height: 2.5rem;
+}
+
+.AccountSettingsSection-view .Button {
+  background-color: var(--purple);
+  color: #fff;
+  transition: all 200ms ease-in-out;
+}
+
+.AccountSettingsSection-view .Button:hover {
+  background-color: var(--dark-purple);
+  color: #fff;
+}

@@ -1,0 +1,35 @@
+.TransactionHistory {
+  padding-top: 4.44rem;
+  font-family: var(--font-family-global);
+  text-align: left;
+}
+
+.TransactionHistory h2 {
+  padding-bottom: 1.78rem;
+}
+
+.TransactionHistory-table {
+  padding: 2rem 1.5rem;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: normal;
+  border-radius: 0.83rem;
+  box-shadow: var(--shadow-card-normal);
+  align-content: center;
+}
+
+.Traded-item {
+  line-height: 2.4rem;
+}
+
+.Complete {
+  color: var(--dark-grey);
+}
+
+.In {
+  color: var(--purple);
+}
+
+.Confirmation {
+  color: var(--lightcoral);
+}
