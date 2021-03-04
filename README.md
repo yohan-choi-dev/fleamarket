@@ -23,50 +23,50 @@ To provide easy trading experience, Fleamarket supports the following functional
 
 ### User Account Management
 
-**Create an account.**
+#### Create an account.
 ![Create-a-account](screenshot/10.png)
 
-**Login to account.**
+#### Login to account.
 ![Login-to-account](screenshot/11.png)
 
-**Eddit to account.**
-![Login-to-account](screenshot/18.png)
+#### Edit account.
+![Edit-account](screenshot/18.png)
 
 ### Manage User Item
-**User's inventory.**
+#### User's inventory.
 ![User-inventory](screenshot/15.png)
 
-**Upload Item.**
+#### Upload Item.
 ![Upload-Item](screenshot/27.png)
 
-**Delete Item.**
+#### Delete Item.
 ![Delete-Item](screenshot/30.png)
 
 ### Search Item
 
-**Visit user profile.**
+#### Visit user profile.
 ![Visit-another-user](screenshot/16.png)
 
-**Item Page**
+#### Item Page
 ![Item-page](screenshot/26.png)
 
 
 ### Chatting
-**Sending and receiving message.**
+#### Sending and receiving message.
 ![Chatting-1](screenshot/01.png)
 
 
 ### Trading
-**Select Item.**
+#### Select Item.
 ![Trading-Select-Item](screenshot/02.png)
 
-**Pending another user.**
+#### Pending another user.
 ![Trading-Pending-User](screenshot/04.png)
 
-**Both users confirm items.**
+#### Both users confirm items.
 ![Trading-Confirm-Item](screenshot/06.png)
 
-**Rating user after trading.**
+#### Rating user after trading.
 ![Rating-user](screenshot/08.png)
 
 
