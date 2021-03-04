@@ -2,7 +2,7 @@
 
 ## Motivation
 
-Fleamarket was the graudation project. Whenever I used Kijiji, I felt uncomfortable for its limited functionality. The main movitation of the application was providing simple and fast of trading. Fleamarket is E-commerse platform that allows local people exchange thier goods easily. It is a web application that supports responsive web design. 
+Fleamarket was the graudation project. Whenever I used Kijiji, I felt uncomfortable for its limited functionality. The main movitation of the application was providing simple and fast trading service. Fleamarket is E-commerse platform that allows local people exchange thier goods easily. It is a web application that supports responsive web design. 
 
 ## Technologies
 
