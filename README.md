@@ -36,7 +36,7 @@ To provide easy trading experience, Fleamarket supports the following functional
 #### User's inventory.
 ![User-inventory](screenshot/15.png)
 
-#### Upload Item.
+#### Upload item.
 ![Upload-Item](screenshot/27.png)
 
 #### Delete Item.
@@ -47,7 +47,7 @@ To provide easy trading experience, Fleamarket supports the following functional
 #### Visit user profile.
 ![Visit-another-user](screenshot/16.png)
 
-#### Item Page
+#### Item page
 ![Item-page](screenshot/26.png)
 
 
@@ -57,7 +57,7 @@ To provide easy trading experience, Fleamarket supports the following functional
 
 
 ### Trading
-#### Select Item.
+#### Select item.
 ![Trading-Select-Item](screenshot/02.png)
 
 #### Pending another user.
