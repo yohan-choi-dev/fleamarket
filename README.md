@@ -18,9 +18,10 @@ JavaScript HTML5 CSS3 React.JS
 
 To provide easy trading experience, Fleamarket supports the following functionalities.
 
-### User Account Management
-**Home**
+### Home
 ![Home-1](screenshot/09.png)
+
+### User Account Management
 
 **Create an account.**
 ![Create-a-account](screenshot/10.png)
