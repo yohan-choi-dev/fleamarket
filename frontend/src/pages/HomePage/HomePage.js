@@ -43,7 +43,10 @@ function HomePage(props) {
     }
 
     if (appState.user.isLoggedIn) {
-      const itemsLikedByUser = await getData(`${APIRoute}/api/favorites?userId=${appState.user.id}`);
+      const result = await getData(`${APIRoute}/api/favorites?userId=${appState.user.id}`);
+      
+      const itemsLikedByUser = Array.isArray(result) ? result : []
+
       itemList = itemList.map(item => {
         if (itemsLikedByUser.includes(item.id)) {
           return {
@@ -92,9 +95,6 @@ function HomePage(props) {
     getTotalNumberOfItems();
   }, [appState.user.isLoggedIn]);
 
-  // useEffect(() => {
-
-  // }, [page]);
 
   const handleLikedStatus = async (liked, itemId) => {
     if (liked) {

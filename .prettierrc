@@ -5,6 +5,5 @@
     "semi": false,
     "useTabs": false,
     "tabWidth": 4,
-    "endOfLine": "lf",
     "arrowParens": "always"
 }

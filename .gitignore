@@ -1,0 +1,14 @@
+node_modules/
+package-lock.json
+view
+.env
+build/
+.swp
+test/
+branches/
+.DS_Store
+images/
+.eslintcache
+dummy.js
+mock-data.js
+client

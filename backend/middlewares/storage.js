@@ -19,7 +19,7 @@ const fileStorage = multer.diskStorage({
         cb(null, 'images')
     },
     filename: (req, file, cb) => {
-        console.log('images created')
+        console.log('image', file)
         cb(
             null,
             cryptoRandomString({ length: 20, type: 'url-safe' }) + path.extname(file.originalname)
