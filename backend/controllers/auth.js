@@ -11,6 +11,10 @@ const User = require('../models/user')
 const Token = require('../models/token')
 
 const ERROR_CODES = require('../utils/app-error-codes')
+// const dotenv = require('dotnev')
+// dote
+const URL = process.env.URL
+const CLIENT_URL = process.env.CLIENT_URL
 
 exports.signup = async (req, res, next) => {
     const errors = validationResult(req)
@@ -23,7 +27,6 @@ exports.signup = async (req, res, next) => {
             error.data[0].appErrorCode = ERROR_CODES.USER.EMAIL_USED
             throw error
         }
-
         const email = req.body.email
         const name = req.body.name
         const password = req.body.password
@@ -31,6 +34,7 @@ exports.signup = async (req, res, next) => {
         const image = req.files[0].path
 
         const hashedPw = await bcrypt.hash(password, 12)
+        console.log('signup email', email);
         const result = await User.create({
             email: email,
             namespace: cryptoRandomString({ length: 24, type: 'url-safe' }),
@@ -43,7 +47,7 @@ exports.signup = async (req, res, next) => {
 
         const cryptoURL = cryptoRandomString({ length: 48, type: 'url-safe' })
 
-        const token = await Token.create({
+        await Token.create({
             token: cryptoURL,
             UserId: user.id
         })
@@ -56,7 +60,7 @@ exports.signup = async (req, res, next) => {
             createAt: user.createAt
         })
 
-        const domain = 'http://myvmlab.senecacollege.ca:6765/api/auth/confirmEmail?url='
+        const domain = `${URL}/api/auth/confirmEmail?url=`
 
         MailService.sendMail(user.email, {
             subject: 'Verfication Email',
@@ -132,7 +136,7 @@ exports.login = async (req, res, next) => {
         if (!error.statusCode) {
             error.statusCode = 500
         }
-        next(error)
+        console.error(error)
     }
 }
 
@@ -178,7 +182,7 @@ exports.confirmEmail = async (req, res, next) => {
             }
         )
 
-        res.status(200).redirect('http://myvmlab.senecacollege.ca:6761/')
+        res.status(200).redirect(CLIENT_URL)
 
         res.status(200).json(user)
     } catch (error) {

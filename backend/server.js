@@ -1,6 +1,9 @@
+const dotenv = require('dotenv');
+dotenv.config()
+
 module.exports = (async () => {
     const express = require('express')
-    const PORT = process.env.PORT | 8080
+    const PORT = process.env.PORT | 5050
     const app = express()
     const sequelize = require('./utils/database')
     const redisDbFactory = require('./factories/redis-db-factory')
@@ -22,6 +25,7 @@ module.exports = (async () => {
     app.use(require('body-parser').json())
     app.use(express.urlencoded({ extended: false, limit: '50mb' }))
     app.use('/images', express.static(require('path').join(__dirname, 'images')))
+    console.log( require('path').join(__dirname, 'images'));
     app.use('/api/auth', require('./routes/auth'))
     app.use('/api/items', require('./routes/items'))
     app.use('/api/categories', require('./routes/category'))
@@ -43,6 +47,7 @@ module.exports = (async () => {
             mailService.init()
             console.log('success to connect to mai server')
         }
+        mailService.init()
     } catch (err) {
         console.error(err)
     }
