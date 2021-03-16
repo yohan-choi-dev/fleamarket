@@ -56,7 +56,8 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "export NODE_ENV=development && nodemon server.js",
-        "production": "export NODE_ENV=production && forever server.js"
+        "production": "export NODE_ENV=production && forever server.js",
+        "launch": "pm2 start yarn --name 'fleamarket backend' --watch --interpreter bash -- start"
     },
     "author": "",
     "license": "ISC",
